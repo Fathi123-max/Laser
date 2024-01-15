@@ -1,4 +1,8 @@
 import 'package:get/get.dart';
+import 'package:getx_skeleton/app/modules/onboarding/binding/onboarding_binding.dart';
+import 'package:getx_skeleton/app/modules/onboarding/view/onboarding_screens.dart';
+import 'package:getx_skeleton/app/modules/splash/biniding/splash_screen_binding.dart';
+import 'package:getx_skeleton/app/modules/splash/views/splash_Screen.dart';
 
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
@@ -8,7 +12,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.HOME;
+  static const INITIAL = Routes.Onboarding;
 
   static final routes = [
     GetPage(
@@ -16,5 +20,13 @@ class AppPages {
       page: () => const HomeView(),
       binding: HomeBinding(),
     ),
+    GetPage(
+        name: Routes.Splash,
+        page: () => SplashScreen(),
+        binding: SplashScreenBinding()),
+    GetPage(
+        name: Routes.Onboarding,
+        page: () => Onboarding(),
+        binding: OnboardingBinding()),
   ];
 }

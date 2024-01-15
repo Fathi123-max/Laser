@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import '../../../../../config/translations/strings_enum.dart';
+import '../../../../config/translations/strings_enum.dart';
 
 // mock model
 class DataGridModelMock {
@@ -96,9 +96,15 @@ class DataGrid extends StatelessWidget {
                 ),
               ),
               8.verticalSpace,
-              Text(gridData.title,style: theme.textTheme.bodySmall,),
+              Text(
+                gridData.title,
+                style: theme.textTheme.bodySmall,
+              ),
               7.verticalSpace,
-              Text(gridData.subtitle,style: theme.textTheme.bodyMedium?.copyWith(color: const Color(0xFF4B4C4D),)),
+              Text(gridData.subtitle,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: const Color(0xFF4B4C4D),
+                  )),
             ],
           ),
         );

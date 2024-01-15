@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:getx_skeleton/config/theme/my_theme.dart';
-import 'package:getx_skeleton/config/translations/localization_service.dart';
+import 'package:getx_skeleton/app/config/theme/my_theme.dart';
+import 'package:getx_skeleton/app/config/translations/localization_service.dart';
 
-import '../../../../../config/theme/theme_extensions/header_container_theme_data.dart';
-import '../../../../../config/translations/strings_enum.dart';
+import '../../../../config/theme/theme_extensions/header_container_theme_data.dart';
+import '../../../../config/translations/strings_enum.dart';
 
 class Header extends StatelessWidget {
   const Header({super.key});
@@ -61,14 +61,13 @@ class Header extends StatelessWidget {
                   height: 39.h,
                   width: 39.h,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFFE2C2),
-                    borderRadius: BorderRadius.circular(8.r),
-                    border: Border.all(
-                      color: Colors.white,
-                      width: 1
-                    )
+                      color: const Color(0xFFFFE2C2),
+                      borderRadius: BorderRadius.circular(8.r),
+                      border: Border.all(color: Colors.white, width: 1)),
+                  child: Image.asset(
+                    'assets/images/person1.png',
+                    height: double.infinity,
                   ),
-                  child: Image.asset('assets/images/person1.png',height: double.infinity,),
                 ),
                 9.horizontalSpace,
                 Column(
@@ -99,9 +98,13 @@ class Header extends StatelessWidget {
                     child: Container(
                       height: 39.h,
                       width: 39.h,
-                      decoration: theme.extension<HeaderContainerThemeData>()?.decoration,
+                      decoration: theme
+                          .extension<HeaderContainerThemeData>()
+                          ?.decoration,
                       child: SvgPicture.asset(
-                        Get.isDarkMode ? 'assets/vectors/moon.svg' : 'assets/vectors/sun.svg',
+                        Get.isDarkMode
+                            ? 'assets/vectors/moon.svg'
+                            : 'assets/vectors/sun.svg',
                         fit: BoxFit.none,
                         color: Colors.white,
                         height: 10,
@@ -116,13 +119,17 @@ class Header extends StatelessWidget {
                 //----------------Language Button----------------//
                 InkWell(
                   onTap: () => LocalizationService.updateLanguage(
-                    LocalizationService.getCurrentLocal().languageCode == 'ar' ? 'en' : 'ar',
+                    LocalizationService.getCurrentLocal().languageCode == 'ar'
+                        ? 'en'
+                        : 'ar',
                   ),
                   child: Ink(
                     child: Container(
                       height: 39.h,
                       width: 39.h,
-                      decoration: theme.extension<HeaderContainerThemeData>()?.decoration,
+                      decoration: theme
+                          .extension<HeaderContainerThemeData>()
+                          ?.decoration,
                       child: SvgPicture.asset(
                         'assets/vectors/language.svg',
                         fit: BoxFit.none,

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:getx_skeleton/app/data/local/my_shared_pref.dart';
-import 'package:getx_skeleton/config/translations/localization_service.dart';
-import 'package:getx_skeleton/config/translations/strings_enum.dart';
+import 'package:getx_skeleton/app/config/translations/localization_service.dart';
+import 'package:getx_skeleton/app/config/translations/strings_enum.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 main() async {
@@ -19,7 +19,7 @@ main() async {
 
   await MySharedPref.init();
 
-  test('check if language is supported', (){
+  test('check if language is supported', () {
     // check if English is supported
     bool isEnSupported = LocalizationService.isLanguageSupported('en');
     expect(isEnSupported, true);
@@ -28,7 +28,6 @@ main() async {
     bool isFrSupported = LocalizationService.isLanguageSupported('fr');
     expect(isFrSupported, false);
   });
-
 
   test('Check getting/updating current local', () async {
     await LocalizationService.updateLanguage('en');
@@ -40,17 +39,17 @@ main() async {
     expect(currentLocaleAfterUpdate.languageCode, 'ar');
   });
 
-
   test('Check if current language is English', () async {
-      await LocalizationService.updateLanguage('en');
-      bool isCurrentLangIsEnglish = LocalizationService.getCurrentLocal().languageCode.contains('en');
-      expect(isCurrentLangIsEnglish, true);
+    await LocalizationService.updateLanguage('en');
+    bool isCurrentLangIsEnglish =
+        LocalizationService.getCurrentLocal().languageCode.contains('en');
+    expect(isCurrentLangIsEnglish, true);
 
-      await LocalizationService.updateLanguage('ar');
-      bool isCurrentLangEnglishAfterUpdate = LocalizationService.getCurrentLocal().languageCode.contains('ar');
-      expect(isCurrentLangEnglishAfterUpdate, true);
+    await LocalizationService.updateLanguage('ar');
+    bool isCurrentLangEnglishAfterUpdate =
+        LocalizationService.getCurrentLocal().languageCode.contains('ar');
+    expect(isCurrentLangEnglishAfterUpdate, true);
   });
-
 
   testWidgets('Check translation', (tester) async {
     Get.testMode = false;

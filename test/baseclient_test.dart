@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart' hide Response;
-import 'package:getx_skeleton/app/services/api_exceptions.dart';
-import 'package:getx_skeleton/app/services/base_client.dart';
-import 'package:getx_skeleton/app/config/translations/strings_enum.dart';
+import 'package:laser/app/services/api_exceptions.dart';
+import 'package:laser/app/services/base_client.dart';
+import 'package:laser/app/config/translations/strings_enum.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 
 /// the main point of the test is to make sure callbacks and function work

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
-import 'package:getx_skeleton/app/modules/splash/biniding/splash_screen_binding.dart';
-import 'package:getx_skeleton/app/utils/awesome_notifications_helper.dart';
+import 'package:laser/app/modules/splash/biniding/splash_screen_binding.dart';
+import 'package:laser/app/utils/awesome_notifications_helper.dart';
 
 import 'app/data/local/my_hive.dart';
 import 'app/data/local/my_shared_pref.dart';
@@ -50,7 +50,7 @@ Future<void> main() async {
           builder: (context, widget) {
             bool themeIsLight = MySharedPref.getThemeIsLight();
             return Theme(
-              data: MyTheme.getThemeData(isLight: themeIsLight),
+              data: MyTheme.getThemeData(isLight: !themeIsLight),
               child: MediaQuery(
                 // prevent font from scalling (some people use big/small device fonts)
                 // but we want our app font to still the same and dont get affected

@@ -1,9 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:getx_skeleton/app/data/local/my_shared_pref.dart';
+import 'package:laser/app/data/local/my_shared_pref.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// test shared pref (read & write)
-
 
 Future<void> main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +13,7 @@ Future<void> main() async {
 
   await MySharedPref.init();
 
-  test('clear all the data from storage',() async {
+  test('clear all the data from storage', () async {
     // set new token in shared pref
     await MySharedPref.setFcmToken('token');
 
@@ -33,7 +32,6 @@ Future<void> main() async {
     // token must be null
     expect(tokenAfterClearing, isNull);
   });
-
 
   test('test read and write', () async {
     // set theme is light to false (write operation)

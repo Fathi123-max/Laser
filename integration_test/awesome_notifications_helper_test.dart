@@ -2,7 +2,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:getx_skeleton/app/utils/awesome_notifications_helper.dart';
+import 'package:laser/app/utils/awesome_notifications_helper.dart';
 import 'package:integration_test/integration_test.dart';
 
 /// test awesome notifications helper class

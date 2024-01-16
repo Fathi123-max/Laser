@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:getx_skeleton/app/data/local/my_shared_pref.dart';
-import 'package:getx_skeleton/app/config/translations/localization_service.dart';
-import 'package:getx_skeleton/app/config/translations/strings_enum.dart';
+import 'package:laser/app/data/local/my_shared_pref.dart';
+import 'package:laser/app/config/translations/localization_service.dart';
+import 'package:laser/app/config/translations/strings_enum.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 main() async {

@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:getx_skeleton/app/modules/onboarding/controller/onboarding_controller.dart';
+import 'package:laser/app/modules/onboarding/controller/onboarding_controller.dart';
 
 class OnboardingBinding implements Bindings {
   @override

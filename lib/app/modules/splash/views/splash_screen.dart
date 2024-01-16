@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_skeleton/app/components/custom_image_widget.dart';
-import 'package:getx_skeleton/app/modules/splash/controller/splash_screen_controller.dart';
+import 'package:laser/app/components/custom_image_widget.dart';
+import 'package:laser/app/modules/splash/controller/splash_screen_controller.dart';
 
 class SplashScreen extends GetView<SplashScreenController> {
   @override

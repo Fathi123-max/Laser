@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import 'package:getx_skeleton/app/modules/onboarding/binding/onboarding_binding.dart';
-import 'package:getx_skeleton/app/modules/onboarding/view/onboarding_screens.dart';
-import 'package:getx_skeleton/app/modules/splash/biniding/splash_screen_binding.dart';
-import 'package:getx_skeleton/app/modules/splash/views/splash_Screen.dart';
+import 'package:laser/app/modules/onboarding/binding/onboarding_binding.dart';
+import 'package:laser/app/modules/onboarding/view/onboarding_screens.dart';
+import 'package:laser/app/modules/splash/biniding/splash_screen_binding.dart';
+import 'package:laser/app/modules/splash/views/splash_Screen.dart';
 
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';

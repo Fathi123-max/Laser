@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:getx_skeleton/app/config/theme/my_theme.dart';
-import 'package:getx_skeleton/app/config/translations/localization_service.dart';
+import 'package:laser/app/config/theme/my_theme.dart';
+import 'package:laser/app/config/translations/localization_service.dart';
 
 import '../../../../config/theme/theme_extensions/header_container_theme_data.dart';
 import '../../../../config/translations/strings_enum.dart';

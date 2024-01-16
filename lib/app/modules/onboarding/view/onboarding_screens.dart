@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:getx_skeleton/app/components/custom_image_widget.dart';
-import 'package:getx_skeleton/app/modules/onboarding/controller/onboarding_controller.dart';
-import 'package:getx_skeleton/app/modules/splash/controller/splash_screen_controller.dart';
+import 'package:laser/app/components/custom_image_widget.dart';
+import 'package:laser/app/modules/onboarding/controller/onboarding_controller.dart';
+import 'package:laser/app/modules/splash/controller/splash_screen_controller.dart';
 
 class Onboarding extends GetView<OnboardingController> {
   @override

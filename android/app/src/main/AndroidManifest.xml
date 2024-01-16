@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.emad.beltaje.getx_skeleton.getx_skeleton">
+    package="com.emad.beltaje.laser.laser">
    <application
-        android:label="getx_skeleton"
+        android:label="laser"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

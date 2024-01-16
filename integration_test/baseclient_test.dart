@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:getx_skeleton/app/services/base_client.dart';
+import 'package:laser/app/services/base_client.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:integration_test/integration_test.dart';
-
 
 /// this is widget test for BaseClient and the main point of it
 /// is to test if BaseClient shows error (Snackbar) automatically if you
 /// don't pass onError() callback
-
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -59,7 +57,6 @@ void main() {
       Get.closeAllSnackbars();
       await tester.pumpAndSettle();
     });
-
 
     testWidgets('Error case with no message from api', (tester) async {
       await tester.pumpWidget(

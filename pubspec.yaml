@@ -25,16 +25,23 @@ dependencies:
   firebase_messaging: ^14.6.4 # fcm services
   awesome_notifications: ^0.7.4+1 # notifications services (will be used for fcm)
 
-  flutter_launcher_icons: # change app icon
   change_app_package_name: # change package name
-  rename_app: 1.0.0 # rename app
 
   flutter_svg:  # display svg vectors
+  intro_slider: ^4.2.1
+  gap: ^3.0.1
+  tbib_splash_screen: ^1.0.0
+
+
+
 
   flutter:
     sdk: flutter
+  get_storage: ^2.1.1
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.13.1
+
   mockito:
   flutter_lints:
   build_runner:  # generate dart files
@@ -47,10 +54,29 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/logo.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "path/to/image.png"
+    background_color: "#hexcode"
+    theme_color: "#hexcode"
+  windows:
+    generate: true
+    image_path: "path/to/image.png"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "path/to/image.png"
+  flutter_test:
+    sdk: flutter
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/images/app_icon.png"
+  image_path: "assets/images/logo.png"
 
 flutter:
   uses-material-design: true

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
+import 'package:laser/app/modules/onboarding/binding/onboarding_binding.dart';
 import 'package:laser/app/modules/splash/biniding/splash_screen_binding.dart';
 import 'package:laser/app/utils/awesome_notifications_helper.dart';
 
@@ -43,9 +44,9 @@ Future<void> main() async {
       builder: (context, widget) {
         return GetMaterialApp(
           // todo add your app name
-          title: "GetXSkeleton",
+          title: "Laser",
           useInheritedMediaQuery: true,
-          initialBinding: SplashScreenBinding(),
+          initialBinding: OnboardingBinding(),
           debugShowCheckedModeBanner: false,
           builder: (context, widget) {
             bool themeIsLight = MySharedPref.getThemeIsLight();

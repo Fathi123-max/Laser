@@ -12,7 +12,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.Onboarding;
+  static const INITIAL = Routes.Splash;
 
   static final routes = [
     GetPage(
@@ -26,7 +26,7 @@ class AppPages {
         binding: SplashScreenBinding()),
     GetPage(
         name: Routes.Onboarding,
-        page: () => Onboarding(),
+        page: () => OnboardingScreens(),
         binding: OnboardingBinding()),
   ];
 }

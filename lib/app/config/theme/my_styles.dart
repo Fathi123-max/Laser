@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:laser/app/config/theme/theme_extensions/header_container_theme_data.dart';
 
 import 'dark_theme_colors.dart';
-import 'my_fonts.dart';
 import 'light_theme_colors.dart';
+import 'my_fonts.dart';
 import 'theme_extensions/employee_list_item_theme_data.dart';
 
 class MyStyles {
+  TextStyle onBordingTextStyle = TextStyle(
+    color: const Color(0xFF908DA9),
+    fontSize: 12.sp,
+    fontFamily: 'Inter',
+    fontWeight: FontWeight.w500,
+  );
+  TextStyle onBordingBUttonStyle = const TextStyle(
+    color: Colors.white,
+    fontSize: 12,
+    fontFamily: 'Inter',
+    fontWeight: FontWeight.w700,
+    height: 0,
+  );
+
   /// custom employee list item theme
   static EmployeeListItemThemeData getEmployeeListItemTheme(
       {required bool isLightTheme}) {

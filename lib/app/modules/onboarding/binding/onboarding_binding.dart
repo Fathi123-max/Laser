@@ -4,6 +4,6 @@ import 'package:laser/app/modules/onboarding/controller/onboarding_controller.da
 class OnboardingBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<OnboardingController>(() => OnboardingController());
+    Get.put(OnboardingController());
   }
 }

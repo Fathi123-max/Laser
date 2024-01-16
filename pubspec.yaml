@@ -38,6 +38,7 @@ dependencies:
   flutter:
     sdk: flutter
   get_storage: ^2.1.1
+  auto_size_text: ^3.0.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1

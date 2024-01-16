@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:laser/app/config/theme/my_fonts.dart';
 
 import '../../data/local/my_shared_pref.dart';
 import 'dark_theme_colors.dart';
 import 'light_theme_colors.dart';
 import 'my_styles.dart';
-import 'theme_extensions/employee_list_item_theme_data.dart';
 
 class MyTheme {
   static getThemeData({required bool isLight}) {

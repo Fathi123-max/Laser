@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:get/get.dart';
-import 'package:laser/app/modules/onboarding/binding/onboarding_binding.dart';
-import 'package:laser/app/modules/splash/biniding/splash_screen_binding.dart';
+import 'package:laser/app/binding/on_start_binding.dart';
 import 'package:laser/app/utils/awesome_notifications_helper.dart';
 
+import 'app/config/theme/my_theme.dart';
+import 'app/config/translations/localization_service.dart';
 import 'app/data/local/my_hive.dart';
 import 'app/data/local/my_shared_pref.dart';
 import 'app/data/models/user_model.dart';
 import 'app/routes/app_pages.dart';
-import 'app/config/theme/my_theme.dart';
-import 'app/config/translations/localization_service.dart';
 import 'app/utils/fcm_helper.dart';
 
 Future<void> main() async {
@@ -36,21 +34,21 @@ Future<void> main() async {
   runApp(
     ScreenUtilInit(
       // todo add your (Xd / Figma) artboard size
-      designSize: const Size(375, 812),
+      designSize: const Size(375, 667),
       minTextAdapt: true,
       splitScreenMode: true,
       useInheritedMediaQuery: true,
       rebuildFactor: (old, data) => true,
       builder: (context, widget) {
         return GetMaterialApp(
-          // todo add your app name
           title: "Laser",
           useInheritedMediaQuery: true,
-          initialBinding: OnboardingBinding(),
           debugShowCheckedModeBanner: false,
+          initialBinding: OnStartBinding(),
           builder: (context, widget) {
             bool themeIsLight = MySharedPref.getThemeIsLight();
             return Theme(
+              // data: MyTheme.getThemeData(isLight: !themeIsLight),
               data: MyTheme.getThemeData(isLight: !themeIsLight),
               child: MediaQuery(
                 // prevent font from scalling (some people use big/small device fonts)
@@ -61,7 +59,7 @@ Future<void> main() async {
             );
           },
           initialRoute:
-              AppPages.INITIAL, // first screen to show when app is running
+              AppPages.iNITIAL, // first screen to show when app is running
           getPages: AppPages.routes, // app screens
           locale: MySharedPref.getCurrentLocal(), // app language
           translations: LocalizationService

@@ -1,4 +1,4 @@
-import 'package:get/get.dart';
+import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:laser/app/modules/onboarding/binding/onboarding_binding.dart';
 import 'package:laser/app/modules/onboarding/view/onboarding_screens.dart';
 import 'package:laser/app/modules/splash/biniding/splash_screen_binding.dart';
@@ -12,7 +12,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.Splash;
+  static const iNITIAL = Routes.Splash;
 
   static final routes = [
     GetPage(
@@ -22,11 +22,11 @@ class AppPages {
     ),
     GetPage(
         name: Routes.Splash,
-        page: () => SplashScreen(),
+        page: () => const SplashScreen(),
         binding: SplashScreenBinding()),
     GetPage(
         name: Routes.Onboarding,
-        page: () => OnboardingScreens(),
+        page: () => const OnboardingScreens(),
         binding: OnboardingBinding()),
   ];
 }

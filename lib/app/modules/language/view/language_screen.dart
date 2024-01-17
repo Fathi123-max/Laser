@@ -49,7 +49,7 @@ class LanguagePage extends GetView<LanguageController> {
               )
             ],
           ),
-          const Gap(205),
+          const Gap(200),
           NextButtonWidget(
             onTap: () async {
               Get.offNamed(Routes.LoginPage);

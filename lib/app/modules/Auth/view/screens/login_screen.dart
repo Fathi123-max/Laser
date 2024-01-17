@@ -6,6 +6,7 @@ import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/modules/Auth/controller/login_controller.dart';
 import 'package:laser/app/modules/Auth/view/widgets/model_layout.dart';
 
+import '../widgets/auth_button.dart';
 import '../widgets/custom_text_form_field.dart';
 
 class LoginPage extends GetView<LoginController> {
@@ -55,20 +56,36 @@ class LoginPage extends GetView<LoginController> {
               isPassword: true,
             ),
             const Gap(20),
-            SizedBox(
-              height: 42.h,
-              width: 270.w,
-              child: ElevatedButton(
-                onPressed: () {},
-                child: SizedBox(
-                  height: 20.h,
-                  width: 46.w,
-                  child: const Text(
-                    "Sign Up",
-                    style: TextStyle(color: Colors.white),
+            AuthButton(
+              data: "Sign up",
+              onPressed: () {},
+            ),
+            const Gap(13),
+            Row(
+              children: [
+                const Gap(65),
+                Text(
+                  'Already has an account?  ',
+                  style: TextStyle(
+                    color: const Color(0xFF1B1926),
+                    fontSize: 10.sp,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
-              ),
+                GestureDetector(
+                  onTap: () {},
+                  child: Text(
+                    'Sign in',
+                    style: TextStyle(
+                      color: const Color(0xFF1B1926),
+                      fontSize: 12.sp,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
             )
           ],
         ),

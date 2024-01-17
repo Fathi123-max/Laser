@@ -14,12 +14,19 @@ class MyStyles {
     fontFamily: 'Inter',
     fontWeight: FontWeight.w500,
   );
-  TextStyle onBordingBUttonStyle = const TextStyle(
+  TextStyle onBordingButtonStyle = TextStyle(
     color: Colors.white,
-    fontSize: 12,
+    fontSize: 12.sp,
     fontFamily: 'Inter',
     fontWeight: FontWeight.w700,
     height: 0,
+  );
+  TextStyle languageButtonStyle = TextStyle(
+    fontFamily: 'Inter',
+    color: const Color.fromRGBO(0, 0, 0, 1),
+    fontSize: 32.sp,
+    letterSpacing: 0,
+    fontWeight: FontWeight.bold,
   );
 
   /// custom employee list item theme

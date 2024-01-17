@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../data/local/my_shared_pref.dart';
 import 'dark_theme_colors.dart';
@@ -10,6 +11,7 @@ class MyTheme {
   static getThemeData({required bool isLight}) {
     return ThemeData(
         // main color (app bar,tabs..etc)
+
         primaryColor: isLight
             ? LightThemeColors.primaryColor
             : DarkThemeColors.primaryColor,
@@ -66,7 +68,8 @@ class MyTheme {
             MyStyles.getElevatedButtonTheme(isLightTheme: isLight),
 
         // text theme
-        textTheme: MyStyles.getTextTheme(isLightTheme: isLight),
+        textTheme: GoogleFonts.interTextTheme(
+            MyStyles.getTextTheme(isLightTheme: isLight)),
 
         // chip theme
         chipTheme: MyStyles.getChipTheme(isLightTheme: isLight),

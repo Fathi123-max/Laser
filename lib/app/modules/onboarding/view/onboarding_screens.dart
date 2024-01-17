@@ -11,6 +11,7 @@ class OnboardingScreens extends GetWidget<OnboardingController> {
   Widget build(BuildContext context) {
     return IntroSlider(
       key: controller.introSliderKey,
+      isScrollable: false,
       isShowDoneBtn: false,
       isShowPrevBtn: false,
       isShowSkipBtn: false,

@@ -8,6 +8,8 @@ import 'package:laser/app/components/custom_image_widget.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/routes/app_pages.dart';
 
+import '../../../components/next_button_widget.dart';
+
 class OnboardingController extends GetxController {
   final GlobalKey<IntroSliderState> introSliderKey =
       GlobalKey<IntroSliderState>();
@@ -33,7 +35,7 @@ class OnboardingController extends GetxController {
                   onTap: () {
                     introSliderKey.currentState?.tabController.index = 1;
                   },
-                  child: Text('Next', style: MyStyles().onBordingBUttonStyle))
+                  child: Text('Next', style: MyStyles().onBordingButtonStyle))
             ],
           ),
           heightImage: Get.height,
@@ -73,7 +75,7 @@ and Top-quality spare parts''',
                   onTap: () {
                     introSliderKey.currentState?.tabController.index = 2;
                   },
-                  child: Text('Next', style: MyStyles().onBordingBUttonStyle))
+                  child: Text('Next', style: MyStyles().onBordingButtonStyle))
             ],
           ),
           heightImage: Get.height,
@@ -111,7 +113,7 @@ comfortable prices''',
                   onTap: () {
                     introSliderKey.currentState?.tabController.index = 3;
                   },
-                  child: Text('Next', style: MyStyles().onBordingBUttonStyle))
+                  child: Text('Next', style: MyStyles().onBordingButtonStyle))
             ],
           ),
           heightImage: Get.height,
@@ -145,11 +147,12 @@ right at your doorstep''',
                         .copyWith(fontSize: 15.sp)),
               ),
               const Gap(150),
-              GestureDetector(
-                  onTap: () async {
-                    Get.offNamed(Routes.HOME);
-                  },
-                  child: Text('Next', style: MyStyles().onBordingBUttonStyle))
+              NextButtonWidget(
+                onTap: () async {
+                  Get.offNamed(Routes.Language);
+                },
+                style: MyStyles().onBordingButtonStyle,
+              )
             ],
           ),
           heightImage: Get.height,

@@ -36,7 +36,7 @@ class AppPages {
         binding: OnboardingBinding()),
     GetPage(
         name: Routes.Language,
-        page: () => LanguagePage(),
+        page: () => const LanguagePage(),
         binding: LanguageBinding()),
     GetPage(
       name: Routes.AuthModelPage,

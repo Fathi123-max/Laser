@@ -8,6 +8,13 @@ import 'my_fonts.dart';
 import 'theme_extensions/employee_list_item_theme_data.dart';
 
 class MyStyles {
+  TextStyle authBigTextStyle = TextStyle(
+      color: const Color.fromRGBO(0, 0, 0, 1),
+      fontFamily: 'Inter',
+      fontSize: 20.sp,
+      letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
+      fontWeight: FontWeight.bold,
+      height: 1);
   TextStyle onBordingTextStyle = TextStyle(
     color: const Color(0xFF908DA9),
     fontSize: 12.sp,
@@ -207,7 +214,7 @@ class MyStyles {
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(6.r),
+              borderRadius: BorderRadius.circular(30.r),
               //side: BorderSide(color: Colors.teal, width: 2.0),
             ),
           ),

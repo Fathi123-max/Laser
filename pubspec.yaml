@@ -75,10 +75,10 @@ flutter_launcher_icons:
     image_path: "path/to/image.png"
   flutter_test:
     sdk: flutter
-flutter_icons:
-  android: true
-  ios: true
-  image_path: "assets/images/logo.png"
+# flutter_icons:
+#   android: true
+#   ios: true
+#   image_path: "assets/images/logo.png"
 
 flutter:
   uses-material-design: true

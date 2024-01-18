@@ -45,15 +45,18 @@ class RegisterPage extends GetView<RegisterController> {
               ),
               const Gap(39),
               const CustomTextFormField(
+                key: Key("usernameRigster"),
                 hint: "username",
               ),
               const Gap(20),
               const CustomTextFormField(
                 hint: "mobile number",
+                key: Key("mobileNumber"),
               ),
               const Gap(20),
               const CustomTextFormField(
                 hint: "password",
+                key: Key("passwordRigster"),
                 isPassword: true,
               ),
               const Gap(20),

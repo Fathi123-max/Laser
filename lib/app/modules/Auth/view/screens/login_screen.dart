@@ -45,10 +45,12 @@ class LoginPage extends GetView<LoginController> {
             ),
             const Gap(39),
             const CustomTextFormField(
+              key: Key("username"),
               hint: "username",
             ),
             const Gap(20),
             const CustomTextFormField(
+              key: Key("password"),
               hint: "password",
               isPassword: true,
               isLogin: true,

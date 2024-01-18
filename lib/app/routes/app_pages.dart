@@ -2,10 +2,12 @@ import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:laser/app/modules/Auth/binding/auth_binding.dart';
 import 'package:laser/app/modules/Auth/binding/forget_password_binding.dart';
 import 'package:laser/app/modules/Auth/binding/login_binding.dart';
+import 'package:laser/app/modules/Auth/binding/new_password_binding.dart';
 import 'package:laser/app/modules/Auth/binding/otp_binding.dart';
 import 'package:laser/app/modules/Auth/binding/register_binding.dart';
 import 'package:laser/app/modules/Auth/view/screens/forgot_password_screen.dart';
 import 'package:laser/app/modules/Auth/view/screens/login_screen.dart';
+import 'package:laser/app/modules/Auth/view/screens/new_password_screen.dart';
 import 'package:laser/app/modules/Auth/view/screens/otp_screen.dart';
 import 'package:laser/app/modules/Auth/view/screens/register_screen.dart';
 import 'package:laser/app/modules/Auth/view/widgets/model_layout.dart';
@@ -67,5 +69,9 @@ class AppPages {
         name: Routes.OtpPage,
         page: () => const OtpPage(),
         binding: OtpBinding()),
+    GetPage(
+        name: Routes.NewPassword,
+        page: () => const NewPassword(),
+        binding: NewPasswordBinding()),
   ];
 }

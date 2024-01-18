@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -44,7 +45,55 @@ received on your phone number''',
               ],
             ),
             const Gap(39),
-            const Gap(59),
+            OtpTextField(
+              numberOfFields: 4,
+              fieldWidth: 54.w,
+              styles: [
+                TextStyle(fontSize: 20.sp),
+                TextStyle(fontSize: 20.sp),
+                TextStyle(fontSize: 20.sp),
+                TextStyle(fontSize: 20.sp),
+              ],
+              cursorColor: Colors.black,
+              borderColor: Colors.black,
+              disabledBorderColor: Colors.black,
+              enabledBorderColor: Colors.black,
+              focusedBorderColor: Colors.black,
+              fillColor: Colors.black,
+              filled: true,
+
+              obscureText: false,
+              borderWidth: 0.2,
+
+              decoration: const InputDecoration(
+                  border: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Colors.black,
+                          style: BorderStyle.solid,
+                          width: 2,
+                          strokeAlign: 0))),
+              autoFocus: true, keyboardType: TextInputType.number,
+
+              hasCustomInputDecoration: true,
+              //set to true to show as box or false to show as dash
+              showFieldAsBox: true,
+              //runs when a code is typed in
+              onCodeChanged: (String code) {
+                //handle validation or checks here
+              },
+              //runs when every textfield is filled
+              onSubmit: (String verificationCode) {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text("Verification Code"),
+                        content: Text('Code entered is $verificationCode'),
+                      );
+                    });
+              }, // end onSubmit
+            ),
+            const Gap(57),
             AuthButton(
               data: "Send",
               onPressed: () {},
@@ -64,7 +113,7 @@ received on your phone number''',
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.toNamed(Routes.LoginPage);
+                    Get.toNamed(Routes.NewPassword);
                   },
                   child: Text(
                     'Resend',

@@ -52,7 +52,7 @@ class LanguagePage extends GetView<LanguageController> {
           const Gap(200),
           NextButtonWidget(
             onTap: () async {
-              Get.offNamed(Routes.LoginPage);
+              Get.offNamed(Routes.RegisterPage);
             },
             style:
                 MyStyles().onBordingButtonStyle.copyWith(color: Colors.black),

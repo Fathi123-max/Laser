@@ -16,7 +16,7 @@ class AuthButton extends StatelessWidget {
       height: 42.h,
       width: 270.w,
       child: ElevatedButton(
-        onPressed: onPressed,
+        onPressed: onPressed ?? () {},
         child: SizedBox(
           height: 20.h,
           width: 50.w,

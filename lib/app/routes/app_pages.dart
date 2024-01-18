@@ -1,7 +1,13 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:laser/app/modules/Auth/binding/auth_binding.dart';
+import 'package:laser/app/modules/Auth/binding/forget_password_binding.dart';
 import 'package:laser/app/modules/Auth/binding/login_binding.dart';
+import 'package:laser/app/modules/Auth/binding/otp_binding.dart';
+import 'package:laser/app/modules/Auth/binding/register_binding.dart';
+import 'package:laser/app/modules/Auth/view/screens/forgot_password_screen.dart';
 import 'package:laser/app/modules/Auth/view/screens/login_screen.dart';
+import 'package:laser/app/modules/Auth/view/screens/otp_screen.dart';
+import 'package:laser/app/modules/Auth/view/screens/register_screen.dart';
 import 'package:laser/app/modules/Auth/view/widgets/model_layout.dart';
 import 'package:laser/app/modules/language/binding/language_binding.dart';
 import 'package:laser/app/modules/language/view/language_screen.dart';
@@ -47,8 +53,19 @@ class AppPages {
     ),
     GetPage(
         name: Routes.LoginPage,
-        page: () => LoginPage(),
+        page: () => const LoginPage(),
         binding: LoginBinding()),
-    // GetPage(name: Routes.RegisterPage, page:()=> Registerpage(), binding:MyBinding() ),
+    GetPage(
+        name: Routes.RegisterPage,
+        page: () => const RegisterPage(),
+        binding: RegisterBinding()),
+    GetPage(
+        name: Routes.ForgotPasswordlPage,
+        page: () => const ForgotPage(),
+        binding: ForgotBinding()),
+    GetPage(
+        name: Routes.OtpPage,
+        page: () => const OtpPage(),
+        binding: OtpBinding()),
   ];
 }

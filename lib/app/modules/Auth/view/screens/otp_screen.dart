@@ -3,21 +3,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
-import 'package:laser/app/modules/Auth/controller/forget_password_controller.dart';
+import 'package:laser/app/modules/Auth/controller/otp_controller.dart';
 import 'package:laser/app/modules/Auth/view/widgets/model_layout.dart';
 import 'package:laser/app/routes/app_pages.dart';
 
 import '../widgets/auth_button.dart';
-import '../widgets/custom_text_form_field.dart';
 
-class ForgotPage extends GetView<ForgotController> {
-  const ForgotPage({super.key});
+class OtpPage extends GetView<OtpController> {
+  const OtpPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return AuthModelPage(
       authContant: Form(
-        key: controller.forgotFormKey,
+        key: controller.otpFormKey,
         child: Column(
           children: [
             Row(
@@ -35,8 +34,8 @@ class ForgotPage extends GetView<ForgotController> {
               children: [
                 const Gap(53),
                 Text(
-                  '''Please Enter your phone number
-to get verification code''',
+                  '''Please Enter the 4 digits number you have
+received on your phone number''',
                   textAlign: TextAlign.start,
                   style: MyStyles()
                       .authBigTextStyle
@@ -45,23 +44,17 @@ to get verification code''',
               ],
             ),
             const Gap(39),
-            const CustomTextFormField(
-              key: Key("mobile"),
-              hint: "Mobile Number",
-            ),
             const Gap(59),
             AuthButton(
               data: "Send",
-              onPressed: () {
-                Get.offNamed(Routes.OtpPage);
-              },
+              onPressed: () {},
             ),
             const Gap(13),
             Row(
               children: [
                 const Gap(65),
                 Text(
-                  'Don’t have an account?  ',
+                  'Didn’t get a code?  ',
                   style: TextStyle(
                     color: const Color(0xFF1B1926),
                     fontSize: 10.sp,
@@ -74,7 +67,7 @@ to get verification code''',
                     Get.toNamed(Routes.LoginPage);
                   },
                   child: Text(
-                    'Sign in',
+                    'Resend',
                     style: TextStyle(
                       color: const Color(0xFF1B1926),
                       fontSize: 12.sp,

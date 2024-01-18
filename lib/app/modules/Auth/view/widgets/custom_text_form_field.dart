@@ -2,19 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:laser/app/modules/Auth/controller/login_controller.dart';
+import 'package:laser/app/modules/Auth/controller/register_controller.dart';
+import 'package:laser/app/routes/app_pages.dart';
 
-class CustomTextFormField extends GetWidget<LoginController> {
+class CustomTextFormField extends GetWidget<RegisterController> {
   const CustomTextFormField({
     Key? key,
     this.textEditingController,
     this.hint,
     this.isPassword = false,
+    this.isLogin,
   }) : super(key: key);
 
   final TextEditingController? textEditingController;
   final String? hint;
   final bool isPassword;
+  final bool? isLogin;
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +29,7 @@ class CustomTextFormField extends GetWidget<LoginController> {
           height: 42.h,
           child: TextFormField(
             controller: textEditingController,
-            obscureText:
-                isPassword ? !controller.isPasswordVisible.value : false,
+            obscureText: isPassword ? true : false,
             decoration: InputDecoration(
               hintText: hint,
               fillColor: Colors.white,
@@ -51,12 +53,41 @@ class CustomTextFormField extends GetWidget<LoginController> {
                       onTap: () {
                         controller.togglePasswordVisibility();
                       },
-                      child: Icon(
-                        color: Colors.black,
-                        controller.isPasswordVisible.value
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                      ),
+                      child: false
+                          ? Icon(
+                              color: Colors.black,
+                              controller.isPasswordVisible.value
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            )
+                          : GestureDetector(
+                              onTap: () {
+                                Get.toNamed(Routes.ForgotPasswordlPage);
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: 60.w,
+                                    height: 20.h,
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          'Forgot?',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: const Color(0xFF1B1926),
+                                            fontSize: 12.sp,
+                                            fontFamily: 'Inter',
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                     )
                   : null,
             ),

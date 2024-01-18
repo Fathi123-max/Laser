@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/modules/Auth/controller/login_controller.dart';
 import 'package:laser/app/modules/Auth/view/widgets/model_layout.dart';
+import 'package:laser/app/routes/app_pages.dart';
 
 import '../widgets/auth_button.dart';
 import '../widgets/custom_text_form_field.dart';
@@ -23,7 +24,7 @@ class LoginPage extends GetView<LoginController> {
               children: [
                 const Gap(53),
                 Text(
-                  'Register',
+                  'Login',
                   textAlign: TextAlign.center,
                   style: MyStyles().authBigTextStyle,
                 ),
@@ -34,7 +35,7 @@ class LoginPage extends GetView<LoginController> {
               children: [
                 const Gap(53),
                 Text(
-                  'Please register to log in.',
+                  'Please login to log in.',
                   textAlign: TextAlign.center,
                   style: MyStyles()
                       .authBigTextStyle
@@ -48,16 +49,13 @@ class LoginPage extends GetView<LoginController> {
             ),
             const Gap(20),
             const CustomTextFormField(
-              hint: "mobile number",
-            ),
-            const Gap(20),
-            const CustomTextFormField(
               hint: "password",
               isPassword: true,
+              isLogin: true,
             ),
             const Gap(20),
             AuthButton(
-              data: "Sign up",
+              data: "Login",
               onPressed: () {},
             ),
             const Gap(13),
@@ -65,7 +63,7 @@ class LoginPage extends GetView<LoginController> {
               children: [
                 const Gap(65),
                 Text(
-                  'Already has an account?  ',
+                  'Don’t have an account?  ',
                   style: TextStyle(
                     color: const Color(0xFF1B1926),
                     fontSize: 10.sp,
@@ -74,9 +72,11 @@ class LoginPage extends GetView<LoginController> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(Routes.RegisterPage);
+                  },
                   child: Text(
-                    'Sign in',
+                    'Sign up',
                     style: TextStyle(
                       color: const Color(0xFF1B1926),
                       fontSize: 12.sp,

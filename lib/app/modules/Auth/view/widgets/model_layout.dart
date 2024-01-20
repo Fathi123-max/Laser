@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -24,7 +25,13 @@ class AuthModelPage extends GetView {
                     fileName: "logo_black.png",
                     width: 56.h,
                     height: 47.w,
-                  ),
+                  )
+                      .animate(
+                        onPlay: (controller) => controller.repeat(),
+                      )
+                      .shimmer(
+                          duration: const Duration(seconds: 3),
+                          curve: Curves.easeInQuart),
                 ],
               ),
               const Gap(105),

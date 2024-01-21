@@ -19,14 +19,14 @@ import 'package:laser/app/modules/splash/biniding/splash_screen_binding.dart';
 import 'package:laser/app/modules/splash/views/splash_Screen.dart';
 
 import '../modules/home/bindings/home_binding.dart';
-import '../modules/home/views/home_view.dart';
+import '../modules/home/views/screens/home_screen.dart';
 
 part 'app_routes.dart';
 
 class AppPages {
   AppPages._();
 
-  static const iNITIAL = Routes.Splash;
+  static const iNITIAL = Routes.HOME;
 
   static final routes = [
     GetPage(

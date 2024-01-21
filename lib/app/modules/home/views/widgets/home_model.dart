@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:laser/app/modules/home/views/widgets/page_banner.dart';
 
 import 'custom_appbar_icon.dart';
 
-class HomeModel extends GetView {
-  const HomeModel({required this.child, super.key});
+class HomeViewModel extends GetView {
+  const HomeViewModel({required this.child, super.key});
   final Widget child;
   @override
   Widget build(BuildContext context) {
@@ -43,6 +44,11 @@ class HomeModel extends GetView {
                 ),
                 const Gap(19)
               ]),
+              const Gap(30),
+              const PageBanner(
+                  pageIndex: 1,
+                  pageTitle: "Device Type",
+                  pageSubTitle: "Select your device type"),
               child,
               Row(
                 children: [

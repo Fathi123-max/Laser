@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/constants.dart';
@@ -5,6 +6,8 @@ import '../../../services/api_call_status.dart';
 import '../../../services/base_client.dart';
 
 class HomeController extends GetxController {
+  //page view controller
+  PageController pageController = PageController();
   // hold data coming from api
   List<dynamic>? data;
   // api call status

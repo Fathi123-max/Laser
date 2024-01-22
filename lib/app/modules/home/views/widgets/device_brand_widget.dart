@@ -11,7 +11,7 @@ class DeviceBrandWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
         height: 150.h,
-        width: 122 + 110 + 110,
+        width: 122 + 110 + 110.w,
         child: GridView.builder(
             itemCount: 4,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

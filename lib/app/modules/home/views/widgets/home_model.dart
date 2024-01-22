@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/page_banner.dart';
 
 import 'custom_appbar_icon.dart';
+import 'navgation_text_buttons.dart';
 
-class HomeViewModel extends GetView {
+class HomeViewModel extends GetView<HomeController> {
   const HomeViewModel({required this.child, super.key});
   final Widget child;
   @override
@@ -55,12 +57,20 @@ class HomeViewModel extends GetView {
                   const Gap(50),
                   NavgationTextButtons(
                     text: "Back",
-                    onTap: () => Get.back(),
+                    onTap: () {
+                      controller.pageController.previousPage(
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeInOut);
+                    },
                   ),
                   const Spacer(),
                   NavgationTextButtons(
                     text: "Next",
-                    onTap: () {},
+                    onTap: () {
+                      controller.pageController.nextPage(
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeInOut);
+                    },
                   ),
                   const Gap(51)
                 ],
@@ -69,36 +79,6 @@ class HomeViewModel extends GetView {
           ),
         ),
       ),
-    );
-  }
-}
-
-class NavgationTextButtons extends StatelessWidget {
-  const NavgationTextButtons({
-    super.key,
-    this.onTap,
-    required this.text,
-  });
-  final Function()? onTap;
-  final String text;
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: SizedBox(
-          width: 29.w,
-          height: 20.h,
-          child: Text(
-            text,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: const Color(0xFF1B1D28),
-              fontSize: 12.sp,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w700,
-              // height: 0.14,
-            ),
-          )),
     );
   }
 }

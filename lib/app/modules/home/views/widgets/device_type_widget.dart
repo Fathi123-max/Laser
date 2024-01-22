@@ -22,25 +22,27 @@ class DeviceTypeWidget extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        width: height ?? 132.w,
-        height: width ?? 137.h,
+        width: width ?? 132.w,
+        height: height ?? 137.h,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AssetImageView(
                 fileName: fileName ?? "logo.png", height: 65.h, width: 85.w),
-            const Gap(16),
-            Text(
-              text ?? "Laser",
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Color(0xFF1B1926),
-                fontSize: 12,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w400,
-                height: 0.14,
-              ),
-            )
+            text == null ? Container() : const Gap(16),
+            text == null
+                ? Container()
+                : Text(
+                    text ?? " ",
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Color(0xFF1B1926),
+                      fontSize: 12,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w400,
+                      height: 0.14,
+                    ),
+                  )
           ],
         ),
         decoration: ShapeDecoration(

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // TODO add your light theme colors palette
 class LightThemeColors {
   // PRIMARY
-  static const Color primaryColor = Color(0xFF1B1D28);
+  static const Color primaryColor = Color(0xFFD9EDE1);
 
   // SECONDARY COLOR
   static const Color accentColor = Color(0xFFD9EDE1);
@@ -14,7 +14,7 @@ class LightThemeColors {
   //SCAFFOLD
   static const Color scaffoldBackgroundColor = Color(0xFFF1F0F5);
   static const Color backgroundColor = Colors.white;
-  static const Color dividerColor = Color(0xff686868);
+  static const Color dividerColor = Colors.white;
   static const Color cardColor = Color(0xfffafafa);
 
   //ICONS
@@ -43,7 +43,7 @@ class LightThemeColors {
   // list tile
   static const Color listTileTitleColor = Color(0xFF575757);
   static const Color listTileSubtitleColor = Color(0xFF575757);
-  static const Color listTileBackgroundColor = Color(0xFFF8F8F8);
+  static const Color listTileBackgroundColor = Color(0xFFFFFFFF);
   static const Color listTileIconColor = Color(0xFF575757);
 
   //------------------- custom theme (extensions) ------------------- //

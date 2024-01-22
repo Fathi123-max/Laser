@@ -3,10 +3,10 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:laser/app/components/custom_text_form_field.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/modules/Auth/controller/register_controller.dart';
 import 'package:laser/app/modules/Auth/view/widgets/auth_button.dart';
-import 'package:laser/app/modules/Auth/view/widgets/custom_text_form_field.dart';
 import 'package:laser/app/modules/Auth/view/widgets/model_layout.dart';
 import 'package:laser/app/routes/app_pages.dart';
 

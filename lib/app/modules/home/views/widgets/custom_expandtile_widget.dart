@@ -113,7 +113,7 @@ class CustomExpandtileWidget extends StatelessWidget {
             ],
           ),
         ),
-        controller: ExpandedTileController(isExpanded: true));
+        controller: ExpandedTileController(isExpanded: false));
   }
 }
 

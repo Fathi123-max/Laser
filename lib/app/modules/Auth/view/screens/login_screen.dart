@@ -7,8 +7,8 @@ import 'package:laser/app/modules/Auth/controller/login_controller.dart';
 import 'package:laser/app/modules/Auth/view/widgets/model_layout.dart';
 import 'package:laser/app/routes/app_pages.dart';
 
+import '../../../../components/custom_text_form_field.dart';
 import '../widgets/auth_button.dart';
-import '../widgets/custom_text_form_field.dart';
 
 class LoginPage extends GetView<LoginController> {
   const LoginPage({super.key});

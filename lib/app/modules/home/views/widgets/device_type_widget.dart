@@ -11,17 +11,22 @@ class DeviceTypeWidget extends StatelessWidget {
     this.fileName,
     this.text,
     this.onTap,
+    this.enableMargin,
   }) : super(key: key);
   final double? height;
   final double? width;
   final String? fileName;
   final String? text;
   final Function()? onTap;
+  final bool? enableMargin;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
       child: Container(
+        margin: enableMargin != null
+            ? EdgeInsets.only(right: 7.w, top: 7.h)
+            : EdgeInsets.zero,
         width: width ?? 132.w,
         height: height ?? 137.h,
         child: Column(

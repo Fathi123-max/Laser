@@ -2,8 +2,10 @@ import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/modules/Auth/view/widgets/auth_button.dart';
+import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/big_text_filed.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
 
@@ -163,6 +165,17 @@ class VisitDetailsPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 AuthButton(
+                  onPressed: () {
+                    Get.find<HomeController>()
+                        .pageController
+                        .value
+                        .nextPage(
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.easeInOut)
+                        .then((value) => Get.find<HomeController>()
+                            .visibilityOfBanner
+                            .value = false);
+                  },
                   data: "Place Order",
                   height: 37.h,
                   width: 131.w,

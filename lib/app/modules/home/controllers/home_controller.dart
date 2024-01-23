@@ -7,7 +7,9 @@ import '../../../services/base_client.dart';
 
 class HomeController extends GetxController {
   //page view controller
-  PageController pageController = PageController();
+  Rx<PageController> pageController = Rx(PageController());
+  RxBool visibilityOfBanner = true.obs;
+
   // hold data coming from api
   List<dynamic>? data;
   // api call status

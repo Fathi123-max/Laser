@@ -49,10 +49,13 @@ class HomeViewModel extends GetView<HomeController> {
                 const Gap(19)
               ]),
               const Gap(30),
-              const PageBanner(
-                  pageIndex: 1,
-                  pageTitle: "Device Type",
-                  pageSubTitle: "Select your device type"),
+              Obx(() => Visibility(
+                    visible: controller.visibilityOfBanner.value,
+                    child: const PageBanner(
+                        pageIndex: 1,
+                        pageTitle: "Device Type",
+                        pageSubTitle: "Select your device type"),
+                  )),
               child,
               Row(
                 children: [
@@ -60,7 +63,7 @@ class HomeViewModel extends GetView<HomeController> {
                   NavgationTextButtons(
                     text: "Back",
                     onTap: () {
-                      controller.pageController.previousPage(
+                      controller.pageController.value.previousPage(
                           duration: const Duration(milliseconds: 500),
                           curve: Curves.easeInOut);
                     },
@@ -69,7 +72,7 @@ class HomeViewModel extends GetView<HomeController> {
                   NavgationTextButtons(
                     text: "Next",
                     onTap: () {
-                      controller.pageController.nextPage(
+                      controller.pageController.value.nextPage(
                           duration: const Duration(milliseconds: 500),
                           curve: Curves.easeInOut);
                     },

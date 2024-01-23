@@ -19,12 +19,20 @@ class HomeView extends GetView<HomeController> {
         height: 410.h,
         child: PageView(
           physics: const NeverScrollableScrollPhysics(),
-          controller: controller.pageController,
-          children: const [
-            DeviceTypePage(),
-            DeviceBrandPage(),
-            ServicePage(),
-            VisitDetailsPage()
+          controller: controller.pageController.value,
+          children: [
+            const DeviceTypePage(),
+            const DeviceBrandPage(),
+            const ServicePage(),
+            const VisitDetailsPage(),
+            SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(27.w),
+                child: const Column(
+                  children: [],
+                ),
+              ),
+            )
           ],
         ),
       ),

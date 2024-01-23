@@ -41,10 +41,10 @@ class DarkThemeColors {
   static const Color progressIndicatorColor = Color(0xFF40A76A);
 
   // list tile
-  static const Color listTileTitleColor = Colors.white;
-  static const Color listTileSubtitleColor = Colors.white;
-  static const Color listTileBackgroundColor = Color(0xFF414141);
-  static const Color listTileIconColor = Colors.white;
+  static const Color listTileTitleColor = Color(0xFF1B1926);
+  static const Color listTileSubtitleColor = Color(0xFF1B1926);
+  static const Color listTileBackgroundColor = Color(0xFF1B1926);
+  static const Color listTileIconColor = Color(0xFF1B1926);
 
   //------------------- custom theme (extensions) ------------------- //
   // header containers

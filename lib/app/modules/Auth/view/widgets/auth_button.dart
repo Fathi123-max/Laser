@@ -7,22 +7,30 @@ class AuthButton extends StatelessWidget {
     super.key,
     this.onPressed,
     this.data,
+    this.width,
+    this.height,
   });
   final Function()? onPressed;
   final String? data;
+  final double? width;
+  final double? height;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 42.h,
-      width: 270.w,
+      height: height ?? 42.h,
+      width: width ?? 270.w,
       child: ElevatedButton(
         onPressed: onPressed ?? () {},
         child: SizedBox(
           height: 20.h,
-          width: 50.w,
-          child: AutoSizeText(
-            data ?? "Sign in",
-            style: const TextStyle(color: Colors.white),
+          width: width != null ? 70.w : 50.w,
+          child: Center(
+            child: AutoSizeText(
+              data ?? "Sign in",
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
           ),
         ),
       ),

@@ -5,6 +5,8 @@ import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_add_media_widget.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_expandtile_widget.dart';
 
+import '../widgets/big_text_filed.dart';
+
 class ServicePage extends StatelessWidget {
   const ServicePage({
     super.key,
@@ -66,24 +68,7 @@ class ServicePage extends StatelessWidget {
             ],
           ),
           const Gap(14),
-          Container(
-            width: 267.w,
-            height: 97.h,
-            decoration: ShapeDecoration(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.r),
-              ),
-              shadows: const [
-                BoxShadow(
-                  color: Color(0x02000000),
-                  blurRadius: 4,
-                  offset: Offset(0, 4),
-                  spreadRadius: 1,
-                )
-              ],
-            ),
-          ),
+          const BigTextFiled(),
           const Gap(41)
         ],
       ),

@@ -13,6 +13,8 @@ class HomeController extends GetxController {
   // api call status
   ApiCallStatus apiCallStatus = ApiCallStatus.holding;
 
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   // getting data from api
   getData() async {
     // *) perform api call

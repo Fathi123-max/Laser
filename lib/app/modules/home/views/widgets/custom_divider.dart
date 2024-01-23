@@ -4,14 +4,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CustomDivider extends StatelessWidget {
   const CustomDivider({
     super.key,
+    this.fullWidth,
+    this.color,
   });
-
+  final bool? fullWidth;
+  final Color? color;
   @override
   Widget build(BuildContext context) {
     return Divider(
-      color: Colors.grey.shade300,
-      endIndent: 37.w,
-      indent: 37.w,
+      color: color ?? Colors.grey.shade300,
+      endIndent: fullWidth != null ? 0 : 37.w,
+      indent: fullWidth != null ? 0 : 37.w,
     );
   }
 }

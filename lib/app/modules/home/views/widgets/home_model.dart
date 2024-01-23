@@ -6,18 +6,19 @@ import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/page_banner.dart';
 
 import 'custom_appbar_icon.dart';
+import 'custom_drawer.dart';
 import 'navgation_text_buttons.dart';
 
 class HomeViewModel extends GetView<HomeController> {
   const HomeViewModel({required this.child, super.key});
   final Widget child;
+
   @override
   Widget build(BuildContext context) {
-    GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
     return SafeArea(
       child: Scaffold(
-        key: scaffoldKey,
+        drawer: const CustomDrawer(),
+        key: controller.scaffoldKey,
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -28,7 +29,8 @@ class HomeViewModel extends GetView<HomeController> {
                   fileName: "drawer.png",
                   height: 15.h,
                   width: 16.w,
-                  onTap: () => scaffoldKey.currentState?.openDrawer(),
+                  onTap: () =>
+                      controller.scaffoldKey.currentState?.openDrawer(),
                 ),
                 const Spacer(),
                 CustomAppbarIcon(

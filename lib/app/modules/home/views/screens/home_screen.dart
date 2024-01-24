@@ -7,6 +7,7 @@ import 'package:laser/app/modules/home/views/pages/service_page.dart';
 import 'package:laser/app/modules/home/views/widgets/home_model.dart';
 
 import '../../controllers/home_controller.dart';
+import '../pages/order_page.dart';
 import '../pages/visit_details_page.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -20,19 +21,12 @@ class HomeView extends GetView<HomeController> {
         child: PageView(
           physics: const NeverScrollableScrollPhysics(),
           controller: controller.pageController.value,
-          children: [
-            const DeviceTypePage(),
-            const DeviceBrandPage(),
-            const ServicePage(),
-            const VisitDetailsPage(),
-            SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.all(27.w),
-                child: const Column(
-                  children: [],
-                ),
-              ),
-            )
+          children: const [
+            DeviceTypePage(),
+            DeviceBrandPage(),
+            ServicePage(),
+            VisitDetailsPage(),
+            OrderPage()
           ],
         ),
       ),

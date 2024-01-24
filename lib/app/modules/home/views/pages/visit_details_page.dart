@@ -8,6 +8,7 @@ import 'package:laser/app/modules/Auth/view/widgets/auth_button.dart';
 import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/big_text_filed.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
+import 'package:laser/app/modules/home/views/widgets/page_banner.dart';
 
 class VisitDetailsPage extends StatelessWidget {
   const VisitDetailsPage({
@@ -18,41 +19,61 @@ class VisitDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 38.w),
+        padding: EdgeInsets.symmetric(horizontal: 25.w),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const Gap(30),
+            const PageBanner(
+                pageIndex: 1,
+                pageTitle: "Device Type",
+                pageSubTitle: "Select your device type"),
             const Gap(26),
-            Text('Delivery location',
-                textAlign: TextAlign.center,
-                style: MyStyles().authBigTextStyle.copyWith(
-                      color: const Color(0xFF1B1926),
-                      fontSize: 12.sp,
-                    )),
+            Row(
+              children: [
+                Gap(13.w),
+                Text('Delivery location',
+                    textAlign: TextAlign.center,
+                    style: MyStyles().authBigTextStyle.copyWith(
+                          color: const Color(0xFF1B1926),
+                          fontSize: 12.sp,
+                        )),
+              ],
+            ),
             const Gap(12),
             BigTextFiled(
-              width: 311.w,
+              width: 300.w,
             ),
             const Gap(14),
-            Text('Technician arrival date',
-                textAlign: TextAlign.center,
-                style: MyStyles().authBigTextStyle.copyWith(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w700,
-                      color: const Color(0xFF1B1926),
-                    )),
-            Opacity(
-              opacity: 0.30,
-              child: Text(
-                'January, 2024',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: const Color(0xFF1B1926),
-                  fontSize: 12.sp,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w400,
+            Row(
+              children: [
+                Gap(13.w),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Technician arrival date',
+                        textAlign: TextAlign.center,
+                        style: MyStyles().authBigTextStyle.copyWith(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w700,
+                              color: const Color(0xFF1B1926),
+                            )),
+                    Opacity(
+                      opacity: 0.30,
+                      child: Text(
+                        'January, 2024',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          color: const Color(0xFF1B1926),
+                          fontSize: 12.sp,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
+              ],
             ),
             const Gap(16),
             EasyDateTimeLine(
@@ -83,12 +104,17 @@ class VisitDetailsPage extends StatelessWidget {
               locale: "en",
             ),
             const Gap(14),
-            Text('Technician arrival time',
-                textAlign: TextAlign.center,
-                style: MyStyles().languageButtonStyle.copyWith(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w700,
-                    )),
+            Row(
+              children: [
+                Gap(13.w),
+                Text('Technician arrival time',
+                    textAlign: TextAlign.center,
+                    style: MyStyles().languageButtonStyle.copyWith(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w700,
+                        )),
+              ],
+            ),
             const Gap(6),
             Container(
               width: 311.w,

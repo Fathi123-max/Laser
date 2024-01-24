@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/modules/home/controllers/home_controller.dart';
-import 'package:laser/app/modules/home/views/widgets/page_banner.dart';
 
 import 'custom_appbar_icon.dart';
 import 'custom_drawer.dart';
@@ -48,15 +47,7 @@ class HomeViewModel extends GetView<HomeController> {
                 ),
                 const Gap(19)
               ]),
-              const Gap(30),
-              Obx(() => Visibility(
-                    visible: controller.visibilityOfBanner.value,
-                    child: const PageBanner(
-                        pageIndex: 1,
-                        pageTitle: "Device Type",
-                        pageSubTitle: "Select your device type"),
-                  )),
-              child,
+              SizedBox(height: 580.h, child: child),
               Row(
                 children: [
                   const Gap(50),
@@ -75,6 +66,9 @@ class HomeViewModel extends GetView<HomeController> {
                       controller.pageController.value.nextPage(
                           duration: const Duration(milliseconds: 500),
                           curve: Curves.easeInOut);
+                      if (controller.pageController.value.page == 3) {
+                        controller.visibilityOfBanner.value = false;
+                      } else {}
                     },
                   ),
                   const Gap(51)

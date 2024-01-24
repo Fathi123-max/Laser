@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:laser/app/modules/home/views/widgets/device_type_widget.dart';
+import 'package:laser/app/modules/home/views/widgets/page_banner.dart';
 
 class DeviceTypePage extends StatelessWidget {
   const DeviceTypePage({
@@ -12,6 +13,11 @@ class DeviceTypePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const Gap(30),
+        const PageBanner(
+            pageIndex: 1,
+            pageTitle: "Device Type",
+            pageSubTitle: "Select your device type"),
         const Gap(30),
         const Row(
           children: [

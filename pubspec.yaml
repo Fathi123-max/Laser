@@ -23,7 +23,7 @@ dependencies:
 
   firebase_core: ^2.14.0 # to initialize firebase services
   firebase_messaging: ^14.6.4 # fcm services
-  awesome_notifications: ^0.7.4+1 # notifications services (will be used for fcm)
+  awesome_notifications: ^0.7.5 # notifications services (will be used for fcm)
 
   change_app_package_name: # change package name
 

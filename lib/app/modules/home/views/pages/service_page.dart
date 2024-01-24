@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_add_media_widget.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_expandtile_widget.dart';
+import 'package:laser/app/modules/home/views/widgets/page_banner.dart';
 
 import '../widgets/big_text_filed.dart';
 
@@ -17,6 +18,11 @@ class ServicePage extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
+          const Gap(30),
+          const PageBanner(
+              pageIndex: 1,
+              pageTitle: "Device Type",
+              pageSubTitle: "Select your device type"),
           const CustomExpandtileWidget(),
           const Gap(19),
           SizedBox(

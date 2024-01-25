@@ -7,6 +7,7 @@ import 'package:laser/app/modules/home/views/pages/service_page.dart';
 import 'package:laser/app/modules/home/views/widgets/home_model.dart';
 
 import '../../controllers/home_controller.dart';
+import '../pages/after_order_paid_page.dart';
 import '../pages/order_ditails_page.dart';
 import '../pages/order_page.dart';
 import '../pages/visit_details_page.dart';
@@ -28,7 +29,8 @@ class HomeView extends GetView<HomeController> {
             ServicePage(),
             VisitDetailsPage(),
             OrderPage(),
-            OrderDitailsPage()
+            OrderDitailsPage(),
+            AfterOrderPaidPage()
           ],
         ),
       ),

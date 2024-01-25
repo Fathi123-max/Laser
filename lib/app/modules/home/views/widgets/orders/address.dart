@@ -7,12 +7,13 @@ import 'package:laser/app/config/theme/my_styles.dart';
 class Address extends StatelessWidget {
   const Address({
     super.key,
+    this.customWidth,
   });
-
+  final double? customWidth;
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 300.w,
+      width: customWidth ?? 300.w,
       height: 80.h,
       child: Column(
         children: [

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:laser/app/components/custom_image_widget.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
 
 class DliveryTimeAndDate extends StatelessWidget {
@@ -32,15 +33,10 @@ class DliveryTimeAndDate extends StatelessWidget {
           Row(
             children: [
               const Gap(24),
-              Container(
-                width: 14,
-                height: 11,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage("https://via.placeholder.com/14x11"),
-                    fit: BoxFit.cover,
-                  ),
-                ),
+              AssetImageView(
+                width: 14.w,
+                height: 11.h,
+                fileName: "time.png",
               ),
               const Gap(7),
               Text('11:00 - 12:00',
@@ -54,15 +50,10 @@ class DliveryTimeAndDate extends StatelessWidget {
           Row(
             children: [
               const Gap(24),
-              Container(
-                width: 14,
-                height: 11,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage("https://via.placeholder.com/14x11"),
-                    fit: BoxFit.cover,
-                  ),
-                ),
+              AssetImageView(
+                width: 14.w,
+                height: 11.h,
+                fileName: "date.png",
               ),
               const Gap(7),
               Text('8-1-2024',

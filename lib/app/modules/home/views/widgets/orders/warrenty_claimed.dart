@@ -4,8 +4,8 @@ import 'package:gap/gap.dart';
 import 'package:laser/app/components/custom_image_widget.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
 
-class Address extends StatelessWidget {
-  const Address({
+class WarrentyClaimed extends StatelessWidget {
+  const WarrentyClaimed({
     super.key,
   });
 
@@ -16,33 +16,34 @@ class Address extends StatelessWidget {
       height: 80.h,
       child: Column(
         children: [
-          const Gap(14),
+          const Gap(22),
           Row(
             children: [
-              const Gap(24),
-              Text('Address',
+              const Gap(22),
+              Text('Warranty claimed',
                   textAlign: TextAlign.center,
                   style: MyStyles().languageButtonStyle.copyWith(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w700,
                       )),
+              const Spacer(),
+              AssetImageView(
+                height: 26.h,
+                width: 21.w,
+                fileName: "done.png",
+                // color: Colors.transparent,
+              ),
+              const Gap(17)
             ],
           ),
-          const Gap(14),
+          const Gap(6),
           Row(
             children: [
-              const Gap(24),
-              AssetImageView(
-                fileName: "location.png",
-                width: 21.w,
-                height: 17.h,
-              ),
-              const Gap(4),
+              const Gap(22),
               Text('Alrehab District, Jeddah, Saudi Arabia',
-                  style: MyStyles().languageButtonStyle.copyWith(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                      ))
+                  style: MyStyles()
+                      .languageButtonStyle
+                      .copyWith(fontSize: 12.sp, fontWeight: FontWeight.w400)),
             ],
           )
         ],

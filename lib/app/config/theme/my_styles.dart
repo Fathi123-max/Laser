@@ -41,6 +41,40 @@ class MyStyles {
     fontWeight: FontWeight.bold,
   );
 ////////////////////////////////////////////////////////////////////////////////
+
+  ///////////////////////////////////
+  ///  fontSize14 //////////
+  ///////////////////////////////////
+
+  TextStyle fontSize14Weight700 = TextStyle(
+    fontFamily: 'Inter',
+    color: const Color.fromRGBO(0, 0, 0, 1),
+    fontSize: 14.sp,
+    letterSpacing: 0,
+    fontWeight: FontWeight.w700,
+  );
+  TextStyle fontSize14Weight400 = TextStyle(
+    fontFamily: 'Inter',
+    color: const Color.fromRGBO(0, 0, 0, 1),
+    fontSize: 14.sp,
+    letterSpacing: 0,
+    fontWeight: FontWeight.w400,
+  );
+  TextStyle fontSize14Weight500 = TextStyle(
+    fontFamily: 'Inter',
+    color: const Color.fromRGBO(0, 0, 0, 1),
+    fontSize: 14.sp,
+    letterSpacing: 0,
+    fontWeight: FontWeight.w500,
+  );
+  TextStyle fontSize14WeightBold = TextStyle(
+    fontFamily: 'Inter',
+    color: const Color.fromRGBO(0, 0, 0, 1),
+    fontSize: 14.sp,
+    letterSpacing: 0,
+    fontWeight: FontWeight.bold,
+  );
+////////////////////////////////////////////////////////////////////////////////
   TextStyle authBigTextStyle = TextStyle(
       color: const Color.fromRGBO(0, 0, 0, 1),
       fontFamily: 'Inter',

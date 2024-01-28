@@ -18,12 +18,7 @@ class OrderPrice extends StatelessWidget {
           TextSpan(
             children: [
               TextSpan(text: 'Total ', style: MyStyles().fontSize12Weight400),
-              TextSpan(
-                  text: '300 SAR',
-                  style: MyStyles().languageButtonStyle.copyWith(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w700,
-                      )),
+              TextSpan(text: '300 SAR', style: MyStyles().fontSize14Weight700),
             ],
           ),
           textAlign: TextAlign.center,

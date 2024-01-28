@@ -42,13 +42,9 @@ class ServicePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const Gap(50),
-              Text(
-                'Add photo/ Video',
-                textAlign: TextAlign.center,
-                style: MyStyles().languageButtonStyle.copyWith(
-                      fontSize: 14.sp,
-                    ),
-              ),
+              Text('Add photo/ Video',
+                  textAlign: TextAlign.center,
+                  style: MyStyles().fontSize14WeightBold),
             ],
           ),
           const Gap(15),

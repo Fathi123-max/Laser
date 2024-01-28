@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/config/theme/my_theme.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
 
@@ -28,12 +29,8 @@ class CustomExpandtileWidget extends StatelessWidget {
         ),
         trailingRotation: 1,
         title: Text('Device Model',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 14.sp,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.bold,
-            )),
+            style:
+                MyStyles().fontSize14WeightBold.copyWith(color: Colors.black)),
         content: Container(
           alignment: Alignment.topCenter,
           width: 311.w,

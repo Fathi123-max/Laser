@@ -18,10 +18,7 @@ class TotalPrice extends StatelessWidget {
             const Gap(32),
             Text(
               "Total",
-              style: MyStyles().languageButtonStyle.copyWith(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: MyStyles().fontSize14WeightBold,
             ),
             const Spacer(),
             Text(

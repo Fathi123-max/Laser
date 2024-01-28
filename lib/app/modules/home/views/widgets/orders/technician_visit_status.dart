@@ -75,17 +75,13 @@ class TechnicianVisitStatus extends StatelessWidget {
                         Step(
                             state: StepState.complete,
                             title: Text('Requested',
-                                style: MyStyles().languageButtonStyle.copyWith(
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w400)),
+                                style: MyStyles().fontSize12Weight400),
                             content: const Text(""),
                             isActive: true),
                         Step(
                             state: StepState.indexed,
                             title: Text('Requested',
-                                style: MyStyles().languageButtonStyle.copyWith(
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w400)),
+                                style: MyStyles().fontSize12Weight400),
                             content: const Text(""),
                             isActive: false),
                         Step(

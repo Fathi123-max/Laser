@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -53,7 +54,7 @@ class PageBanner extends StatelessWidget {
                 SizedBox(
                   width: 124.w,
                   height: 23.h,
-                  child: Text(
+                  child: AutoSizeText(
                     pageTitle,
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -61,7 +62,7 @@ class PageBanner extends StatelessWidget {
                       fontSize: 20.sp,
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w700,
-                      height: 0.05,
+                      // height: 0.05,
                     ),
                   ),
                 ),

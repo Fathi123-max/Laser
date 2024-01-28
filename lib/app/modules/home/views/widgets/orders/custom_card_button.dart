@@ -10,14 +10,20 @@ class CustomCardButton extends StatelessWidget {
     this.color,
     this.width,
     this.heaight,
+    this.colorText,
+    this.fontsize,
+    this.bold,
   }) : super(key: key);
 //ontap
   final Function()? onTap;
   final String? text;
   final Color? color;
+  final Color? colorText;
 
   final double? width;
   final double? heaight;
+  final double? fontsize;
+  final bool? bold;
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +35,9 @@ class CustomCardButton extends StatelessWidget {
         alignment: Alignment.center,
         child: Text(text ?? "Details",
             style: MyStyles().languageButtonStyle.copyWith(
-                  fontSize: 10.sp,
-                  fontWeight: FontWeight.w400,
+                  color: colorText,
+                  fontSize: fontsize ?? 10.sp,
+                  fontWeight: bold != null ? FontWeight.bold : FontWeight.w400,
                 )),
         decoration: ShapeDecoration(
           color: color,

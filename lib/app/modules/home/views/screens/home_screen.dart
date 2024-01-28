@@ -10,6 +10,7 @@ import '../../controllers/home_controller.dart';
 import '../pages/after_order_paid_page.dart';
 import '../pages/order_ditails_page.dart';
 import '../pages/order_page.dart';
+import '../pages/payment_details_page.dart';
 import '../pages/visit_details_page.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -30,7 +31,8 @@ class HomeView extends GetView<HomeController> {
             VisitDetailsPage(),
             OrderPage(),
             OrderDitailsPage(),
-            AfterOrderPaidPage()
+            AfterOrderPaidPage(),
+            PaymentDetailsPage()
           ],
         ),
       ),

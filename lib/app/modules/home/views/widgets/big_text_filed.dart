@@ -5,13 +5,15 @@ class BigTextFiled extends StatelessWidget {
   const BigTextFiled({
     super.key,
     this.width,
+    this.height,
   });
   final double? width;
+  final double? height;
   @override
   Widget build(BuildContext context) {
     return Container(
       width: width ?? 267.w, // Your custom width
-      height: 97.h, // Your custom height
+      height: height ?? 97.h, // Your custom height
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(

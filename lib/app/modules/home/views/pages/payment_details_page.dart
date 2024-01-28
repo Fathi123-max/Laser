@@ -46,7 +46,7 @@ class PaymentDetailsPage extends StatelessWidget {
             const Gap(8),
             Row(
               children: [
-                const Gap(25),
+                const Gap(32),
                 BigTextFiled(
                   width: 200.w,
                   height: 34.h,

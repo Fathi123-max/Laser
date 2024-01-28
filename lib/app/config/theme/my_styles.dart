@@ -8,6 +8,39 @@ import 'my_fonts.dart';
 import 'theme_extensions/employee_list_item_theme_data.dart';
 
 class MyStyles {
+  ///////////////////////////////////
+  ///  fontSize12 //////////
+  ///////////////////////////////////
+
+  TextStyle fontSize12Weight700 = TextStyle(
+    fontFamily: 'Inter',
+    color: const Color.fromRGBO(0, 0, 0, 1),
+    fontSize: 12.sp,
+    letterSpacing: 0,
+    fontWeight: FontWeight.w700,
+  );
+  TextStyle fontSize12Weight400 = TextStyle(
+    fontFamily: 'Inter',
+    color: const Color.fromRGBO(0, 0, 0, 1),
+    fontSize: 12.sp,
+    letterSpacing: 0,
+    fontWeight: FontWeight.w400,
+  );
+  TextStyle fontSize12Weight500 = TextStyle(
+    fontFamily: 'Inter',
+    color: const Color.fromRGBO(0, 0, 0, 1),
+    fontSize: 12.sp,
+    letterSpacing: 0,
+    fontWeight: FontWeight.w500,
+  );
+  TextStyle fontSize12WeightBold = TextStyle(
+    fontFamily: 'Inter',
+    color: const Color.fromRGBO(0, 0, 0, 1),
+    fontSize: 12.sp,
+    letterSpacing: 0,
+    fontWeight: FontWeight.bold,
+  );
+////////////////////////////////////////////////////////////////////////////////
   TextStyle authBigTextStyle = TextStyle(
       color: const Color.fromRGBO(0, 0, 0, 1),
       fontFamily: 'Inter',

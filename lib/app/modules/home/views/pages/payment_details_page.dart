@@ -34,13 +34,8 @@ class PaymentDetailsPage extends StatelessWidget {
             Row(
               children: [
                 const Gap(32),
-                Text(
-                  "Do you have a discount?",
-                  style: MyStyles().languageButtonStyle.copyWith(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w700,
-                      ),
-                ),
+                Text("Do you have a discount?",
+                    style: MyStyles().fontSize12Weight700),
               ],
             ),
             const Gap(8),

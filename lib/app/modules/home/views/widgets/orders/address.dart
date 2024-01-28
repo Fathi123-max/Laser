@@ -40,10 +40,7 @@ class Address extends StatelessWidget {
               ),
               const Gap(4),
               Text('Alrehab District, Jeddah, Saudi Arabia',
-                  style: MyStyles().languageButtonStyle.copyWith(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                      ))
+                  style: MyStyles().fontSize12Weight400)
             ],
           )
         ],

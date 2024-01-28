@@ -26,10 +26,7 @@ class CardDetails extends StatelessWidget {
               const Gap(24),
               Text('Order number 226',
                   textAlign: TextAlign.center,
-                  style: MyStyles().languageButtonStyle.copyWith(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w700,
-                      )),
+                  style: MyStyles().fontSize12Weight700),
               const Spacer(),
               CustomCardButton(
                 text: "Details",
@@ -47,10 +44,7 @@ class CardDetails extends StatelessWidget {
               const Gap(31),
               Text('Mobiles-iphone 8 plus',
                   textAlign: TextAlign.center,
-                  style: MyStyles().languageButtonStyle.copyWith(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                      ))
+                  style: MyStyles().fontSize12Weight400)
             ],
           ),
           const Gap(13),
@@ -59,10 +53,7 @@ class CardDetails extends StatelessWidget {
             Text(
               'Issue',
               textAlign: TextAlign.center,
-              style: MyStyles().languageButtonStyle.copyWith(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w400,
-                  ),
+              style: MyStyles().fontSize12Weight400,
             ),
             const Gap(25),
             Text('Checking',
@@ -93,11 +84,7 @@ class CardDetails extends StatelessWidget {
                 onTap: () {},
               ),
               const Gap(13),
-              Text('Total ',
-                  style: MyStyles().languageButtonStyle.copyWith(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                      )),
+              Text('Total ', style: MyStyles().fontSize12Weight400),
               const Text(
                 '200 SAR',
                 style: TextStyle(

@@ -22,10 +22,7 @@ class WarrentyClaimed extends StatelessWidget {
               const Gap(22),
               Text('Warranty claimed',
                   textAlign: TextAlign.center,
-                  style: MyStyles().languageButtonStyle.copyWith(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w700,
-                      )),
+                  style: MyStyles().fontSize12Weight700),
               const Spacer(),
               AssetImageView(
                 height: 26.h,

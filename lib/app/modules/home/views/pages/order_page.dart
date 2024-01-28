@@ -28,14 +28,10 @@ class OrderPage extends StatelessWidget {
             ),
             const Gap(24),
             SizedBox(
-              width: 273.w,
-              child:
-                  Text('After order is accepted you can pay the amount needed.',
-                      style: MyStyles().languageButtonStyle.copyWith(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w400,
-                          )),
-            ),
+                width: 273.w,
+                child: Text(
+                    'After order is accepted you can pay the amount needed.',
+                    style: MyStyles().fontSize12Weight400)),
             const Gap(19),
             const CardDetails(),
             const CardDetails(),

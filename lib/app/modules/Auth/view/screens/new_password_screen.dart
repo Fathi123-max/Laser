@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
@@ -7,8 +6,8 @@ import 'package:laser/app/modules/Auth/controller/new_password_controller.dart';
 import 'package:laser/app/modules/Auth/view/widgets/model_layout.dart';
 import 'package:laser/app/routes/app_pages.dart';
 
-import '../widgets/auth_button.dart';
 import '../../../../components/custom_text_form_field.dart';
+import '../widgets/auth_button.dart';
 
 class NewPassword extends GetView<NewPasswordController> {
   const NewPassword({super.key});
@@ -38,9 +37,7 @@ class NewPassword extends GetView<NewPasswordController> {
                   '''Your new password should be different
 from previously used password''',
                   textAlign: TextAlign.start,
-                  style: MyStyles()
-                      .authBigTextStyle
-                      .copyWith(fontSize: 12.sp, fontWeight: FontWeight.w500),
+                  style: MyStyles().fontSize12Weight500,
                 ),
               ],
             ),

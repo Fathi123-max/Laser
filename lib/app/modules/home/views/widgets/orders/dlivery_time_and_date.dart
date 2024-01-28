@@ -23,10 +23,7 @@ class DliveryTimeAndDate extends StatelessWidget {
               const Gap(24),
               Text('Delivery time and date',
                   textAlign: TextAlign.center,
-                  style: MyStyles().languageButtonStyle.copyWith(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w700,
-                      )),
+                  style: MyStyles().fontSize12Weight700),
             ],
           ),
           const Gap(18),
@@ -39,11 +36,7 @@ class DliveryTimeAndDate extends StatelessWidget {
                 fileName: "time.png",
               ),
               const Gap(7),
-              Text('11:00 - 12:00',
-                  style: MyStyles().languageButtonStyle.copyWith(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                      ))
+              Text('11:00 - 12:00', style: MyStyles().fontSize12Weight400)
             ],
           ),
           const Gap(10),
@@ -56,11 +49,7 @@ class DliveryTimeAndDate extends StatelessWidget {
                 fileName: "date.png",
               ),
               const Gap(7),
-              Text('8-1-2024',
-                  style: MyStyles().languageButtonStyle.copyWith(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                      ))
+              Text('8-1-2024', style: MyStyles().fontSize12Weight400)
             ],
           )
         ],

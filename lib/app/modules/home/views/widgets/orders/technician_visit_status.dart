@@ -24,10 +24,7 @@ class TechnicianVisitStatus extends StatelessWidget {
               Text(
                 'Technician Visit Status',
                 textAlign: TextAlign.center,
-                style: MyStyles().languageButtonStyle.copyWith(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w700,
-                    ),
+                style: MyStyles().fontSize12Weight700,
               )
             ],
           ),
@@ -75,25 +72,19 @@ class TechnicianVisitStatus extends StatelessWidget {
                       Step(
                           state: StepState.complete,
                           title: Text('Requested',
-                              style: MyStyles().languageButtonStyle.copyWith(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w400)),
+                              style: MyStyles().fontSize12Weight400),
                           content: const Text(""),
                           isActive: true),
                       Step(
                           state: StepState.indexed,
                           title: Text('Requested',
-                              style: MyStyles().languageButtonStyle.copyWith(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w400)),
+                              style: MyStyles().fontSize12Weight400),
                           content: const Text(""),
                           isActive: false),
                       Step(
                           state: StepState.indexed,
                           title: Text('Requested',
-                              style: MyStyles().languageButtonStyle.copyWith(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w400)),
+                              style: MyStyles().fontSize12Weight400),
                           content: const Text(""),
                           isActive: false),
                     ]),

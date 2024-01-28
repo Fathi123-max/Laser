@@ -115,15 +115,7 @@ received on your phone number''',
                   onTap: () {
                     Get.toNamed(Routes.NewPassword);
                   },
-                  child: Text(
-                    'Resend',
-                    style: TextStyle(
-                      color: const Color(0xFF1B1926),
-                      fontSize: 12.sp,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  child: Text('Resend', style: MyStyles().fontSize12WeightBold),
                 ),
               ],
             )

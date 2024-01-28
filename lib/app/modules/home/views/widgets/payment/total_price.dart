@@ -36,7 +36,7 @@ class TotalPrice extends StatelessWidget {
         ),
         Row(
           children: [
-            Gap(32),
+            const Gap(32),
             Text(
               "Prices include taxes",
               style: MyStyles().languageButtonStyle.copyWith(

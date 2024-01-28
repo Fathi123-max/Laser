@@ -15,10 +15,8 @@ class ReceiptButton extends StatelessWidget {
       alignment: Alignment.center,
       child: Text('View receipt',
           textAlign: TextAlign.center,
-          style: MyStyles().languageButtonStyle.copyWith(
+          style: MyStyles().fontSize12Weight400.copyWith(
                 color: Colors.white,
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w400,
               )),
       decoration: ShapeDecoration(
         color: const Color(0xFF1B1D28),

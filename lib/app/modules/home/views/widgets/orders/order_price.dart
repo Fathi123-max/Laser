@@ -17,12 +17,7 @@ class OrderPrice extends StatelessWidget {
         Text.rich(
           TextSpan(
             children: [
-              TextSpan(
-                  text: 'Total ',
-                  style: MyStyles().languageButtonStyle.copyWith(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                      )),
+              TextSpan(text: 'Total ', style: MyStyles().fontSize12Weight400),
               TextSpan(
                   text: '300 SAR',
                   style: MyStyles().languageButtonStyle.copyWith(
@@ -47,11 +42,7 @@ class OrderPrice extends StatelessWidget {
         ),
         const Gap(7),
         Text('Paid in cash',
-            textAlign: TextAlign.center,
-            style: MyStyles().languageButtonStyle.copyWith(
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w400,
-                ))
+            textAlign: TextAlign.center, style: MyStyles().fontSize12Weight400)
       ],
     );
   }

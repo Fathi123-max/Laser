@@ -83,15 +83,8 @@ class RegisterPage extends GetView<RegisterController> {
                     onTap: () {
                       Get.toNamed(Routes.LoginPage);
                     },
-                    child: Text(
-                      'Sign in',
-                      style: TextStyle(
-                        color: const Color(0xFF1B1926),
-                        fontSize: 12.sp,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    child:
+                        Text('Sign in', style: MyStyles().fontSize12WeightBold),
                   ),
                 ],
               )

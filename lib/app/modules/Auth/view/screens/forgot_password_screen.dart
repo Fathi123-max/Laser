@@ -34,14 +34,10 @@ class ForgotPage extends GetView<ForgotController> {
             Row(
               children: [
                 const Gap(53),
-                Text(
-                  '''Please Enter your phone number
+                Text('''Please Enter your phone number
 to get verification code''',
-                  textAlign: TextAlign.start,
-                  style: MyStyles()
-                      .authBigTextStyle
-                      .copyWith(fontSize: 12.sp, fontWeight: FontWeight.w500),
-                ),
+                    textAlign: TextAlign.start,
+                    style: MyStyles().fontSize12Weight500)
               ],
             ),
             const Gap(39),
@@ -73,15 +69,8 @@ to get verification code''',
                   onTap: () {
                     Get.toNamed(Routes.LoginPage);
                   },
-                  child: Text(
-                    'Sign in',
-                    style: TextStyle(
-                      color: const Color(0xFF1B1926),
-                      fontSize: 12.sp,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  child:
+                      Text('Sign in', style: MyStyles().fontSize12WeightBold),
                 ),
               ],
             )

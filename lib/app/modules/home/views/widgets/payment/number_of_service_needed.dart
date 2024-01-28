@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
 
@@ -13,22 +12,11 @@ class NumberOfServiceNeeded extends StatelessWidget {
     return Row(
       children: [
         const Gap(35),
-        Text(
-          "Number of services needed",
-          style: MyStyles().languageButtonStyle.copyWith(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w700,
-              ),
-        ),
-        Spacer(),
-        Text(
-          "3",
-          style: MyStyles().languageButtonStyle.copyWith(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w400,
-              ),
-        ),
-        Gap(28)
+        Text("Number of services needed",
+            style: MyStyles().fontSize12Weight700),
+        const Spacer(),
+        Text("3", style: MyStyles().fontSize12Weight400),
+        const Gap(28)
       ],
     );
   }

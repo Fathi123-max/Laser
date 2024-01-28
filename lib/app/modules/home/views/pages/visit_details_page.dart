@@ -53,22 +53,17 @@ class VisitDetailsPage extends StatelessWidget {
                   children: [
                     Text('Technician arrival date',
                         textAlign: TextAlign.center,
-                        style: MyStyles().authBigTextStyle.copyWith(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w700,
-                              color: const Color(0xFF1B1926),
-                            )),
+                        style: MyStyles()
+                            .fontSize12Weight700
+                            .copyWith(color: const Color(0xFF1B1926))),
                     Opacity(
                       opacity: 0.30,
                       child: Text(
                         'January, 2024',
                         textAlign: TextAlign.start,
-                        style: TextStyle(
-                          color: const Color(0xFF1B1926),
-                          fontSize: 12.sp,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w400,
-                        ),
+                        style: MyStyles().fontSize12Weight400.copyWith(
+                              color: const Color(0xFF1B1926),
+                            ),
                       ),
                     ),
                   ],

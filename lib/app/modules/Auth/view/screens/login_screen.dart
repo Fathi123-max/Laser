@@ -77,15 +77,8 @@ class LoginPage extends GetView<LoginController> {
                   onTap: () {
                     Get.toNamed(Routes.RegisterPage);
                   },
-                  child: Text(
-                    'Sign up',
-                    style: TextStyle(
-                      color: const Color(0xFF1B1926),
-                      fontSize: 12.sp,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  child:
+                      Text('Sign up', style: MyStyles().fontSize12WeightBold),
                 ),
               ],
             )

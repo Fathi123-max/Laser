@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:laser/app/config/theme/my_styles.dart';
 
 class BigTextFiled extends StatelessWidget {
   const BigTextFiled({
@@ -14,20 +15,7 @@ class BigTextFiled extends StatelessWidget {
     return Container(
       width: width ?? 267.w, // Your custom width
       height: height ?? 97.h, // Your custom height
-      decoration: ShapeDecoration(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.r),
-        ),
-        shadows: const [
-          BoxShadow(
-            color: Color(0x02000000),
-            blurRadius: 4,
-            offset: Offset(0, 4),
-            spreadRadius: 1,
-          )
-        ],
-      ),
+      decoration: MyStyles().shapeDecoration,
       child: TextField(
         maxLines: 50,
         decoration: InputDecoration(

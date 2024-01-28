@@ -45,20 +45,7 @@ class Address extends StatelessWidget {
           )
         ],
       ),
-      decoration: ShapeDecoration(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.r),
-        ),
-        shadows: const [
-          BoxShadow(
-            color: Color(0x02000000),
-            blurRadius: 4,
-            offset: Offset(0, 4),
-            spreadRadius: 1,
-          )
-        ],
-      ),
+      decoration: MyStyles().shapeDecoration,
     );
   }
 }

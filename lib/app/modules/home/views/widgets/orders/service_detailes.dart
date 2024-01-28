@@ -15,44 +15,30 @@ class ServiceDetailes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 326.w,
-      height: 220.h,
-      child: Column(
-        children: [
-          const Gap(22),
-          Row(
-            children: [
-              const Gap(14),
-              Text('Service Details:',
-                  textAlign: TextAlign.center,
-                  style: MyStyles()
-                      .languageButtonStyle
-                      .copyWith(fontSize: 14.sp, fontWeight: FontWeight.w700))
-            ],
-          ),
-          const Gap(29),
-          const DeviceType(),
-          const Gap(10),
-          const DeviceIssues(),
-          const Gap(30),
-          const TechnicianCommet(),
-          const Gap(53),
-        ],
-      ),
-      decoration: ShapeDecoration(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+        width: 326.w,
+        height: 220.h,
+        child: Column(
+          children: [
+            const Gap(22),
+            Row(
+              children: [
+                const Gap(14),
+                Text('Service Details:',
+                    textAlign: TextAlign.center,
+                    style: MyStyles()
+                        .languageButtonStyle
+                        .copyWith(fontSize: 14.sp, fontWeight: FontWeight.w700))
+              ],
+            ),
+            const Gap(29),
+            const DeviceType(),
+            const Gap(10),
+            const DeviceIssues(),
+            const Gap(30),
+            const TechnicianCommet(),
+            const Gap(53),
+          ],
         ),
-        shadows: const [
-          BoxShadow(
-            color: Color(0x02000000),
-            blurRadius: 4,
-            offset: Offset(0, 4),
-            spreadRadius: 1,
-          )
-        ],
-      ),
-    );
+        decoration: MyStyles().shapeDecoration);
   }
 }

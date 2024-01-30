@@ -7,8 +7,8 @@ import 'package:laser/app/data/local/my_shared_pref.dart';
 import 'package:logger/logger.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
-import '../config/translations/strings_enum.dart';
 import '../components/custom_snackbar.dart';
+import '../config/translations/strings_enum.dart';
 import 'api_exceptions.dart';
 
 enum RequestType {
@@ -20,6 +20,7 @@ enum RequestType {
 
 class BaseClient {
   static final Dio _dio = Dio(BaseOptions(headers: {
+    "Accept-Language": MySharedPref.getCurrentLocal().languageCode,
     'Content-Type': 'application/json',
     'Accept': 'application/json'
   }))

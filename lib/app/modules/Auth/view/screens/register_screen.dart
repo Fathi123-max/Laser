@@ -46,25 +46,26 @@ class RegisterPage extends GetView<RegisterController> {
                 ],
               ),
               const Gap(39),
-              const CustomTextFormField(
-                key: Key("usernameRigster"),
+              CustomTextFormField(
+                textEditingController: controller.userName,
                 hint: "username",
               ),
               const Gap(20),
-              const CustomTextFormField(
+              CustomTextFormField(
+                keyboardType: TextInputType.phone,
+                textEditingController: controller.mobileNumber,
                 hint: "mobile number",
-                key: Key("mobileNumber"),
               ),
               const Gap(20),
-              const CustomTextFormField(
+              CustomTextFormField(
                 hint: "password",
-                key: Key("passwordRigster"),
+                textEditingController: controller.password,
                 isPassword: true,
               ),
               const Gap(20),
               AuthButton(
                 data: "Sign up",
-                onPressed: () {},
+                onPressed: () => controller.register(),
               ),
               const Gap(13),
               Row(

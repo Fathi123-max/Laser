@@ -3,10 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/components/custom_image_widget.dart';
-import 'package:laser/app/components/next_button_widget.dart';
-import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/modules/language/controller/language_controller.dart';
-import 'package:laser/app/routes/app_pages.dart';
 
 import 'widgets/language_widget.dart';
 
@@ -39,24 +36,28 @@ class LanguagePage extends GetView<LanguageController> {
                 height: 1.3333333333333333),
           ),
           const Gap(74),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              LanguageWidget(lang: "AR"),
-              Gap(33),
+              LanguageWidget(
+                lang: "AR",
+                onTap: () => controller.setLaunguage("ar"),
+              ),
+              const Gap(33),
               LanguageWidget(
                 lang: "EN",
+                onTap: () => controller.setLaunguage("en"),
               )
             ],
           ),
           const Gap(200),
-          NextButtonWidget(
-            onTap: () async {
-              Get.offNamed(Routes.RegisterPage);
-            },
-            style:
-                MyStyles().onBordingButtonStyle.copyWith(color: Colors.black),
-          )
+          // NextButtonWidget(
+          //   onTap: () async {
+          //     Get.offNamed(Routes.RegisterPage);
+          //   },
+          //   style:
+          //       MyStyles().onBordingButtonStyle.copyWith(color: Colors.black),
+          // )
         ],
       ),
     );

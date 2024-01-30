@@ -72,6 +72,7 @@ Future<void> main() async {
                 ),
               );
             },
+            defaultTransition: Transition.cupertino,
             initialRoute:
                 AppPages.iNITIAL, // first screen to show when app is running
             getPages: AppPages.routes, // app screens

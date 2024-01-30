@@ -3,8 +3,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:laser/app/binding/on_start_binding.dart';
 import 'package:laser/app/config/theme/my_theme.dart';
+import 'package:laser/app/data/models/payload.dart';
+import 'package:laser/app/data/models/register_response.dart';
+import 'package:laser/app/data/models/user.dart';
+import 'package:laser/app/modules/splash/biniding/splash_screen_binding.dart';
 import 'package:laser/app/utils/awesome_notifications_helper.dart';
 
 import 'app/config/translations/localization_service.dart';
@@ -21,6 +24,10 @@ Future<void> main() async {
   // initialize local db (hive) and register our custom adapters
   await MyHive.init(registerAdapters: (hive) {
     hive.registerAdapter(UserModelAdapter());
+    hive.registerAdapter(PayloadAdapter());
+    hive.registerAdapter(UserAdapter());
+    hive.registerAdapter(RegisterResponseAdapter());
+
     //myHive.registerAdapter(OtherAdapter());
   });
 
@@ -32,7 +39,6 @@ Future<void> main() async {
 
   // initialize local notifications service
   await AwesomeNotificationsHelper.init();
-
   runApp(
     DevicePreview(
       enabled: !kReleaseMode, // Disable it in release builds.
@@ -51,7 +57,7 @@ Future<void> main() async {
             title: "Laser",
             useInheritedMediaQuery: true,
             debugShowCheckedModeBanner: false,
-            initialBinding: OnStartBinding(),
+            initialBinding: SplashScreenBinding(),
             builder: (context, widget) {
               bool themeIsLight = MySharedPref.getThemeIsLight();
               return Theme(
@@ -60,7 +66,8 @@ Future<void> main() async {
                 child: MediaQuery(
                   // prevent font from scalling (some people use big/small device fonts)
                   // but we want our app font to still the same and dont get affected
-                  data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                  data: MediaQuery.of(context)
+                      .copyWith(textScaler: const TextScaler.linear(1.0)),
                   child: widget!,
                 ),
               );

@@ -5,7 +5,7 @@ import 'package:laser/app/modules/splash/controller/splash_screen_controller.dar
 import 'package:tbib_splash_screen/splash_screen_view.dart';
 
 class SplashScreen extends GetWidget<SplashScreenController> {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

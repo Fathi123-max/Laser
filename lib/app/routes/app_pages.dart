@@ -1,4 +1,5 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:laser/app/binding/on_start_binding.dart';
 import 'package:laser/app/modules/Auth/binding/auth_binding.dart';
 import 'package:laser/app/modules/Auth/binding/forget_password_binding.dart';
 import 'package:laser/app/modules/Auth/binding/login_binding.dart';
@@ -15,7 +16,6 @@ import 'package:laser/app/modules/language/binding/language_binding.dart';
 import 'package:laser/app/modules/language/view/language_screen.dart';
 import 'package:laser/app/modules/onboarding/binding/onboarding_binding.dart';
 import 'package:laser/app/modules/onboarding/view/onboarding_screens.dart';
-import 'package:laser/app/modules/splash/biniding/splash_screen_binding.dart';
 import 'package:laser/app/modules/splash/views/splash_Screen.dart';
 
 import '../modules/home/bindings/home_binding.dart';
@@ -26,7 +26,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const iNITIAL = Routes.HOME;
+  static const iNITIAL = Routes.Splash;
 
   static final routes = [
     GetPage(
@@ -37,7 +37,7 @@ class AppPages {
     GetPage(
         name: Routes.Splash,
         page: () => const SplashScreen(),
-        binding: SplashScreenBinding()),
+        binding: OnStartBinding()),
     GetPage(
         name: Routes.Onboarding,
         page: () => const OnboardingScreens(),

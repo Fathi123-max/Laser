@@ -12,11 +12,11 @@ class DeviceBrandPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return const SingleChildScrollView(
       child: Column(
         children: [
-          const Gap(30),
-          const PageBanner(
+          Gap(30),
+          PageBanner(
               pageIndex: 1,
               pageTitle: "Device Type",
               pageSubTitle: "Select your device type"),

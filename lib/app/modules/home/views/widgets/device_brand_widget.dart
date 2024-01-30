@@ -10,23 +10,23 @@ class DeviceBrandWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 150.h,
+        height: 100.h,
         width: 122 + 110 + 110.w,
         child: GridView.builder(
             itemCount: 4,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisSpacing: 10.w,
                 mainAxisSpacing: 10.h,
-                mainAxisExtent: 101.h,
-                childAspectRatio: .7,
+                mainAxisExtent: 80.h,
+                childAspectRatio: .5,
                 crossAxisCount: 1),
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               return DeviceTypeWidget(
                   fileName: "apple-logo.png",
                   text: "Apple",
-                  height: 137.h,
-                  width: 101.w);
+                  height: 70.h,
+                  width: 80.w);
             }));
   }
 }

@@ -14,6 +14,7 @@ class MySharedPref {
   static const String _fcmTokenKey = 'fcm_token';
   static const String _currentLocalKey = 'current_local';
   static const String _lightThemeKey = 'is_theme_light';
+  static const String _userTokenKey = 'user_token'; // user token = '';
 
   /// init get storage services
   static Future<void> init() async {
@@ -36,6 +37,10 @@ class MySharedPref {
   /// save current locale
   static Future<void> setCurrentLanguage(String languageCode) =>
       _sharedPreferences.setString(_currentLocalKey, languageCode);
+
+  /// save current token
+  static Future<void> setCurrentToken(String token) =>
+      _sharedPreferences.setString(_userTokenKey, token);
 
   /// get current locale
   static Locale getCurrentLocal() {

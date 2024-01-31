@@ -45,7 +45,7 @@ Widget _getLoadingIndicator({String? msg}) {
       mainAxisSize: MainAxisSize.min,
       children: [
         Image.asset(
-          'assets/images/app_icon.png',
+          'assets/images/logo_black.png',
           height: 45.h,
         ),
         SizedBox(

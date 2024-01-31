@@ -8,7 +8,7 @@ part of 'payload.dart';
 
 class PayloadAdapter extends TypeAdapter<Payload> {
   @override
-  final int typeId = 2;
+  final int typeId = 3;
 
   @override
   Payload read(BinaryReader reader) {
@@ -17,9 +17,9 @@ class PayloadAdapter extends TypeAdapter<Payload> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Payload(
-      token: fields[0] as String,
-      user: fields[1] as User,
-      msg: fields[2] as String,
+      token: fields[0] as String?,
+      user: fields[1] as User?,
+      msg: fields[2] as String?,
     );
   }
 

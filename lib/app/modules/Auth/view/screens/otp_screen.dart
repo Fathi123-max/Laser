@@ -81,22 +81,26 @@ received on your phone number''',
               onCodeChanged: (String code) {
                 //handle validation or checks here
               },
+
               //runs when every textfield is filled
               onSubmit: (String verificationCode) {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: const Text("Verification Code"),
-                        content: Text('Code entered is $verificationCode'),
-                      );
-                    });
+                controller.otp.value = verificationCode;
+                // showDialog(
+                //     context: context,
+                //     builder: (context) {
+                //       return AlertDialog(
+                //         title: const Text("Verification Code"),
+                //         content: Text('Code entered is $verificationCode'),
+                //       );
+                //     });
               }, // end onSubmit
             ),
             const Gap(57),
             AuthButton(
               data: "Send",
-              onPressed: () {},
+              onPressed: () {
+                controller.sendOtp();
+              },
             ),
             const Gap(13),
             Row(

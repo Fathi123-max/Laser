@@ -47,9 +47,9 @@ class HomeController extends GetxController {
     );
   }
 
-  @override
-  void onInit() {
-    getData();
-    super.onInit();
-  }
+  // @override
+  // void onInit() {
+  //   getData();
+  //   super.onInit();
+  // }
 }

@@ -45,6 +45,7 @@ dependencies:
   easy_date_timeline: ^1.0.3
   order_tracker_zen: ^1.0.0+4
   device_preview: ^1.1.0
+  flutter_spinkit: ^5.2.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/core/constants.dart';
+import 'package:laser/app/data/models/payload.dart';
+import 'package:laser/app/data/models/register_response.dart';
+import 'package:laser/app/data/models/user.dart';
 import 'package:laser/app/routes/app_pages.dart';
-import 'package:laser/app/services/api_call_status.dart';
 import 'package:laser/app/services/base_client.dart';
 
 class RegisterController extends GetxController {
@@ -11,8 +13,8 @@ class RegisterController extends GetxController {
   TextEditingController userName = TextEditingController();
   TextEditingController mobileNumber = TextEditingController();
   TextEditingController password = TextEditingController();
-  // api call status
-  ApiCallStatus apiCallStatus = ApiCallStatus.holding;
+  var registerResponse = RegisterResponse().obs;
+  var user = User().obs;
   register() async {
     if (registerFormKey.currentState!.validate()) {
       await BaseClient.safeApiCall(
@@ -23,30 +25,36 @@ class RegisterController extends GetxController {
           "password": password.text,
           "mobile_number": mobileNumber.text
         },
+
         onLoading: () {
           // *) indicate loading state
-          apiCallStatus = ApiCallStatus.loading;
-          update();
         },
         onSuccess: (response) {
           // api done successfully
-          Get.toNamed(Routes.OtpPage);
+          registerResponse.value = RegisterResponse.fromData(
+            status: response.data["status"],
+            error: response.data["error"],
+            err_message: response.data["err_message"],
+            payload: Payload.fromJson(response.data["payload"]),
+          );
+          if (registerResponse.value.status == true) {
+            user.value = registerResponse.value.payload!.user!;
+            Get.toNamed(Routes.OtpPage);
+          } else {}
           // *) indicate success state
-          apiCallStatus = ApiCallStatus.success;
-          update();
+          // update();
         },
+
         // if you don't pass this method base client
         // will automaticly handle error and show message to user
         onError: (error) {
           // show error message to user
+
           BaseClient.handleApiError(error);
           // *) indicate error status
-          apiCallStatus = ApiCallStatus.error;
           update();
         },
       );
-
-      Get.toNamed(Routes.OtpPage);
     }
   }
 

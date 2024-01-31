@@ -8,7 +8,7 @@ part of 'register_response.dart';
 
 class RegisterResponseAdapter extends TypeAdapter<RegisterResponse> {
   @override
-  final int typeId = 4;
+  final int typeId = 2;
 
   @override
   RegisterResponse read(BinaryReader reader) {
@@ -17,10 +17,10 @@ class RegisterResponseAdapter extends TypeAdapter<RegisterResponse> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return RegisterResponse(
-      status: fields[0] as bool,
-      error: fields[1] as bool,
-      message: fields[2] as String,
-      payload: fields[3] as Payload,
+      status: fields[0] as bool?,
+      error: fields[1] as bool?,
+      err_message: fields[2] as String?,
+      payload: fields[3] as Payload?,
     );
   }
 
@@ -33,7 +33,7 @@ class RegisterResponseAdapter extends TypeAdapter<RegisterResponse> {
       ..writeByte(1)
       ..write(obj.error)
       ..writeByte(2)
-      ..write(obj.message)
+      ..write(obj.err_message)
       ..writeByte(3)
       ..write(obj.payload);
   }

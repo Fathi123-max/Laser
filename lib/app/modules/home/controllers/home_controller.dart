@@ -9,6 +9,8 @@ class HomeController extends GetxController {
   //page view controller
   Rx<PageController> pageController = Rx(PageController());
   RxBool visibilityOfBanner = true.obs;
+  RxBool visibilityOfNextButton = true.obs;
+  RxBool visibilityOfBackButton = false.obs;
 
   // hold data coming from api
   List<dynamic>? data;
@@ -16,12 +18,22 @@ class HomeController extends GetxController {
   ApiCallStatus apiCallStatus = ApiCallStatus.holding;
 
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  controllVisibilityOfButtons(bool skipCondition) {
+    pageController.value.addListener(() {
+      int currentPage = pageController.value.page?.round() ?? 0;
+      // Example: Update UI based on the current page
+      visibilityOfBackButton.value = currentPage > 0;
+
+      // Set the visibility of the next button based on the current page
+      visibilityOfNextButton.value = currentPage < 3;
+    });
+  }
 
   // getting data from api
   getData() async {
     // *) perform api call
     await BaseClient.safeApiCall(
-      Constants.registerUrl, // url
+      Constants.deviceTypesUrl, // url
       RequestType.get, // request type (get,post,delete,put)
       onLoading: () {
         // *) indicate loading state
@@ -47,9 +59,24 @@ class HomeController extends GetxController {
     );
   }
 
-  // @override
-  // void onInit() {
-  //   getData();
-  //   super.onInit();
-  // }
+  @override
+  void onClose() {}
+
+  @override
+  void dispose() {
+    pageController.value.dispose();
+    super.dispose();
+  }
+
+  @override
+  void onReady() {
+    getData();
+    super.onReady();
+  }
+
+  @override
+  void onInit() {
+    // getData();
+    super.onInit();
+  }
 }

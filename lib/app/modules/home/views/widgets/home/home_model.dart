@@ -4,9 +4,9 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/modules/home/controllers/home_controller.dart';
 
-import 'custom_appbar_icon.dart';
-import 'custom_drawer.dart';
-import 'navgation_text_buttons.dart';
+import '../custom_appbar_icon.dart';
+import '../custom_drawer.dart';
+import '../navgation_text_buttons.dart';
 
 class HomeViewModel extends GetView<HomeController> {
   const HomeViewModel({required this.child, super.key});
@@ -49,26 +49,34 @@ class HomeViewModel extends GetView<HomeController> {
             Row(
               children: [
                 const Gap(50),
-                NavgationTextButtons(
-                  text: "Back",
-                  onTap: () {
-                    controller.pageController.value.previousPage(
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.easeInOut);
-                  },
-                ),
+                Obx(() => Visibility(
+                      visible: controller.visibilityOfBackButton
+                          .value, // Replace isVisible with your visibility condition
+                      child: NavgationTextButtons(
+                        text: "Back",
+                        onTap: () {
+                          controller.pageController.value.previousPage(
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                      ),
+                    )),
                 const Spacer(),
-                NavgationTextButtons(
-                  text: "Next",
-                  onTap: () {
-                    controller.pageController.value.nextPage(
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.easeInOut);
-                    if (controller.pageController.value.page == 3) {
-                      controller.visibilityOfBanner.value = false;
-                    } else {}
-                  },
-                ),
+                Obx(() => Visibility(
+                      visible: controller.visibilityOfNextButton
+                          .value, // Replace isVisible with your visibility condition
+                      child: NavgationTextButtons(
+                        text: "Next",
+                        onTap: () {
+                          controller.pageController.value.nextPage(
+                              duration: const Duration(milliseconds: 500),
+                              curve: Curves.easeInOut);
+
+                          controller.controllVisibilityOfButtons(false);
+                        },
+                      ),
+                    )),
                 const Gap(51)
               ],
             )

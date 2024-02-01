@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/modules/Auth/controller/otp_controller.dart';
 import 'package:laser/app/modules/Auth/view/widgets/model_layout.dart';
-import 'package:laser/app/routes/app_pages.dart';
 
 import '../widgets/auth_button.dart';
 
@@ -103,7 +102,7 @@ received on your phone number''',
             AuthButton(
               data: "Send",
               onPressed: () {
-                controller.sendOtp(isForgotPassword: forgotPassword);
+                controller.checkOtp(isForgotPassword: forgotPassword);
               },
             ),
             const Gap(13),
@@ -121,7 +120,7 @@ received on your phone number''',
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.toNamed(Routes.NewPassword);
+                    controller.reSendOtp(isForgotPassword: forgotPassword);
                   },
                   child: Text('Resend', style: MyStyles().fontSize12WeightBold),
                 ),

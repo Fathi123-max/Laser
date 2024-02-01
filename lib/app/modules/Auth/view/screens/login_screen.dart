@@ -79,7 +79,9 @@ class LoginPage extends GetView<LoginController> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.offNamed(Routes.RegisterPage);
+                    // Get.offNamed(Routes.RegisterPage);
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, Routes.RegisterPage, (r) => false);
                   },
                   child:
                       Text('Sign up', style: MyStyles().fontSize12WeightBold),

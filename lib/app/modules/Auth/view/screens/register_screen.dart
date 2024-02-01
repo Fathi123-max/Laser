@@ -19,7 +19,6 @@ class RegisterPage extends GetView<RegisterController> {
     return Scaffold(
       body: AuthModelPage(
         authContant: Form(
-          canPop: false,
           key: controller.registerFormKey.value,
           child: Column(
             children: [
@@ -86,7 +85,9 @@ class RegisterPage extends GetView<RegisterController> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Get.offNamed(Routes.LoginPage);
+                      // Get.offNamed(Routes.LoginPage);
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, Routes.LoginPage, (r) => false);
                     },
                     child:
                         Text('Sign in', style: MyStyles().fontSize12WeightBold),

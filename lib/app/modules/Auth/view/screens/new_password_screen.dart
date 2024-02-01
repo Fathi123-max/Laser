@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/modules/Auth/controller/new_password_controller.dart';
 import 'package:laser/app/modules/Auth/view/widgets/model_layout.dart';
-import 'package:laser/app/routes/app_pages.dart';
 
 import '../../../../components/custom_text_form_field.dart';
 import '../widgets/auth_button.dart';
@@ -42,20 +41,20 @@ from previously used password''',
               ],
             ),
             const Gap(31),
-            const CustomTextFormField(
-              key: Key("newPassword"),
+            CustomTextFormField(
+              textEditingController: controller.newPassword,
               hint: "New Password",
             ),
             const Gap(13),
-            const CustomTextFormField(
-              key: Key("ConfirmPassword"),
+            CustomTextFormField(
+              textEditingController: controller.newPasswordAgain,
               hint: "Confirm Password",
             ),
             const Gap(25),
             AuthButton(
               data: "Save",
               onPressed: () {
-                Get.offNamed(Routes.HOME);
+                controller.setNewPassword();
               },
             ),
           ],

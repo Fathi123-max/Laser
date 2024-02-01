@@ -44,21 +44,22 @@ class LoginPage extends GetView<LoginController> {
               ],
             ),
             const Gap(39),
-            const CustomTextFormField(
-              key: Key("username"),
-              hint: "username",
+            CustomTextFormField(
+              textEditingController: controller.mobileNumber,
+              hint: "phonenumber",
             ),
             const Gap(20),
-            const CustomTextFormField(
-              key: Key("password"),
+            CustomTextFormField(
+              textEditingController: controller.password,
               hint: "password",
               isPassword: true,
-              isLogin: true,
             ),
             const Gap(20),
             AuthButton(
               data: "Login",
-              onPressed: () {},
+              onPressed: () {
+                controller.login();
+              },
             ),
             const Gap(13),
             Row(

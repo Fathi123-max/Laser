@@ -12,13 +12,12 @@ class CustomTextFormField extends GetWidget {
     this.keyboardType,
     this.hint,
     this.isPassword = false,
-    this.isLogin,
   });
 
   final TextEditingController? textEditingController;
   final String? hint;
   final bool isPassword;
-  final bool? isLogin;
+
   final TextInputType? keyboardType;
   @override
   Widget build(BuildContext context) {

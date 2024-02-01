@@ -15,6 +15,10 @@ class OtpPage extends GetView<OtpController> {
 
   @override
   Widget build(BuildContext context) {
+    final Map<String, String?> parameters = Get.parameters;
+    final String forgotPassword =
+        parameters['forgot password'] ?? 'default_value';
+
     return AuthModelPage(
       authContant: Form(
         key: controller.otpFormKey,
@@ -99,7 +103,7 @@ received on your phone number''',
             AuthButton(
               data: "Send",
               onPressed: () {
-                controller.sendOtp();
+                controller.sendOtp(isForgotPassword: forgotPassword);
               },
             ),
             const Gap(13),

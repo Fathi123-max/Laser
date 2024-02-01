@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:laser/app/components/custom_image_widget.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
+import 'package:laser/app/data/local/my_shared_pref.dart';
 import 'package:laser/app/routes/app_pages.dart';
 
 import '../../../components/next_button_widget.dart';
@@ -149,6 +150,7 @@ right at your doorstep''',
               const Gap(150),
               NextButtonWidget(
                 onTap: () async {
+                  MySharedPref.setOnboarding("OnBoardingDone");
                   Get.offNamed(Routes.Language);
                 },
                 style: MyStyles().onBordingButtonStyle,

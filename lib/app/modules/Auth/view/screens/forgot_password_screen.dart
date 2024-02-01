@@ -41,15 +41,15 @@ to get verification code''',
               ],
             ),
             const Gap(39),
-            const CustomTextFormField(
-              key: Key("mobile"),
+            CustomTextFormField(
+              textEditingController: controller.mobileNumber,
               hint: "Mobile Number",
             ),
             const Gap(59),
             AuthButton(
               data: "Send",
               onPressed: () {
-                Get.offNamed(Routes.OtpPage);
+                controller.getNewPassword();
               },
             ),
             const Gap(13),

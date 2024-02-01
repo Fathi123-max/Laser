@@ -7,4 +7,5 @@ class Constants {
   static const resetPasswordUrl = '$baseUrl/reset-password';
   static const tokenValidatorUrl = '$baseUrl/token-validator';
   static const deviceTypesUrl = '$baseUrl/device-types';
+  static const logoutUrl = '$baseUrl/logout';
 }

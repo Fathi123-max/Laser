@@ -18,11 +18,8 @@ class SplashScreenController extends GetxController {
         },
         onSuccess: (response) {
           // api done successfully
-          if (response.data["message"] == "Unauthenticated") {
-            Get.toNamed(Routes.LoginPage);
-          } else {
-            Get.toNamed(Routes.HOME);
-          }
+
+          Get.toNamed(Routes.HOME);
 
           // *) indicate success state
           // update();
@@ -32,10 +29,12 @@ class SplashScreenController extends GetxController {
         // will automaticly handle error and show message to user
         onError: (error) {
           // show error message to user
-
-          BaseClient.handleApiError(error);
+          if (error.statusCode == 401) {
+            Get.offAllNamed(Routes.LoginPage);
+          }
+          // BaseClient.handleApiError(error);
           // *) indicate error status
-          update();
+          // update();
         },
       );
     } else {

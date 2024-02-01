@@ -19,7 +19,8 @@ class RegisterPage extends GetView<RegisterController> {
     return Scaffold(
       body: AuthModelPage(
         authContant: Form(
-          key: controller.registerFormKey,
+          canPop: false,
+          key: controller.registerFormKey.value,
           child: Column(
             children: [
               Row(
@@ -47,17 +48,20 @@ class RegisterPage extends GetView<RegisterController> {
               ),
               const Gap(39),
               CustomTextFormField(
+                key: const Key("username"),
                 textEditingController: controller.userName,
                 hint: "username",
               ),
               const Gap(20),
               CustomTextFormField(
+                key: const Key("mobileNumber2"),
                 keyboardType: TextInputType.phone,
                 textEditingController: controller.mobileNumber,
                 hint: "mobile number",
               ),
               const Gap(20),
               CustomTextFormField(
+                key: const Key("password2"),
                 hint: "password",
                 textEditingController: controller.password,
                 isPassword: true,
@@ -82,7 +86,7 @@ class RegisterPage extends GetView<RegisterController> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Get.toNamed(Routes.LoginPage);
+                      Get.offNamed(Routes.LoginPage);
                     },
                     child:
                         Text('Sign in', style: MyStyles().fontSize12WeightBold),

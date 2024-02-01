@@ -8,7 +8,7 @@ class SplashScreen extends GetWidget<SplashScreenController> {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 3)).then((value) {
+    Future.delayed(const Duration(seconds: 2)).then((value) {
       controller.checkCardintial();
     });
     return SplashScreenView(

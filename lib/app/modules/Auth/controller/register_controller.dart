@@ -8,7 +8,7 @@ import 'package:laser/app/routes/app_pages.dart';
 import 'package:laser/app/services/base_client.dart';
 
 class RegisterController extends GetxController {
-  GlobalKey<FormState> registerFormKey = GlobalKey<FormState>();
+  var registerFormKey = GlobalKey<FormState>(debugLabel: "registerFormKey").obs;
   RxBool isPasswordVisible = true.obs;
   TextEditingController userName = TextEditingController();
   TextEditingController mobileNumber = TextEditingController();
@@ -16,7 +16,7 @@ class RegisterController extends GetxController {
   var registerResponse = RegisterResponse().obs;
   var user = User().obs;
   register() async {
-    if (registerFormKey.currentState!.validate()) {
+    if (registerFormKey.value.currentState!.validate()) {
       await BaseClient.safeApiCall(
         Constants.registerUrl,
         RequestType.post,

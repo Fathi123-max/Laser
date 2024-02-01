@@ -7,7 +7,6 @@ import 'package:laser/app/config/theme/my_theme.dart';
 import 'package:laser/app/data/models/payload.dart';
 import 'package:laser/app/data/models/register_response.dart';
 import 'package:laser/app/data/models/user.dart';
-import 'package:laser/app/modules/splash/biniding/splash_screen_binding.dart';
 import 'package:laser/app/utils/awesome_notifications_helper.dart';
 
 import 'app/config/translations/localization_service.dart';
@@ -57,7 +56,7 @@ Future<void> main() async {
             title: "Laser",
             useInheritedMediaQuery: true,
             debugShowCheckedModeBanner: false,
-            initialBinding: SplashScreenBinding(),
+            // initialBinding: SplashScreenBinding(),
             builder: (context, widget) {
               bool themeIsLight = MySharedPref.getThemeIsLight();
               return Theme(

@@ -17,6 +17,7 @@ class LoginPage extends GetView<LoginController> {
   Widget build(BuildContext context) {
     return AuthModelPage(
       authContant: Form(
+        canPop: false,
         key: controller.loginFormKey,
         child: Column(
           children: [
@@ -46,12 +47,14 @@ class LoginPage extends GetView<LoginController> {
             const Gap(39),
             CustomTextFormField(
               textEditingController: controller.mobileNumber,
+              key: const Key("mobileNumber"),
               hint: "phonenumber",
             ),
             const Gap(20),
             CustomTextFormField(
               textEditingController: controller.password,
               hint: "password",
+              key: const Key("password"),
               isPassword: true,
             ),
             const Gap(20),
@@ -76,7 +79,7 @@ class LoginPage extends GetView<LoginController> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.toNamed(Routes.RegisterPage);
+                    Get.offNamed(Routes.RegisterPage);
                   },
                   child:
                       Text('Sign up', style: MyStyles().fontSize12WeightBold),

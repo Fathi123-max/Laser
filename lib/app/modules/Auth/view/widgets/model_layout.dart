@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
 import 'package:laser/app/components/custom_image_widget.dart';
 
-class AuthModelPage extends GetView {
+class AuthModelPage extends StatelessWidget {
   const AuthModelPage({super.key, required this.authContant});
   final Widget? authContant;
   @override

@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:laser/app/core/constants.dart';
+import 'package:laser/app/data/local/my_shared_pref.dart';
+import 'package:laser/app/routes/app_pages.dart';
+import 'package:laser/app/services/base_client.dart';
 
 import 'custom_list_tile.dart';
 
@@ -46,11 +51,38 @@ class DrawerTiles extends StatelessWidget {
           text: "Account Settings",
         ),
         CustomListTile(
-          onTap: () {},
+          onTap: () {
+            signout();
+          },
           iconPath: "sign-out.png",
           text: "Sign Out",
         ),
       ],
+    );
+  }
+
+  signout() async {
+    // *) perform api call
+    await BaseClient.safeApiCall(
+      Constants.logoutUrl, // url
+      RequestType.get, // request type (get,post,delete,put)
+      onLoading: () {
+        // *) indicate loading state
+      },
+      onSuccess: (response) {
+        // *) indicate success state
+      },
+      // if you don't pass this method base client
+      // will automaticly handle error and show message to user
+      onError: (error) {
+        // show error message to user
+
+        if (error.statusCode == 401) {
+          Get.offAllNamed(Routes.LoginPage);
+        }
+        MySharedPref.clear();
+        // BaseClient.handleApiError(error);
+      },
     );
   }
 }

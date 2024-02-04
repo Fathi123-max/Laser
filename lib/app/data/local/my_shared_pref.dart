@@ -46,8 +46,9 @@ class MySharedPref {
       _sharedPreferences.setString(_onBoarding, onBoarding);
 
   /// save current token
-  static Future<void> setCurrentToken(String token) =>
-      _sharedPreferences.setString(_userTokenKey, token);
+  static Future<void> setCurrentToken(String token) => _sharedPreferences
+      .setString(_userTokenKey, token)
+      .then((value) => print('Set token: $token'));
 
   /// save current Mobile Number
   static Future<void> setCurrentMobileNumber(String mobileNumber) =>

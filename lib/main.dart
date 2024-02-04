@@ -26,6 +26,7 @@ Future<void> main() async {
     hive.registerAdapter(PayloadAdapter());
     hive.registerAdapter(UserAdapter());
     hive.registerAdapter(RegisterResponseAdapter());
+    // hive.registerAdapter(DeviceTypeAdapter());
 
     //myHive.registerAdapter(OtherAdapter());
   });

@@ -14,6 +14,7 @@ class CustomAddMediaWidget extends StatelessWidget {
       // mainAxisAlignment: MainAxisAlignment.center,
       children: [
         DeviceTypeWidget(
+          tapped: false,
           fileName: photoName,
           height: 75.h,
           width: 90.w,

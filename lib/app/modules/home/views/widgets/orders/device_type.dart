@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
 
-class DeviceType extends StatelessWidget {
-  const DeviceType({
+class DeviceTypeWidget extends StatelessWidget {
+  const DeviceTypeWidget({
     super.key,
   });
 

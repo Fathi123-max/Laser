@@ -23,6 +23,7 @@ class DeviceBrandWidget extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               return DeviceTypeWidget(
+                  tapped: false,
                   fileName: "apple-logo.png",
                   text: "Apple",
                   height: 70.h,

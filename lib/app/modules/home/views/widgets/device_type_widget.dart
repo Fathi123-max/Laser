@@ -4,7 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:laser/app/components/custom_image_widget.dart';
 
 class DeviceTypeWidget extends StatelessWidget {
-  const DeviceTypeWidget({
+  DeviceTypeWidget({
     Key? key,
     this.height,
     this.width,
@@ -12,6 +12,8 @@ class DeviceTypeWidget extends StatelessWidget {
     this.text,
     this.onTap,
     this.enableMargin,
+    required this.tapped,
+    // this.tapped,
   }) : super(key: key);
   final double? height;
   final double? width;
@@ -19,6 +21,7 @@ class DeviceTypeWidget extends StatelessWidget {
   final String? text;
   final Function()? onTap;
   final bool? enableMargin;
+  bool tapped;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -29,29 +32,8 @@ class DeviceTypeWidget extends StatelessWidget {
             : EdgeInsets.zero,
         width: width ?? 132.w,
         height: height ?? 137.h,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AssetImageView(
-                fileName: fileName ?? "logo.png", height: 65.h, width: 85.w),
-            text == null ? Container() : const Gap(16),
-            text == null
-                ? Container()
-                : Text(
-                    text ?? " ",
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: Color(0xFF1B1926),
-                      fontSize: 12,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w400,
-                      height: 0.14,
-                    ),
-                  )
-          ],
-        ),
         decoration: ShapeDecoration(
-          color: Colors.white,
+          color: tapped ? Colors.black : Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.r),
           ),
@@ -62,6 +44,31 @@ class DeviceTypeWidget extends StatelessWidget {
               offset: Offset(0, 4),
               spreadRadius: 1,
             )
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AssetImageView(
+              fileName: fileName ?? "logo.png",
+              height: 65.h,
+              width: 85.w,
+              color: tapped ? Colors.white : null,
+            ),
+            text == null ? Container() : const Gap(16),
+            text == null
+                ? Container()
+                : Text(
+                    text ?? " ",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: tapped ? Colors.white : const Color(0xFF1B1926),
+                      fontSize: 12,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w400,
+                      height: 0.14,
+                    ),
+                  )
           ],
         ),
       ),

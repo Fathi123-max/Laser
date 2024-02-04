@@ -31,7 +31,9 @@ class ServiceDetailes extends StatelessWidget {
               ],
             ),
             const Gap(29),
-            const DeviceTypeWidget(),
+            DeviceTypeWidget(
+              tapped: false,
+            ),
             const Gap(10),
             const DeviceIssues(),
             const Gap(30),

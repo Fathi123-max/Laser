@@ -73,7 +73,7 @@ class HomeViewModel extends GetView<HomeController> {
                               duration: const Duration(milliseconds: 500),
                               curve: Curves.easeInOut);
 
-                          controller.controllVisibilityOfButtons(false);
+                          // controller.controllVisibilityOfButtons();
                         },
                       ),
                     )),

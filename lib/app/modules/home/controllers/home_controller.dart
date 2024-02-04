@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:laser/app/data/local/my_shared_pref.dart';
+import 'package:laser/app/data/models/device_type_model.dart';
 
 import '../../../core/constants.dart';
 import '../../../services/api_call_status.dart';
@@ -9,23 +11,36 @@ class HomeController extends GetxController {
   //page view controller
   Rx<PageController> pageController = Rx(PageController());
   RxBool visibilityOfBanner = true.obs;
-  RxBool visibilityOfNextButton = true.obs;
+  RxBool visibilityOfNextButton = false.obs;
   RxBool visibilityOfBackButton = false.obs;
 
   // hold data coming from api
-  List<dynamic>? data;
+  List<dynamic>? deviceTypeList;
   // api call status
-  ApiCallStatus apiCallStatus = ApiCallStatus.holding;
+  var apiCallStatus = (ApiCallStatus.holding).obs;
+  List<bool> dviceTypeWidgetTapped = [false, false, false, false].obs;
+
+  int? storedIndex;
+
+  void deviceTypeTapeFun(int index) {
+    storedIndex = index;
+    for (int i = 0; i < dviceTypeWidgetTapped.length; i++) {
+      dviceTypeWidgetTapped[i] = (i == index);
+    }
+
+    pageController.value.nextPage(
+        duration: const Duration(milliseconds: 1000), curve: Curves.ease);
+  }
 
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  controllVisibilityOfButtons(bool skipCondition) {
+  controllVisibilityOfButtons() {
     pageController.value.addListener(() {
       int currentPage = pageController.value.page?.round() ?? 0;
       // Example: Update UI based on the current page
       visibilityOfBackButton.value = currentPage > 0;
 
       // Set the visibility of the next button based on the current page
-      visibilityOfNextButton.value = currentPage < 3;
+      visibilityOfNextButton.value = currentPage > 0;
     });
   }
 
@@ -34,49 +49,44 @@ class HomeController extends GetxController {
     // *) perform api call
     await BaseClient.safeApiCall(
       Constants.deviceTypesUrl, // url
+      headers: {
+        "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
+      },
       RequestType.get, // request type (get,post,delete,put)
       onLoading: () {
         // *) indicate loading state
-        // apiCallStatus = ApiCallStatus.loading;
-        // update();
+        apiCallStatus.value = ApiCallStatus.loading;
+        update();
       },
       onSuccess: (response) {
+//resive data in mode datatype model
+        deviceTypeList = response.data["payload"]["device_types"]
+            .map((e) => DeviceType.fromJson(e as Map<String, dynamic>))
+            .toList();
+
+        // print(deviceTypeList!.length);
         // api done successfully
         // data = List.from(response.data);
         // // *) indicate success state
-        // apiCallStatus = ApiCallStatus.success;
-        // update();
+        apiCallStatus.value = ApiCallStatus.success;
+        update();
       },
       // if you don't pass this method base client
       // will automaticly handle error and show message to user
       onError: (error) {
         // show error message to user
-        // BaseClient.handleApiError(error);
+        BaseClient.handleApiError(error);
         // *) indicate error status
-        apiCallStatus = ApiCallStatus.error;
+        apiCallStatus.value = ApiCallStatus.error;
         update();
       },
     );
   }
 
   @override
-  void onClose() {}
-
-  @override
-  void dispose() {
-    pageController.value.dispose();
-    super.dispose();
-  }
-
-  @override
-  void onReady() {
-    // getData();
-    super.onReady();
-  }
-
-  @override
   void onInit() {
-    // getData();
+    getData();
+    controllVisibilityOfButtons();
     super.onInit();
   }
 }

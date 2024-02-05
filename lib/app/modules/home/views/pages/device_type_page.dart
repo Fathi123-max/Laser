@@ -16,14 +16,9 @@ class DeviceTypePage extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return GetX(
         init: controller,
-        // didChangeDependencies: (state) {
-        //   if (state != null) {
-        //     controller.getData();
-        //   }
-        // },
         builder: (_) {
           return MyWidgetsAnimator(
-            apiCallStatus: controller.apiCallStatus.value,
+            apiCallStatus: controller.apiDeviceTypesCallStatus.value,
             errorWidget: () => const Center(child: Text('Error')),
             loadingWidget: () =>
                 const Center(child: CircularProgressIndicator()),
@@ -40,7 +35,7 @@ class DeviceTypePage extends GetView<HomeController> {
                     Gap(43),
                     Obx(() => DeviceTypeWidget(
                         onTap: () {
-                          controller.deviceTypeTapeFun(0);
+                          controller.controlleDeviceTypeTap(0);
                         },
                         tapped: controller.dviceTypeWidgetTapped[0],
                         fileName: "phone.png",
@@ -50,7 +45,7 @@ class DeviceTypePage extends GetView<HomeController> {
                         fileName: "laptop.png",
                         tapped: controller.dviceTypeWidgetTapped[1],
                         onTap: () {
-                          controller.deviceTypeTapeFun(1);
+                          controller.controlleDeviceTypeTap(1);
                         },
                         text: controller.deviceTypeList![1].name)),
                     Gap(43),
@@ -65,7 +60,7 @@ class DeviceTypePage extends GetView<HomeController> {
                           fileName: "watch.png",
                           text: controller.deviceTypeList![2].name,
                           onTap: () {
-                            controller.deviceTypeTapeFun(2);
+                            controller.controlleDeviceTypeTap(2);
                           },
                         )),
                     const Spacer(),
@@ -73,7 +68,7 @@ class DeviceTypePage extends GetView<HomeController> {
                         tapped: controller.dviceTypeWidgetTapped[3],
                         fileName: "ipad.png",
                         onTap: () {
-                          controller.deviceTypeTapeFun(3);
+                          controller.controlleDeviceTypeTap(3);
                         },
                         text: controller.deviceTypeList![3].name)),
                     const Gap(43),

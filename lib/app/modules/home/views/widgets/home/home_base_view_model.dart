@@ -8,8 +8,8 @@ import '../custom_appbar_icon.dart';
 import '../custom_drawer.dart';
 import '../navgation_text_buttons.dart';
 
-class HomeViewModel extends GetView<HomeController> {
-  const HomeViewModel({required this.child, super.key});
+class HomeBaseViewModel extends GetView<HomeController> {
+  const HomeBaseViewModel({required this.child, super.key});
   final Widget child;
 
   @override

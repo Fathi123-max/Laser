@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/config/theme/my_theme.dart';
+import 'package:laser/app/data/models/device_brand_model.dart';
+import 'package:laser/app/data/models/device_model.dart';
+import 'package:laser/app/data/models/device_type_model.dart';
 import 'package:laser/app/data/models/payload.dart';
 import 'package:laser/app/data/models/register_response.dart';
 import 'package:laser/app/data/models/user.dart';
@@ -26,6 +29,10 @@ Future<void> main() async {
     hive.registerAdapter(PayloadAdapter());
     hive.registerAdapter(UserAdapter());
     hive.registerAdapter(RegisterResponseAdapter());
+    hive.registerAdapter(DeviceBrandModelAdapter());
+    hive.registerAdapter(DeviceTypeAdapter());
+    hive.registerAdapter(DeviceModelAdapter());
+
     // hive.registerAdapter(DeviceTypeAdapter());
 
     //myHive.registerAdapter(OtherAdapter());

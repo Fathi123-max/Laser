@@ -4,8 +4,8 @@ import 'package:gap/gap.dart';
 import 'package:laser/app/components/custom_image_widget.dart';
 
 class DeviceTypeWidget extends StatelessWidget {
-  DeviceTypeWidget({
-    Key? key,
+  const DeviceTypeWidget({
+    super.key,
     this.height,
     this.width,
     this.fileName,
@@ -14,14 +14,14 @@ class DeviceTypeWidget extends StatelessWidget {
     this.enableMargin,
     required this.tapped,
     // this.tapped,
-  }) : super(key: key);
+  });
   final double? height;
   final double? width;
   final String? fileName;
   final String? text;
   final Function()? onTap;
   final bool? enableMargin;
-  bool tapped;
+  final bool tapped;
   @override
   Widget build(BuildContext context) {
     return InkWell(

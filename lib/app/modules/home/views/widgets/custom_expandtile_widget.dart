@@ -4,11 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/config/theme/my_theme.dart';
+import 'package:laser/app/data/models/device_model.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
 
 class CustomExpandtileWidget extends StatelessWidget {
-  const CustomExpandtileWidget({Key? key}) : super(key: key);
-
+  const CustomExpandtileWidget({super.key, this.list});
+  final List<dynamic>? list;
   @override
   Widget build(BuildContext context) {
     return ExpandedTile(
@@ -35,6 +36,20 @@ class CustomExpandtileWidget extends StatelessWidget {
           alignment: Alignment.topCenter,
           width: 311.w,
           height: 169.h,
+          decoration: ShapeDecoration(
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.r),
+            ),
+            shadows: const [
+              BoxShadow(
+                color: Color(0x02000000),
+                blurRadius: 4,
+                offset: Offset(0, 4),
+                spreadRadius: 1,
+              )
+            ],
+          ),
           child: Stack(
             children: [
               ListView.separated(
@@ -42,7 +57,7 @@ class CustomExpandtileWidget extends StatelessWidget {
                   separatorBuilder: (context, index) {
                     return const CustomDivider();
                   },
-                  itemCount: 2,
+                  itemCount: list!.length,
                   padding: EdgeInsets.all(10.h),
                   primary: true,
                   itemBuilder: (context, index) {
@@ -52,7 +67,7 @@ class CustomExpandtileWidget extends StatelessWidget {
                       child: Row(children: [
                         const Gap(23),
                         Text(
-                          'iphone 11',
+                          (list![index] as DeviceModel).name as String,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 14.sp,
@@ -93,20 +108,6 @@ class CustomExpandtileWidget extends StatelessWidget {
                     Icons.arrow_drop_down_rounded,
                     size: 50.w,
                   ))
-            ],
-          ),
-          decoration: ShapeDecoration(
-            color: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.r),
-            ),
-            shadows: const [
-              BoxShadow(
-                color: Color(0x02000000),
-                blurRadius: 4,
-                offset: Offset(0, 4),
-                spreadRadius: 1,
-              )
             ],
           ),
         ),

@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/config/theme/my_theme.dart';
-import 'package:laser/app/data/models/device_model.dart';
+import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
 
-class CustomExpandtileWidget extends StatelessWidget {
-  const CustomExpandtileWidget({super.key, this.list});
-  final List<dynamic>? list;
+class DeviceModelExpandtileWidget extends GetWidget<HomeController> {
+  const DeviceModelExpandtileWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ExpandedTile(
@@ -53,55 +54,52 @@ class CustomExpandtileWidget extends StatelessWidget {
           child: Stack(
             children: [
               ListView.separated(
-                  shrinkWrap: true,
-                  separatorBuilder: (context, index) {
-                    return const CustomDivider();
-                  },
-                  itemCount: list!.length,
-                  padding: EdgeInsets.all(10.h),
-                  primary: true,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      height: 38.h,
-                      alignment: Alignment.center,
-                      child: Row(children: [
-                        const Gap(23),
-                        Text(
-                          (list![index] as DeviceModel).name as String,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14.sp,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
-                            // height: 0.20,
+                shrinkWrap: true,
+                separatorBuilder: (context, index) {
+                  return const CustomDivider();
+                },
+                itemCount: controller.deviceModelList.length,
+                padding: EdgeInsets.all(10.h),
+                primary: true,
+                itemBuilder: (context, index) {
+                  // Wrap with Obx to make the ListView reactive
+                  return Obx(() {
+                    bool isActive = controller.activeModelIndex.value == index;
+                    return GestureDetector(
+                      onTap: () {
+                        controller.setActiveModelIndex(index);
+                      },
+                      child: Container(
+                        height: 38.h,
+                        alignment: Alignment.center,
+                        child: Row(children: [
+                          const Gap(23),
+                          Text(
+                            controller.deviceModelList[index].name!,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14.sp,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
-                        ),
-                        const Gap(15),
-                        Container(
-                          width: 20.w,
-                          height: 20.w,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color:
-                                Colors.red, // Replace with your desired color
-                          ),
-                        ),
-                        const Spacer(),
-                        Transform.scale(
-                          scale: 1.1,
-                          child: Checkbox(
-                            value: true,
+                          const Gap(15),
+                          const Spacer(),
+                          Checkbox(
+                            value: isActive,
                             activeColor: Colors.black,
                             checkColor: Colors.white,
-                            // Add this line to set the disabled color to grey
-
                             shape: const CircleBorder(),
-                            onChanged: (value) {},
+                            onChanged: (bool? value) {
+                              controller.setActiveModelIndex(index);
+                            },
                           ),
-                        ),
-                      ]),
+                        ]),
+                      ),
                     );
-                  }),
+                  });
+                },
+              ),
               Align(
                   alignment: Alignment.bottomCenter,
                   child: Icon(
@@ -111,7 +109,7 @@ class CustomExpandtileWidget extends StatelessWidget {
             ],
           ),
         ),
-        controller: ExpandedTileController(isExpanded: false));
+        controller: controller.expandedDeviceModelTileController);
   }
 }
 

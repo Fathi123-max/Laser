@@ -55,10 +55,7 @@ class HomeBaseViewModel extends GetView<HomeController> {
                       child: NavgationTextButtons(
                         text: "Back",
                         onTap: () {
-                          controller.pageController.value.previousPage(
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.easeInOut,
-                          );
+                          controller.backButtonLogic();
                         },
                       ),
                     )),

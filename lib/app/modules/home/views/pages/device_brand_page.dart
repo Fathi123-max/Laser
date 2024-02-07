@@ -3,7 +3,8 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
-import 'package:laser/app/modules/home/views/widgets/custom_expandtile_widget.dart';
+import 'package:laser/app/modules/home/views/widgets/custom_expandtile_device_color.dart';
+import 'package:laser/app/modules/home/views/widgets/custom_expandtile_widget_device_model.dart';
 import 'package:laser/app/modules/home/views/widgets/device_brand_widget.dart';
 import 'package:laser/app/modules/home/views/widgets/page_banner.dart';
 
@@ -28,10 +29,10 @@ class DeviceBrandPage extends GetWidget<HomeController> {
           Obx(() {
             return Visibility(
                 visible: controller.deviceModelVisibleController.value,
-                child: Column(
+                child: const Column(
                   children: [
-                    CustomExpandtileWidget(list: controller.deviceModelList),
-                    const CustomDivider(),
+                    DeviceModelExpandtileWidget(),
+                    CustomDivider(),
                   ],
                 ));
           }),
@@ -40,7 +41,9 @@ class DeviceBrandPage extends GetWidget<HomeController> {
                 visible: controller.deviceColorVisibleController.value,
                 child: const Column(
                   children: [
-                    CustomExpandtileWidget(),
+                    DeviceColorExpandtileWidget(
+                      isWidgetColorVisible: true,
+                    ),
                     CustomDivider(),
                   ],
                 ));

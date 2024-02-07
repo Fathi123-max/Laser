@@ -18,6 +18,9 @@ class MySharedPref {
   static const String _userMobileNUmber =
       'user_mobile_number'; // user token = '';
   static const String _onBoarding = 'onboarding'; // onboarding = '';
+  static const String _deviceType = 'device_type';
+  static const String _deviceColor = 'device_color';
+  static const String _device_id = 'device_id';
 
   /// init get storage services
   static Future<void> init() async {
@@ -53,6 +56,14 @@ class MySharedPref {
   /// save current Mobile Number
   static Future<void> setCurrentMobileNumber(String mobileNumber) =>
       _sharedPreferences.setString(_userMobileNUmber, mobileNumber);
+
+  static void saveDeviceType(String deviceType) =>
+      _sharedPreferences.setString(_deviceType, deviceType);
+
+  static void saveDeviceColor(String deviceColor) =>
+      _sharedPreferences.setString(_deviceColor, deviceColor);
+  static void saveDeviceId(String deviceId) =>
+      _sharedPreferences.setString(_device_id, deviceId);
 
   /// get current locale
   static Locale getCurrentLocal() {

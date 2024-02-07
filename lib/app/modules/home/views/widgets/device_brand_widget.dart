@@ -19,14 +19,14 @@ class DeviceBrandWidget extends GetWidget<HomeController> {
         errorWidget: () => const Center(child: Text('Error')),
         successWidget: () => SizedBox(
             height: 100.h,
-            width: 122 + 110 + 110.w,
+            width: 122 + 110 + 80.w,
             child: GridView.builder(
                 itemCount: controller.deviceBrandList!.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisSpacing: 10.w,
                     mainAxisSpacing: 10.h,
                     mainAxisExtent: 80.h,
-                    childAspectRatio: .5,
+                    childAspectRatio: .3,
                     crossAxisCount: 1),
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {

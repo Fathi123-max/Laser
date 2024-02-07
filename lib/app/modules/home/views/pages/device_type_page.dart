@@ -32,7 +32,7 @@ class DeviceTypePage extends GetView<HomeController> {
                 const Gap(30),
                 Row(
                   children: [
-                    Gap(43),
+                    const Gap(43),
                     Obx(() => DeviceTypeWidget(
                         onTap: () {
                           controller.controlleDeviceTypeTap(0);
@@ -40,7 +40,7 @@ class DeviceTypePage extends GetView<HomeController> {
                         tapped: controller.dviceTypeWidgetTapped[0],
                         fileName: "phone.png",
                         text: controller.deviceTypeList![0].name)),
-                    Spacer(),
+                    const Spacer(),
                     Obx(() => DeviceTypeWidget(
                         fileName: "laptop.png",
                         tapped: controller.dviceTypeWidgetTapped[1],
@@ -48,7 +48,7 @@ class DeviceTypePage extends GetView<HomeController> {
                           controller.controlleDeviceTypeTap(1);
                         },
                         text: controller.deviceTypeList![1].name)),
-                    Gap(43),
+                    const Gap(43),
                   ],
                 ),
                 const Gap(19),

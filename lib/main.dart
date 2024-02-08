@@ -33,7 +33,7 @@ Future<void> main() async {
     hive.registerAdapter(DeviceBrandModelAdapter());
     hive.registerAdapter(DeviceTypeAdapter());
     hive.registerAdapter(DeviceModelAdapter());
-    hive.registerAdapter(ServiceAdapter());
+    hive.registerAdapter(ServiceModelAdapter());
 
     // hive.registerAdapter(DeviceTypeAdapter());
 

@@ -3,9 +3,9 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
-import 'package:laser/app/modules/home/views/widgets/custom_expandtile_device_color.dart';
-import 'package:laser/app/modules/home/views/widgets/custom_expandtile_widget_device_model.dart';
 import 'package:laser/app/modules/home/views/widgets/device_brand_widget.dart';
+import 'package:laser/app/modules/home/views/widgets/expanded_tiles/custom_expandtile_device_color.dart';
+import 'package:laser/app/modules/home/views/widgets/expanded_tiles/custom_expandtile_widget_device_model.dart';
 import 'package:laser/app/modules/home/views/widgets/page_banner.dart';
 
 class DeviceBrandPage extends GetWidget<HomeController> {

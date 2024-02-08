@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -7,6 +8,7 @@ import 'package:laser/app/data/models/device_model.dart';
 import 'package:laser/app/data/models/device_type_model.dart';
 import 'package:laser/app/data/models/payload.dart';
 import 'package:laser/app/data/models/register_response.dart';
+import 'package:laser/app/data/models/service_model.dart';
 import 'package:laser/app/data/models/user.dart';
 import 'package:laser/app/modules/Auth/binding/text_form_field_biniding.dart';
 import 'package:laser/app/utils/awesome_notifications_helper.dart';
@@ -31,6 +33,7 @@ Future<void> main() async {
     hive.registerAdapter(DeviceBrandModelAdapter());
     hive.registerAdapter(DeviceTypeAdapter());
     hive.registerAdapter(DeviceModelAdapter());
+    hive.registerAdapter(ServiceAdapter());
 
     // hive.registerAdapter(DeviceTypeAdapter());
 
@@ -46,49 +49,48 @@ Future<void> main() async {
   // initialize local notifications service
   await AwesomeNotificationsHelper.init();
   runApp(
-    // DevicePreview(
-    // enabled: !kReleaseMode, // Disable it in release builds.
-    // builder: (context) =>
-    ScreenUtilInit(
-      // todo add your (Xd / Figma) artboard size
-      designSize: const Size(375, 667),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      useInheritedMediaQuery: true,
-      rebuildFactor: (old, data) => true,
-      builder: (context, widget) {
-        return GetMaterialApp(
-          // builder: DevicePreview.appBuilder, // Add the builder here
-          // locale: DevicePreview.locale(context), // Add the locale here
-          initialBinding: TextFormFieldBinding(),
-          title: "ليزر",
-          useInheritedMediaQuery: true,
-          debugShowCheckedModeBanner: false,
-          // initialBinding: SplashScreenBinding(),
-          builder: (context, widget) {
-            bool themeIsLight = MySharedPref.getThemeIsLight();
-            return Theme(
-              // data: MyTheme.getThemeData(isLight: !themeIsLight),
-              data: MyTheme.getThemeData(isLight: !themeIsLight),
-              child: MediaQuery(
-                // prevent font from scalling (some people use big/small device fonts)
-                // but we want our app font to still the same and dont get affected
-                data: MediaQuery.of(context)
-                    .copyWith(textScaler: const TextScaler.linear(1.0)),
-                child: widget!,
-              ),
-            );
-          },
-          defaultTransition: Transition.cupertino,
-          initialRoute:
-              AppPages.iNITIAL, // first screen to show when app is running
-          getPages: AppPages.routes, // app screens
-          locale: MySharedPref.getCurrentLocal(), // app language
-          translations: LocalizationService
-              .getInstance(), // localization services in app (controller app language)
-        );
-      },
+    DevicePreview(
+      // enabled: !kReleaseMode, // Disable it in release builds.
+      builder: (context) => ScreenUtilInit(
+        // todo add your (Xd / Figma) artboard size
+        designSize: const Size(375, 667),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        useInheritedMediaQuery: true,
+        rebuildFactor: (old, data) => true,
+        builder: (context, widget) {
+          return GetMaterialApp(
+            // builder: DevicePreview.appBuilder, // Add the builder here
+            // locale: DevicePreview.locale(context), // Add the locale here
+            initialBinding: TextFormFieldBinding(),
+            title: "ليزر",
+            useInheritedMediaQuery: true,
+            debugShowCheckedModeBanner: false,
+            // initialBinding: SplashScreenBinding(),
+            builder: (context, widget) {
+              bool themeIsLight = MySharedPref.getThemeIsLight();
+              return Theme(
+                // data: MyTheme.getThemeData(isLight: !themeIsLight),
+                data: MyTheme.getThemeData(isLight: !themeIsLight),
+                child: MediaQuery(
+                  // prevent font from scalling (some people use big/small device fonts)
+                  // but we want our app font to still the same and dont get affected
+                  data: MediaQuery.of(context)
+                      .copyWith(textScaler: const TextScaler.linear(1.0)),
+                  child: widget!,
+                ),
+              );
+            },
+            defaultTransition: Transition.cupertino,
+            initialRoute:
+                AppPages.iNITIAL, // first screen to show when app is running
+            getPages: AppPages.routes, // app screens
+            locale: MySharedPref.getCurrentLocal(), // app language
+            translations: LocalizationService
+                .getInstance(), // localization services in app (controller app language)
+          );
+        },
+      ),
     ),
-    // ),
   );
 }

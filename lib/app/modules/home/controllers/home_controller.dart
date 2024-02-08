@@ -5,6 +5,7 @@ import 'package:laser/app/data/local/my_shared_pref.dart';
 import 'package:laser/app/data/models/device_brand_model.dart';
 import 'package:laser/app/data/models/device_model.dart';
 import 'package:laser/app/data/models/device_type_model.dart';
+import 'package:laser/app/data/models/service_model.dart';
 
 import '../../../core/constants.dart';
 import '../../../services/api_call_status.dart';
@@ -17,8 +18,9 @@ class HomeController extends GetxController {
   RxBool visibilityOfBackButton = false.obs;
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   List<dynamic>? deviceTypeList;
-  List<dynamic>? deviceBrandList;
+  RxList<DeviceBrandModel>? deviceBrandList;
   RxList<DeviceModel> deviceModelList = RxList([]);
+  RxList<ServiceModel> serviceList = RxList([]);
   RxList<dynamic> deviceColorList = RxList([]);
   var deviceModelVisibleController = false.obs;
   var deviceColorVisibleController = false.obs;
@@ -32,7 +34,7 @@ class HomeController extends GetxController {
   int? dviceTypeIndex;
   int? dviceBrandIndex;
   var expandedDeviceModelTileController =
-      ExpandedTileController(isExpanded: false).obs;
+      ExpandedTileController(isExpanded: true).obs;
 
   ScrollController scrollController = ScrollController();
 
@@ -73,7 +75,7 @@ class HomeController extends GetxController {
     }
 
 // get device Models
-    getModels((deviceBrandList![index] as DeviceBrandModel).id!);
+    getModels((deviceBrandList![index]).id!);
 // navgate to Brand page
   }
 
@@ -88,14 +90,16 @@ class HomeController extends GetxController {
     });
   }
 
-  void deviceModelClicked({required int index}) {
+  Future<void> deviceModelClicked({required int index}) {
     deviceColorVisibleController.value = true;
     // setActiveModelIndex(index);
-    scroll();
+
     deviceColorList.value =
         RxList<dynamic>.from(deviceModelList[index].colors as List<dynamic>);
+
     update();
     deviceColorList.refresh();
+    return Future.value();
   }
 
   void deviceColoeClicked({required int index}) {
@@ -106,6 +110,7 @@ class HomeController extends GetxController {
     MySharedPref.saveDeviceId(
         deviceModelList[activeModelIndex.value].id.toString());
 
+    getService(activeServiceModelIndex.value);
     // hide model and color
     deviceModelVisibleController.value = true;
     deviceColorVisibleController.value = true;
@@ -124,21 +129,39 @@ class HomeController extends GetxController {
       curve: Curves.easeInOut,
     );
 
-    deviceModelVisibleController.value = false;
-    deviceColorVisibleController.value = false;
+    if (pageController.value.page == 1) {
+      deviceModelVisibleController.value = false;
+      deviceColorVisibleController.value = false;
+    } else {}
     update();
   }
 
   var activeModelIndex = (-1).obs; // Start with no active model
   var activeColorModelIndex = (-1).obs; // Start with no active model
+  var activeServiceModelIndex = (-1).obs; // Start with no active model
 
-  // Call this method when an item is tapped
   void setActiveModelIndex(int index) {
     activeModelIndex.value = index;
-    // Add any other logic necessary when an item becomes active
 
-    deviceModelClicked(index: index);
-    update(); // Call this if you're using GetX and you need to update the UI
+    deviceModelClicked(index: index).then((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        scroll();
+      });
+    });
+    update();
+  }
+
+  void setActiveServicesIndex(int index) {
+    activeServiceModelIndex.value = index;
+
+    // deviceModelClicked(index: index).then((_) {
+    //   WidgetsBinding.instance.addPostFrameCallback((_) {
+    //     scroll();
+    //   });
+    // });
+
+    MySharedPref.saveService(serviceList[index].serviceId.toString());
+    update();
   }
 
   // Call this method when an item is tapped
@@ -196,9 +219,10 @@ class HomeController extends GetxController {
         update();
       },
       onSuccess: (response) {
-        deviceBrandList = response.data["payload"]["device_brands"]
+        deviceBrandList = RxList<DeviceBrandModel>.from(response.data["payload"]
+                ["device_brands"]
             .map((e) => DeviceBrandModel.fromJson(e as Map<String, dynamic>))
-            .toList();
+            .toList());
         dviceBrandWidgetTapped =
             deviceBrandList?.map((_) => false.obs).toList() ?? [];
 
@@ -262,9 +286,9 @@ class HomeController extends GetxController {
         update();
       },
       onSuccess: (response) {
-        deviceModelList = RxList<DeviceModel>.from(response.data["payload"]
-                ["device_models"]
-            .map((e) => DeviceModel.fromJson(e as Map<String, dynamic>))
+        serviceList = RxList<ServiceModel>.from(response.data["payload"]
+                ["device_services"]
+            .map((e) => ServiceModel.fromJson(e as Map<String, dynamic>))
             .toList());
 
         apiDeviceModelCallStatus.value = ApiCallStatus.success;

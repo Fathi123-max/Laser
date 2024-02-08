@@ -21,6 +21,7 @@ class MySharedPref {
   static const String _deviceType = 'device_type';
   static const String _deviceColor = 'device_color';
   static const String _device_id = 'device_id';
+  static const String _service_id = 'service_id';
 
   /// init get storage services
   static Future<void> init() async {
@@ -64,6 +65,8 @@ class MySharedPref {
       _sharedPreferences.setString(_deviceColor, deviceColor);
   static void saveDeviceId(String deviceId) =>
       _sharedPreferences.setString(_device_id, deviceId);
+  static void saveService(String servicesId) =>
+      _sharedPreferences.setString(_service_id, servicesId);
 
   /// get current locale
   static Locale getCurrentLocal() {

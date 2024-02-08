@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_add_media_widget.dart';
-import 'package:laser/app/modules/home/views/widgets/custom_expandtile_widget_device_model.dart';
+import 'package:laser/app/modules/home/views/widgets/expanded_tiles/custom_expandedtile_widget_services.dart';
 import 'package:laser/app/modules/home/views/widgets/page_banner.dart';
 
 import '../widgets/big_text_filed.dart';
@@ -20,10 +20,10 @@ class ServicePage extends StatelessWidget {
         children: [
           const Gap(30),
           const PageBanner(
-              pageIndex: 1,
-              pageTitle: "Device Type",
+              pageIndex: 3,
+              pageTitle: "Service",
               pageSubTitle: "Select your device type"),
-          const DeviceModelExpandtileWidget(),
+          const ServisesExpandtileWidget(),
           const Gap(19),
           SizedBox(
             width: 280.w,

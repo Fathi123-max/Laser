@@ -32,7 +32,17 @@ class HomeController extends GetxController {
   int? dviceTypeIndex;
   int? dviceBrandIndex;
   var expandedDeviceModelTileController =
-      ExpandedTileController(isExpanded: false);
+      ExpandedTileController(isExpanded: false).obs;
+
+  ScrollController scrollController = ScrollController();
+
+  void scroll() {
+    scrollController.animateTo(
+      scrollController.position.maxScrollExtent,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
 
 // controll tapping of device and visibilty of buttons ***************************************************************
   void controlleDeviceTypeTap(
@@ -81,7 +91,7 @@ class HomeController extends GetxController {
   void deviceModelClicked({required int index}) {
     deviceColorVisibleController.value = true;
     // setActiveModelIndex(index);
-
+    scroll();
     deviceColorList.value =
         RxList<dynamic>.from(deviceModelList[index].colors as List<dynamic>);
     update();

@@ -69,7 +69,10 @@ class RegisterPage extends GetView<RegisterController> {
               const Gap(20),
               AuthButton(
                 data: "Sign up",
-                onPressed: () => controller.register(),
+                onPressed: () {
+                  controller.register();
+                  FocusScope.of(context).unfocus();
+                },
               ),
               const Gap(13),
               Row(

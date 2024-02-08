@@ -7,7 +7,7 @@ import 'package:laser/app/services/base_client.dart';
 class ForgotController extends GetxController {
   GlobalKey<FormState> forgotFormKey = GlobalKey<FormState>();
   RxBool isPasswordVisible = true.obs;
-  TextEditingController mobileNumber = TextEditingController();
+  TextEditingController mobileNumber = TextEditingController(text: "966");
   getNewPassword() async {
     if (forgotFormKey.currentState!.validate()) {
       await BaseClient.safeApiCall(

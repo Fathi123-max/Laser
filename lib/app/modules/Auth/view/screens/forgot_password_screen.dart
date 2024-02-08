@@ -43,6 +43,7 @@ to get verification code''',
             const Gap(39),
             CustomTextFormField(
               textEditingController: controller.mobileNumber,
+              keyboardType: TextInputType.number,
               hint: "Mobile Number",
             ),
             const Gap(59),
@@ -50,6 +51,7 @@ to get verification code''',
               data: "Send",
               onPressed: () {
                 controller.getNewPassword();
+                FocusScope.of(context).unfocus();
               },
             ),
             const Gap(13),

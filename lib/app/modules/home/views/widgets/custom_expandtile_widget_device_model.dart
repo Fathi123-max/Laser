@@ -13,104 +13,111 @@ class DeviceModelExpandtileWidget extends GetWidget<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return ExpandedTile(
-        contentseparator: 1,
-        trailing: Icon(Icons.arrow_drop_down_rounded, size: 25.sp),
-        theme: ExpandedTileThemeData(
-          headerPadding: EdgeInsets.fromLTRB(25.w, 20.h, 25.w, 15.h),
-          contentPadding: EdgeInsets.symmetric(
-            horizontal: 40.w,
-          ),
-          contentRadius: 13.r,
-          contentBackgroundColor:
-              MyTheme.getThemeData(isLight: true).scaffoldBackgroundColor,
-          headerColor:
-              MyTheme.getThemeData(isLight: true).scaffoldBackgroundColor,
-          headerSplashColor:
-              MyTheme.getThemeData(isLight: true).scaffoldBackgroundColor,
-        ),
-        trailingRotation: 1,
-        title: Text('Device Model',
-            style:
-                MyStyles().fontSize14WeightBold.copyWith(color: Colors.black)),
-        content: Container(
-          alignment: Alignment.topCenter,
-          width: 311.w,
-          height: 169.h,
-          decoration: ShapeDecoration(
-            color: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.r),
+    return Obx(() {
+      return ExpandedTile(
+          contentseparator: 1,
+          trailing:
+              controller.expandedDeviceModelTileController.value.isExpanded
+                  ? Icon(Icons.arrow_drop_up_rounded, size: 25.sp)
+                  : Icon(Icons.arrow_drop_down_rounded, size: 25.sp),
+          theme: ExpandedTileThemeData(
+            headerPadding: EdgeInsets.fromLTRB(25.w, 20.h, 25.w, 15.h),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 40.w,
             ),
-            shadows: const [
-              BoxShadow(
-                color: Color(0x02000000),
-                blurRadius: 4,
-                offset: Offset(0, 4),
-                spreadRadius: 1,
-              )
-            ],
+            contentRadius: 13.r,
+            contentBackgroundColor:
+                MyTheme.getThemeData(isLight: true).scaffoldBackgroundColor,
+            headerColor:
+                MyTheme.getThemeData(isLight: true).scaffoldBackgroundColor,
+            headerSplashColor:
+                MyTheme.getThemeData(isLight: true).scaffoldBackgroundColor,
           ),
-          child: Stack(
-            children: [
-              ListView.separated(
-                shrinkWrap: true,
-                separatorBuilder: (context, index) {
-                  return const CustomDivider();
-                },
-                itemCount: controller.deviceModelList.length,
-                padding: EdgeInsets.all(10.h),
-                primary: true,
-                itemBuilder: (context, index) {
-                  // Wrap with Obx to make the ListView reactive
-                  return Obx(() {
-                    bool isActive = controller.activeModelIndex.value == index;
-                    return GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () {
-                        controller.setActiveModelIndex(index);
-                      },
-                      child: Container(
-                        height: 38.h,
-                        alignment: Alignment.center,
-                        child: Row(children: [
-                          const Gap(23),
-                          Text(
-                            controller.deviceModelList[index].name!,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14.sp,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          const Gap(15),
-                          const Spacer(),
-                          Checkbox(
-                            value: isActive,
-                            activeColor: Colors.black,
-                            checkColor: Colors.white,
-                            shape: const CircleBorder(),
-                            onChanged: (bool? value) {
-                              controller.setActiveModelIndex(index);
-                            },
-                          ),
-                        ]),
-                      ),
-                    );
-                  });
-                },
+          trailingRotation: 1,
+          title: Text('Device Model',
+              style: MyStyles()
+                  .fontSize14WeightBold
+                  .copyWith(color: Colors.black)),
+          content: Container(
+            alignment: Alignment.topCenter,
+            width: 311.w,
+            height: 169.h,
+            decoration: ShapeDecoration(
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.r),
               ),
-              Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Icon(
-                    Icons.arrow_drop_down_rounded,
-                    size: 50.w,
-                  ))
-            ],
+              shadows: const [
+                BoxShadow(
+                  color: Color(0x02000000),
+                  blurRadius: 4,
+                  offset: Offset(0, 4),
+                  spreadRadius: 1,
+                )
+              ],
+            ),
+            child: Stack(
+              children: [
+                ListView.separated(
+                  shrinkWrap: true,
+                  separatorBuilder: (context, index) {
+                    return const CustomDivider();
+                  },
+                  itemCount: controller.deviceModelList.length,
+                  padding: EdgeInsets.all(10.h),
+                  primary: true,
+                  itemBuilder: (context, index) {
+                    // Wrap with Obx to make the ListView reactive
+                    return Obx(() {
+                      bool isActive =
+                          controller.activeModelIndex.value == index;
+                      return GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          controller.setActiveModelIndex(index);
+                        },
+                        child: Container(
+                          height: 38.h,
+                          alignment: Alignment.center,
+                          child: Row(children: [
+                            const Gap(23),
+                            Text(
+                              controller.deviceModelList[index].name!,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14.sp,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            const Gap(15),
+                            const Spacer(),
+                            Checkbox(
+                              value: isActive,
+                              activeColor: Colors.black,
+                              checkColor: Colors.white,
+                              shape: const CircleBorder(),
+                              onChanged: (bool? value) {
+                                controller.setActiveModelIndex(index);
+                              },
+                            ),
+                          ]),
+                        ),
+                      );
+                    });
+                  },
+                ),
+                Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Icon(
+                      Icons.arrow_drop_down_rounded,
+                      size: 50.w,
+                    ))
+              ],
+            ),
           ),
-        ),
-        controller: controller.expandedDeviceModelTileController);
+          controller: controller.expandedDeviceModelTileController.value);
+    });
   }
 }
 

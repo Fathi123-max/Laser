@@ -62,6 +62,7 @@ class LoginPage extends GetView<LoginController> {
               data: "Login",
               onPressed: () {
                 controller.login();
+                FocusScope.of(context).unfocus();
               },
             ),
             const Gap(13),
@@ -82,6 +83,7 @@ class LoginPage extends GetView<LoginController> {
                     // Get.offNamed(Routes.RegisterPage);
                     Navigator.pushNamedAndRemoveUntil(
                         context, Routes.RegisterPage, (r) => false);
+                    FocusScope.of(context).unfocus();
                   },
                   child:
                       Text('Sign up', style: MyStyles().fontSize12WeightBold),

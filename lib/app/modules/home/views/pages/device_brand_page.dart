@@ -16,6 +16,7 @@ class DeviceBrandPage extends GetWidget<HomeController> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      controller: controller.scrollController,
       child: Column(
         children: [
           const Gap(30),

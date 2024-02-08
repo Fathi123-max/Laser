@@ -139,7 +139,7 @@ class DeviceColorExpandtileWidget extends GetWidget<HomeController> {
             ],
           ),
         ),
-        controller: controller.expandedDeviceModelTileController);
+        controller: controller.expandedDeviceModelTileController.value);
   }
 }
 

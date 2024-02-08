@@ -76,6 +76,7 @@ class DeviceColorExpandtileWidget extends GetWidget<HomeController> {
                             controller.activeColorModelIndex.value == index;
 
                         return GestureDetector(
+                          behavior: HitTestBehavior.opaque,
                           onTap: () {
                             controller.setActiveColorModelIndex(index);
                           },

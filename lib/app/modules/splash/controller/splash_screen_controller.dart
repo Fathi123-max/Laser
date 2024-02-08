@@ -19,7 +19,7 @@ class SplashScreenController extends GetxController {
         onSuccess: (response) {
           // api done successfully
 
-          Get.toNamed(Routes.HOME);
+          Get.offAllNamed(Routes.HOME);
 
           // *) indicate success state
           // update();
@@ -39,8 +39,8 @@ class SplashScreenController extends GetxController {
       );
     } else {
       MySharedPref.getOnBoarding() == "OnBoardingDone"
-          ? Get.toNamed(Routes.LoginPage)
-          : Get.toNamed(Routes.Onboarding);
+          ? Get.offAllNamed(Routes.LoginPage)
+          : Get.offAllNamed(Routes.Onboarding);
     }
   }
 }

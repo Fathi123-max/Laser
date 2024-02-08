@@ -151,7 +151,7 @@ right at your doorstep''',
               NextButtonWidget(
                 onTap: () async {
                   MySharedPref.setOnboarding("OnBoardingDone");
-                  Get.offNamed(Routes.Language);
+                  Get.offAllNamed(Routes.Language);
                 },
                 style: MyStyles().onBordingButtonStyle,
               )

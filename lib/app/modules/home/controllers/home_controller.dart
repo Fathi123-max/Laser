@@ -205,10 +205,43 @@ class HomeController extends GetxController {
     );
   }
 
-  getModels(int dviceModelId) async {
+  getModels(int brandId) async {
     // *) perform api call
     await BaseClient.safeApiCall(
-      "${Constants.modelsUrl}/$dviceModelId",
+      "${Constants.modelsUrl}/$brandId",
+      headers: {
+        "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
+      },
+      RequestType.get,
+      onLoading: () {
+        // *) indicate loading state
+        apiDeviceModelCallStatus.value = ApiCallStatus.loading;
+        update();
+      },
+      onSuccess: (response) {
+        deviceModelList = RxList<DeviceModel>.from(response.data["payload"]
+                ["device_models"]
+            .map((e) => DeviceModel.fromJson(e as Map<String, dynamic>))
+            .toList());
+
+        apiDeviceModelCallStatus.value = ApiCallStatus.success;
+        deviceModelVisibleController.value = true;
+        update();
+      },
+      onError: (error) {
+        // show error message to user
+        BaseClient.handleApiError(error);
+        // *) indicate error status
+        apiDeviceModelCallStatus.value = ApiCallStatus.error;
+        update();
+      },
+    );
+  }
+
+  getService(int dviceModelId) async {
+    // *) perform api call
+    await BaseClient.safeApiCall(
+      "${Constants.getServicesUrl}/$dviceModelId",
       headers: {
         "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
       },
@@ -252,5 +285,10 @@ class HomeController extends GetxController {
     if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
     buffer.write(hexString.replaceFirst('#', ''));
     return Color(int.parse(buffer.toString(), radix: 16));
+  }
+
+  onPopInvoked() {
+    pageController.value.previousPage(
+        duration: const Duration(milliseconds: 300), curve: Curves.ease);
   }
 }

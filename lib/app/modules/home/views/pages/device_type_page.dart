@@ -87,7 +87,7 @@ class DeviceTypePage extends GetView<HomeController> {
                     ),
                   ),
                 ),
-                const Gap(25),
+                const Gap(10),
               ],
             ),
           );

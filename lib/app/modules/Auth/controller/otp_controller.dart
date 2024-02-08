@@ -35,7 +35,7 @@ class OtpController extends GetxController {
           if (response.data["status"]) {
             MySharedPref.setCurrentToken(response.data["payload"]["token"])
                 .then((value) => isForgotPassword == "default_value"
-                    ? Get.toNamed(Routes.HOME)
+                    ? Get.offAllNamed(Routes.HOME)
                     : Get.toNamed(Routes.NewPassword));
           }
         } // *) indicate success state
@@ -61,8 +61,8 @@ class OtpController extends GetxController {
       RequestType.post,
       data: {
         "mobile_number": isForgotPassword == "default_value"
-            ? Get.find<ForgotController>().mobileNumber.text
-            : Get.find<RegisterController>().mobileNumber.text
+            ? Get.find<RegisterController>().mobileNumber.text
+            : Get.find<ForgotController>().mobileNumber.text
       },
 
       onLoading: () {

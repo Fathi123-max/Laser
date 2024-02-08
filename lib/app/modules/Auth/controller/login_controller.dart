@@ -10,7 +10,7 @@ class LoginController extends GetxController {
   // craete a key for loginFormKey
   GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
 
-  TextEditingController mobileNumber = TextEditingController();
+  TextEditingController mobileNumber = TextEditingController(text: "966");
   TextEditingController password = TextEditingController();
 
   login() async {

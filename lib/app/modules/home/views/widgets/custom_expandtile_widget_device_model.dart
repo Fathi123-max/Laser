@@ -66,6 +66,7 @@ class DeviceModelExpandtileWidget extends GetWidget<HomeController> {
                   return Obx(() {
                     bool isActive = controller.activeModelIndex.value == index;
                     return GestureDetector(
+                      behavior: HitTestBehavior.opaque,
                       onTap: () {
                         controller.setActiveModelIndex(index);
                       },

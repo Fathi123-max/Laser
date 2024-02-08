@@ -9,5 +9,6 @@ class Constants {
   static const deviceTypesUrl = '$baseUrl/device-types';
   static const deviceBrandsUrl = '$baseUrl/get-brands';
   static const modelsUrl = '$baseUrl/get-models';
+  static const getServicesUrl = '$baseUrl/get-services';
   static const logoutUrl = '$baseUrl/logout';
 }

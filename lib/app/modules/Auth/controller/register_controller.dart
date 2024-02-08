@@ -11,7 +11,7 @@ class RegisterController extends GetxController {
   var registerFormKey = GlobalKey<FormState>(debugLabel: "registerFormKey").obs;
   RxBool isPasswordVisible = true.obs;
   TextEditingController userName = TextEditingController();
-  TextEditingController mobileNumber = TextEditingController();
+  TextEditingController mobileNumber = TextEditingController(text: "966");
   TextEditingController password = TextEditingController();
   var registerResponse = RegisterResponse().obs;
   var user = User().obs;

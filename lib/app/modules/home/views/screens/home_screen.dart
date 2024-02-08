@@ -18,22 +18,28 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return HomeBaseViewModel(
-      child: SizedBox(
-        height: 410.h,
-        child: PageView(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: controller.pageController.value,
-          children: const [
-            DeviceTypePage(),
-            DeviceBrandPage(),
-            ServicePage(),
-            VisitDetailsPage(),
-            OrderPage(),
-            OrderDitailsPage(),
-            AfterOrderPaidPage(),
-            PaymentDetailsPage()
-          ],
+    return WillPopScope(
+      onWillPop: () async {
+        controller.onPopInvoked();
+        return false;
+      },
+      child: HomeBaseViewModel(
+        child: SizedBox(
+          height: 300.h,
+          child: PageView(
+            physics: const NeverScrollableScrollPhysics(),
+            controller: controller.pageController.value,
+            children: const [
+              DeviceTypePage(),
+              DeviceBrandPage(),
+              ServicePage(),
+              VisitDetailsPage(),
+              OrderPage(),
+              OrderDitailsPage(),
+              AfterOrderPaidPage(),
+              PaymentDetailsPage()
+            ],
+          ),
         ),
       ),
     );

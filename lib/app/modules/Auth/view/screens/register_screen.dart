@@ -62,6 +62,7 @@ class RegisterPage extends GetView<RegisterController> {
               CustomTextFormField(
                 key: const Key("password2"),
                 hint: "password",
+                isRigter: true,
                 textEditingController: controller.password,
                 isPassword: true,
               ),

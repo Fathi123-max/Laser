@@ -1,5 +1,4 @@
 import 'package:device_preview/device_preview.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -10,6 +9,7 @@ import 'package:laser/app/data/models/device_type_model.dart';
 import 'package:laser/app/data/models/payload.dart';
 import 'package:laser/app/data/models/register_response.dart';
 import 'package:laser/app/data/models/user.dart';
+import 'package:laser/app/modules/Auth/binding/text_form_field_biniding.dart';
 import 'package:laser/app/utils/awesome_notifications_helper.dart';
 
 import 'app/config/translations/localization_service.dart';
@@ -48,7 +48,7 @@ Future<void> main() async {
   await AwesomeNotificationsHelper.init();
   runApp(
     DevicePreview(
-      enabled: !kReleaseMode, // Disable it in release builds.
+      // enabled: !kReleaseMode, // Disable it in release builds.
       builder: (context) => ScreenUtilInit(
         // todo add your (Xd / Figma) artboard size
         designSize: const Size(375, 667),
@@ -60,8 +60,8 @@ Future<void> main() async {
           return GetMaterialApp(
             // builder: DevicePreview.appBuilder, // Add the builder here
             // locale: DevicePreview.locale(context), // Add the locale here
-
-            title: "Laser",
+            initialBinding: TextFormFieldBinding(),
+            title: "ليزر",
             useInheritedMediaQuery: true,
             debugShowCheckedModeBanner: false,
             // initialBinding: SplashScreenBinding(),

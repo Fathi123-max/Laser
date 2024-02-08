@@ -30,7 +30,7 @@ class NewPasswordController extends GetxController {
           // api done successfully
 
           if (response.data["status"]) {
-            Get.toNamed(
+            Get.offAllNamed(
               Routes.HOME,
             );
           }

@@ -27,7 +27,7 @@ class OtpPage extends GetView<OtpController> {
               children: [
                 const Gap(53),
                 Text(
-                  'Forgot Password',
+                  'Otp Verification',
                   textAlign: TextAlign.center,
                   style: MyStyles().authBigTextStyle,
                 ),
@@ -100,7 +100,7 @@ received on your phone number''',
             ),
             const Gap(57),
             AuthButton(
-              data: "Send",
+              data: "Submit",
               onPressed: () {
                 controller.checkOtp(isForgotPassword: forgotPassword);
               },

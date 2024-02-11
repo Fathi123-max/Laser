@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
+import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_add_media_widget.dart';
 import 'package:laser/app/modules/home/views/widgets/expanded_tiles/custom_expandedtile_widget_services.dart';
 import 'package:laser/app/modules/home/views/widgets/page_banner.dart';
 
 import '../widgets/big_text_filed.dart';
 
-class ServicePage extends StatelessWidget {
+class ServicePage extends GetView<HomeController> {
   const ServicePage({
     super.key,
   });
@@ -16,6 +18,7 @@ class ServicePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      controller: controller.serviceScrollController,
       child: Column(
         children: [
           const Gap(30),

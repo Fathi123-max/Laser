@@ -48,6 +48,11 @@ Future<void> main() async {
 
   // initialize local notifications service
   await AwesomeNotificationsHelper.init();
+
+  /**runApp(
+      RestartWidget(
+        child:  MyApp(selectedLanguage)
+      ), */
   runApp(
     DevicePreview(
       // enabled: !kReleaseMode, // Disable it in release builds.

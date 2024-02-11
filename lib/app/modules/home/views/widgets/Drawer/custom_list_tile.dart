@@ -5,11 +5,11 @@ import 'package:laser/app/components/custom_image_widget.dart';
 
 class CustomListTile extends StatelessWidget {
   const CustomListTile({
-    Key? key,
+    super.key,
     this.onTap,
     this.iconPath,
     this.text,
-  }) : super(key: key);
+  });
   final Function()? onTap;
   final String? iconPath;
   final String? text;

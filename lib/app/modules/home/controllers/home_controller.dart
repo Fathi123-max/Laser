@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
 import 'package:get/get.dart';
+import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/data/local/my_shared_pref.dart';
 import 'package:laser/app/data/models/device_brand_model.dart';
 import 'package:laser/app/data/models/device_model.dart';
@@ -17,8 +18,8 @@ class HomeController extends GetxController {
   RxBool visibilityOfNextButton = false.obs;
   RxBool visibilityOfBackButton = false.obs;
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  List<dynamic>? deviceTypeList;
-  RxList<DeviceBrandModel>? deviceBrandList;
+  RxList<DeviceType> deviceTypeList = RxList([]);
+  RxList<DeviceBrandModel> deviceBrandList = RxList([]);
   RxList<DeviceModel> deviceModelList = RxList([]);
   RxList<ServiceModel> serviceList = RxList([]);
   RxList<dynamic> deviceColorList = RxList([]);
@@ -40,14 +41,21 @@ class HomeController extends GetxController {
   var activeColorModelIndex = (-1).obs; // Start with no active model
   var activeServiceModelIndex = (-1).obs; // Start with no active model
 
-  ScrollController scrollController = ScrollController();
+  ScrollController brandScrollController = ScrollController();
+  ScrollController serviceScrollController = ScrollController();
 
-  void scroll() {
-    scrollController.animateTo(
-      scrollController.position.maxScrollExtent,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
+  void scroll({bool? isBrand = false}) {
+    isBrand!
+        ? brandScrollController.animateTo(
+            brandScrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          )
+        : serviceScrollController.animateTo(
+            serviceScrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          );
   }
 
 // controll tapping of device and visibilty of buttons ***************************************************************
@@ -61,7 +69,7 @@ class HomeController extends GetxController {
     }
 
 // get device brands
-    getDeviceBrand();
+    getDeviceBrand(lang: LocalizationService.isItEnglish() ? "en" : "ar");
 
 // navgate to Brand page
     pageController.value.nextPage(
@@ -79,7 +87,8 @@ class HomeController extends GetxController {
     }
 
 // get device Models
-    getModels((deviceBrandList![index]).id!);
+    getModels((deviceBrandList![index]).id!,
+        lang: LocalizationService.isItEnglish() ? "en" : "ar");
 // navgate to Brand page
   }
 
@@ -103,7 +112,10 @@ class HomeController extends GetxController {
     MySharedPref.saveDeviceId(
         deviceModelList[activeModelIndex.value].id.toString());
 
-    getService(MySharedPref.getDeviceId() ?? "");
+    getService(
+      MySharedPref.getDeviceId() ?? "",
+      lang: LocalizationService.isItEnglish() ? "en" : "ar",
+    );
     update();
     deviceColorList.refresh();
     return Future.value();
@@ -144,7 +156,7 @@ class HomeController extends GetxController {
 
     deviceModelClicked(index: index).then((_) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        scroll();
+        scroll(isBrand: true);
       });
     });
     update();
@@ -153,11 +165,9 @@ class HomeController extends GetxController {
   void setActiveServicesIndex(int index) {
     activeServiceModelIndex.value = index;
 
-    // deviceModelClicked(index: index).then((_) {
-    //   WidgetsBinding.instance.addPostFrameCallback((_) {
-    //     scroll();
-    //   });
-    // });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      scroll(isBrand: false);
+    });
 
     MySharedPref.saveService(serviceList[index].serviceId.toString());
     update();
@@ -175,10 +185,11 @@ class HomeController extends GetxController {
   }
 
 //? http methods for api  ****************************************************************************************
-  getDeviceTypes() async {
+  getDeviceTypes({String? lang = ""}) async {
     await BaseClient.safeApiCall(
       Constants.deviceTypesUrl,
       headers: {
+        "Accept-Language": lang,
         "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
       },
       RequestType.get,
@@ -187,11 +198,13 @@ class HomeController extends GetxController {
         update();
       },
       onSuccess: (response) {
-        deviceTypeList = response.data["payload"]["device_types"]
-            .map((e) => DeviceType.fromJson(e as Map<String, dynamic>))
-            .toList();
-
         apiDeviceTypesCallStatus.value = ApiCallStatus.success;
+
+        deviceTypeList = RxList<DeviceType>.from(response.data["payload"]
+                ["device_types"]
+            .map((e) => DeviceType.fromJson(e as Map<String, dynamic>))
+            .toList());
+
         update();
       },
       onError: (error) {
@@ -204,11 +217,12 @@ class HomeController extends GetxController {
     );
   }
 
-  getDeviceBrand() async {
+  getDeviceBrand({String? lang = ""}) async {
     // *) perform api call
     await BaseClient.safeApiCall(
       "${Constants.deviceBrandsUrl}/${dviceTypeIndex! + 1}",
       headers: {
+        "Accept-Language": lang,
         "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
       },
       RequestType.get,
@@ -238,11 +252,12 @@ class HomeController extends GetxController {
     );
   }
 
-  getModels(int brandId) async {
+  getModels(int brandId, {String? lang = ""}) async {
     // *) perform api call
     await BaseClient.safeApiCall(
       "${Constants.modelsUrl}/$brandId",
       headers: {
+        "Accept-Language": lang,
         "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
       },
       RequestType.get,
@@ -271,11 +286,12 @@ class HomeController extends GetxController {
     );
   }
 
-  getService(String dviceModelId) async {
+  getService(String dviceModelId, {String? lang = ""}) async {
     // *) perform api call
     await BaseClient.safeApiCall(
       "${Constants.getServicesUrl}/$dviceModelId",
       headers: {
+        "Accept-Language": lang,
         "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
       },
       RequestType.get,
@@ -308,7 +324,8 @@ class HomeController extends GetxController {
 //? initialization block ******************************************************************************************
   @override
   void onInit() {
-    getDeviceTypes();
+    getDeviceTypes(lang: LocalizationService.isItEnglish() ? "en" : "ar");
+
     controllVisibilityOfButtons();
     super.onInit();
   }

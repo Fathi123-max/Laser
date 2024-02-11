@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/config/theme/my_theme.dart';
+import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
 
@@ -92,6 +93,34 @@ class ServisesExpandtileWidget extends GetWidget<HomeController> {
                               ),
                             ),
                             const Gap(15),
+                            Text(
+                              controller.serviceList.value[index].minPrice
+                                  .toString(),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14.sp,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            Text(
+                              "-",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14.sp,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            Text(
+                              "${controller.serviceList.value[index].maxPrice.toString()} ${LocalizationService.isItEnglish() ? "SAR" : "ر.س"}",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14.sp,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
                             const Spacer(),
                             Checkbox(
                               value: isActive,

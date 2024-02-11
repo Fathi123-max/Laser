@@ -92,6 +92,18 @@ class MySharedPref {
   /// get on boarding
   static String? getOnBoarding() => _sharedPreferences.getString(_onBoarding);
 
+  /// get current Mobile Number
+  static String? getCurrentMobileNumber() =>
+      _sharedPreferences.getString(_userMobileNUmber);
+
+  /// get device type
+  static String? getDeviceType() => _sharedPreferences.getString(_deviceType);
+
+  /// get device type
+  static String? getDeviceColor() => _sharedPreferences.getString(_deviceColor);
+  static String? getDeviceId() => _sharedPreferences.getString(_device_id);
+  static String? getServiceId() => _sharedPreferences.getString(_service_id);
+
   /// clear all data from shared pref
   static Future<void> clear() async => await _sharedPreferences.clear();
 }

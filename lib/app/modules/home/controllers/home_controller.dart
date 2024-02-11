@@ -36,6 +36,10 @@ class HomeController extends GetxController {
   var expandedDeviceModelTileController =
       ExpandedTileController(isExpanded: true).obs;
 
+  var activeModelIndex = (-1).obs; // Start with no active model
+  var activeColorModelIndex = (-1).obs; // Start with no active model
+  var activeServiceModelIndex = (-1).obs; // Start with no active model
+
   ScrollController scrollController = ScrollController();
 
   void scroll() {
@@ -96,7 +100,10 @@ class HomeController extends GetxController {
 
     deviceColorList.value =
         RxList<dynamic>.from(deviceModelList[index].colors as List<dynamic>);
+    MySharedPref.saveDeviceId(
+        deviceModelList[activeModelIndex.value].id.toString());
 
+    getService(MySharedPref.getDeviceId() ?? "");
     update();
     deviceColorList.refresh();
     return Future.value();
@@ -107,14 +114,10 @@ class HomeController extends GetxController {
     MySharedPref.saveDeviceColor(deviceColorList[index].toString());
     MySharedPref.saveDeviceType(
         deviceModelList[activeModelIndex.value].name.toString());
-    MySharedPref.saveDeviceId(
-        deviceModelList[activeModelIndex.value].id.toString());
 
-    getService(activeServiceModelIndex.value);
     // hide model and color
     deviceModelVisibleController.value = true;
     deviceColorVisibleController.value = true;
-    update();
 
     // navgate to Service page
     pageController.value.nextPage(
@@ -135,10 +138,6 @@ class HomeController extends GetxController {
     } else {}
     update();
   }
-
-  var activeModelIndex = (-1).obs; // Start with no active model
-  var activeColorModelIndex = (-1).obs; // Start with no active model
-  var activeServiceModelIndex = (-1).obs; // Start with no active model
 
   void setActiveModelIndex(int index) {
     activeModelIndex.value = index;
@@ -272,7 +271,7 @@ class HomeController extends GetxController {
     );
   }
 
-  getService(int dviceModelId) async {
+  getService(String dviceModelId) async {
     // *) perform api call
     await BaseClient.safeApiCall(
       "${Constants.getServicesUrl}/$dviceModelId",
@@ -282,6 +281,7 @@ class HomeController extends GetxController {
       RequestType.get,
       onLoading: () {
         // *) indicate loading state
+
         apiDeviceModelCallStatus.value = ApiCallStatus.loading;
         update();
       },

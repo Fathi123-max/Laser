@@ -63,7 +63,7 @@ class ServisesExpandtileWidget extends GetWidget<HomeController> {
                   separatorBuilder: (context, index) {
                     return const CustomDivider();
                   },
-                  itemCount: controller.serviceList.length,
+                  itemCount: controller.serviceList.value.length,
                   padding: EdgeInsets.all(10.h),
                   primary: true,
                   itemBuilder: (context, index) {
@@ -82,7 +82,8 @@ class ServisesExpandtileWidget extends GetWidget<HomeController> {
                           child: Row(children: [
                             const Gap(23),
                             Text(
-                              controller.serviceList[index].categoryName!,
+                              controller.serviceList.value[index].categoryName
+                                  .toString(),
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 14.sp,

@@ -8,7 +8,7 @@ part of 'service_model.dart';
 
 class ServiceModelAdapter extends TypeAdapter<ServiceModel> {
   @override
-  final int typeId = 1;
+  final int typeId = 8;
 
   @override
   ServiceModel read(BinaryReader reader) {

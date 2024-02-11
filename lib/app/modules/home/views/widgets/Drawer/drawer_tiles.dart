@@ -5,6 +5,7 @@ import 'package:laser/app/data/local/my_shared_pref.dart';
 import 'package:laser/app/routes/app_pages.dart';
 import 'package:laser/app/services/base_client.dart';
 
+import '../../../../../config/translations/localization_service.dart';
 import 'custom_list_tile.dart';
 
 class DrawerTiles extends StatelessWidget {
@@ -31,9 +32,12 @@ class DrawerTiles extends StatelessWidget {
           text: "Guarantees",
         ),
         CustomListTile(
-          onTap: () {},
+          onTap: () {
+            LocalizationService.updateLanguage(
+                !LocalizationService.isItEnglish() ? "en" : "ar");
+          },
           iconPath: "language.png",
-          text: "العربية",
+          text: !LocalizationService.isItEnglish() ? "English" : "العربية",
         ),
         CustomListTile(
           onTap: () {},

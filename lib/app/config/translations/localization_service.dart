@@ -49,6 +49,7 @@ class LocalizationService extends Translations {
     if (!isLanguageSupported(languageCode)) return;
     // update current language in shared pref
     await MySharedPref.setCurrentLanguage(languageCode);
+
     if (!Get.testMode) {
       print("update language to $languageCode");
       Get.updateLocale(supportedLanguages[languageCode]!);

@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 
 part 'service_model.g.dart';
 
-@HiveType(typeId: 1)
+@HiveType(typeId: 8)
 class ServiceModel extends HiveObject {
   @HiveField(1)
   final String? categoryName;
@@ -36,18 +36,18 @@ class ServiceModel extends HiveObject {
   //to json
 
   Map<String, dynamic> toJson() => {
-        "categoryName": categoryName,
-        "minPrice": minPrice,
-        "maxPrice": maxPrice,
-        "serviceId": serviceId,
+        "category_name": categoryName,
+        "min_price": minPrice,
+        "max_price": maxPrice,
+        "service_id": serviceId,
       };
 
   //from json
 
   factory ServiceModel.fromJson(Map<String, dynamic> json) => ServiceModel(
-        categoryName: json["categoryName"],
-        minPrice: json["minPrice"],
-        maxPrice: json["maxPrice"],
-        serviceId: json["serviceId"],
+        categoryName: json["category_name"],
+        minPrice: json["min_price"],
+        maxPrice: json["max_price"],
+        serviceId: json["service_id"],
       );
 }

@@ -7,6 +7,7 @@ import 'package:laser/app/data/models/device_brand_model.dart';
 import 'package:laser/app/data/models/device_model.dart';
 import 'package:laser/app/data/models/device_type_model.dart';
 import 'package:laser/app/data/models/service_model.dart';
+import 'package:laser/app/routes/app_pages.dart';
 
 import '../../../core/constants.dart';
 import '../../../services/api_call_status.dart';
@@ -44,20 +45,6 @@ class HomeController extends GetxController {
   ScrollController brandScrollController = ScrollController();
   ScrollController serviceScrollController = ScrollController();
 
-  void scroll({bool? isBrand = false}) {
-    isBrand!
-        ? brandScrollController.animateTo(
-            brandScrollController.position.maxScrollExtent,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-          )
-        : serviceScrollController.animateTo(
-            serviceScrollController.position.maxScrollExtent,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-          );
-  }
-
 // controll tapping of device and visibilty of buttons ***************************************************************
   void controlleDeviceTypeTap(
     int index,
@@ -92,17 +79,6 @@ class HomeController extends GetxController {
 // navgate to Brand page
   }
 
-  controllVisibilityOfButtons() {
-    pageController.value.addListener(() {
-      int currentPage = pageController.value.page?.round() ?? 0;
-      // Example: Update UI based on the current page
-      visibilityOfBackButton.value = currentPage > 0;
-
-      // Set the visibility of the next button based on the current page
-      visibilityOfNextButton.value = currentPage > 500;
-    });
-  }
-
   Future<void> deviceModelClicked({required int index}) {
     deviceColorVisibleController.value = true;
     // setActiveModelIndex(index);
@@ -121,6 +97,39 @@ class HomeController extends GetxController {
     return Future.value();
   }
 
+  // Call this method when an item is tapped
+  void setActiveColorModelIndex(int index) {
+    activeColorModelIndex.value = index;
+    // Add any other logic necessary when an item becomes active
+
+    deviceColoeClicked(
+      index: index,
+    );
+    update(); // Call this if you're using GetX and you need to update the UI
+  }
+
+  void setActiveServicesIndex(int index) {
+    activeServiceModelIndex.value = index;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      scroll(isBrand: false);
+    });
+
+    MySharedPref.saveService(serviceList[index].serviceId.toString());
+    update();
+  }
+
+  void setActiveModelIndex(int index) {
+    activeModelIndex.value = index;
+
+    deviceModelClicked(index: index).then((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        scroll(isBrand: true);
+      });
+    });
+    update();
+  }
+
   void deviceColoeClicked({required int index}) {
     // save device color and device type in shared pref
     MySharedPref.saveDeviceColor(deviceColorList[index].toString());
@@ -136,52 +145,6 @@ class HomeController extends GetxController {
       duration: const Duration(milliseconds: 500),
       curve: Curves.ease,
     );
-  }
-
-  void backButtonLogic() {
-    pageController.value.previousPage(
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeInOut,
-    );
-
-    if (pageController.value.page == 1) {
-      deviceModelVisibleController.value = false;
-      deviceColorVisibleController.value = false;
-    } else {}
-    update();
-  }
-
-  void setActiveModelIndex(int index) {
-    activeModelIndex.value = index;
-
-    deviceModelClicked(index: index).then((_) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        scroll(isBrand: true);
-      });
-    });
-    update();
-  }
-
-  void setActiveServicesIndex(int index) {
-    activeServiceModelIndex.value = index;
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      scroll(isBrand: false);
-    });
-
-    MySharedPref.saveService(serviceList[index].serviceId.toString());
-    update();
-  }
-
-  // Call this method when an item is tapped
-  void setActiveColorModelIndex(int index) {
-    activeColorModelIndex.value = index;
-    // Add any other logic necessary when an item becomes active
-
-    deviceColoeClicked(
-      index: index,
-    );
-    update(); // Call this if you're using GetX and you need to update the UI
   }
 
 //? http methods for api  ****************************************************************************************
@@ -341,5 +304,83 @@ class HomeController extends GetxController {
   onPopInvoked() {
     pageController.value.previousPage(
         duration: const Duration(milliseconds: 300), curve: Curves.ease);
+  }
+
+  void backButtonLogic() {
+    pageController.value.previousPage(
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+
+    if (pageController.value.page == 1) {
+      deviceModelVisibleController.value = false;
+      deviceColorVisibleController.value = false;
+    } else {}
+    update();
+  }
+
+  controllVisibilityOfButtons() {
+    pageController.value.addListener(() {
+      int currentPage = pageController.value.page?.round() ?? 0;
+      // Example: Update UI based on the current page
+      visibilityOfBackButton.value = currentPage > 0;
+
+      // Set the visibility of the next button based on the current page
+      visibilityOfNextButton.value = currentPage > 500;
+    });
+  }
+
+  void changLang() {
+    LocalizationService.updateLanguage(
+            !LocalizationService.isItEnglish() ? "en" : "ar")
+        .then((_) async {
+      getDeviceTypes(lang: LocalizationService.isItEnglish() ? "en" : "ar");
+      pageController.value.animateToPage(0,
+          duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
+      deviceBrandList.clear();
+      deviceTypeList.clear();
+      deviceModelList.clear();
+      deviceModelVisibleController.value = false;
+      deviceColorVisibleController.value = false;
+    });
+  }
+
+  void scroll({bool? isBrand = false}) {
+    isBrand!
+        ? brandScrollController.animateTo(
+            brandScrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          )
+        : serviceScrollController.animateTo(
+            serviceScrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          );
+  }
+
+  signout() async {
+    // *) perform api call
+    await BaseClient.safeApiCall(
+      Constants.logoutUrl, // url
+      RequestType.get, // request type (get,post,delete,put)
+      onLoading: () {
+        // *) indicate loading state
+      },
+      onSuccess: (response) {
+        // *) indicate success state
+      },
+      // if you don't pass this method base client
+      // will automaticly handle error and show message to user
+      onError: (error) {
+        // show error message to user
+
+        if (error.statusCode == 401) {
+          Get.offAllNamed(Routes.LoginPage);
+        }
+        MySharedPref.clear();
+        // BaseClient.handleApiError(error);
+      },
+    );
   }
 }

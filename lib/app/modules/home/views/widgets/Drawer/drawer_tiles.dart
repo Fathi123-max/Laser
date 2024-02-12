@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:laser/app/core/constants.dart';
-import 'package:laser/app/data/local/my_shared_pref.dart';
 import 'package:laser/app/modules/home/controllers/home_controller.dart';
-import 'package:laser/app/routes/app_pages.dart';
-import 'package:laser/app/services/base_client.dart';
 
 import '../../../../../config/translations/localization_service.dart';
 import 'custom_list_tile.dart';
 
-class DrawerTiles extends StatelessWidget {
+class DrawerTiles extends GetWidget<HomeController> {
   const DrawerTiles({
     super.key,
   });
@@ -34,22 +30,7 @@ class DrawerTiles extends StatelessWidget {
         ),
         CustomListTile(
           onTap: () {
-            LocalizationService.updateLanguage(
-                    !LocalizationService.isItEnglish() ? "en" : "ar")
-                .then((_) async {
-              Get.find<HomeController>().getDeviceTypes(
-                  lang: LocalizationService.isItEnglish() ? "en" : "ar");
-              Get.find<HomeController>().pageController.value.animateToPage(0,
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.easeInOut);
-              Get.find<HomeController>().deviceBrandList.clear();
-              Get.find<HomeController>().deviceTypeList.clear();
-              Get.find<HomeController>().deviceModelList.clear();
-              Get.find<HomeController>().deviceModelVisibleController.value =
-                  false;
-              Get.find<HomeController>().deviceColorVisibleController.value =
-                  false;
-            });
+            controller.changLang();
           },
           iconPath: "language.png",
           text: !LocalizationService.isItEnglish() ? "English" : "العربية",
@@ -71,37 +52,12 @@ class DrawerTiles extends StatelessWidget {
         ),
         CustomListTile(
           onTap: () {
-            signout();
+            controller.signout();
           },
           iconPath: "sign-out.png",
           text: "Sign Out",
         ),
       ],
-    );
-  }
-
-  signout() async {
-    // *) perform api call
-    await BaseClient.safeApiCall(
-      Constants.logoutUrl, // url
-      RequestType.get, // request type (get,post,delete,put)
-      onLoading: () {
-        // *) indicate loading state
-      },
-      onSuccess: (response) {
-        // *) indicate success state
-      },
-      // if you don't pass this method base client
-      // will automaticly handle error and show message to user
-      onError: (error) {
-        // show error message to user
-
-        if (error.statusCode == 401) {
-          Get.offAllNamed(Routes.LoginPage);
-        }
-        MySharedPref.clear();
-        // BaseClient.handleApiError(error);
-      },
     );
   }
 }

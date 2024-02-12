@@ -69,9 +69,21 @@ received on your phone number''',
               borderWidth: 0.2,
 
               decoration: const InputDecoration(
-                  border: UnderlineInputBorder(
+                  counterText: "",
+                  // hoverColor: Colors.white,
+                  // fillColor: Colors.white,
+                  // focusColor: Colors.white,
+                  // filled: true,
+                  enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
                           color: Colors.black,
+                          style: BorderStyle.solid,
+                          width: 2,
+                          strokeAlign: 0)),
+                  enabled: true,
+                  border: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                          // color: Colors.black,
                           style: BorderStyle.solid,
                           width: 2,
                           strokeAlign: 0))),

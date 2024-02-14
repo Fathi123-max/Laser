@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class NavgationTextButtons extends StatelessWidget {
   const NavgationTextButtons({
-    Key? key,
+    super.key,
     this.onTap,
     required this.text,
-  }) : super(key: key);
+  });
   final Function()? onTap;
   final String text;
   @override
@@ -17,7 +18,7 @@ class NavgationTextButtons extends StatelessWidget {
           width: 29.w,
           height: 20.h,
           child: Text(
-            text,
+            text.tr,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: const Color(0xFF1B1D28),

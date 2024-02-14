@@ -31,7 +31,7 @@ class ServicePage extends GetView<HomeController> {
           SizedBox(
             width: 280.w,
             child: Text(
-              'You can add a pic or video of your device if \nneeded here!',
+              'You can add a pic or video of your device if \nneeded here!'.tr,
               style: TextStyle(
                 color: const Color(0xFF1B1926),
                 fontSize: 12.sp,
@@ -45,7 +45,7 @@ class ServicePage extends GetView<HomeController> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const Gap(50),
-              Text('Add photo/ Video',
+              Text('Add photo/ Video'.tr,
                   textAlign: TextAlign.center,
                   style: MyStyles().fontSize14WeightBold),
             ],

@@ -35,7 +35,7 @@ class ServisesExpandtileWidget extends GetWidget<HomeController> {
                 MyTheme.getThemeData(isLight: true).scaffoldBackgroundColor,
           ),
           trailingRotation: 1,
-          title: Text('Device Model',
+          title: Text('Device Model'.tr,
               style: MyStyles()
                   .fontSize14WeightBold
                   .copyWith(color: Colors.black)),

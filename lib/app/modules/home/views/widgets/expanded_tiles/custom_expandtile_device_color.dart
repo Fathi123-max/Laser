@@ -37,7 +37,7 @@ class DeviceColorExpandtileWidget extends GetWidget<HomeController> {
               MyTheme.getThemeData(isLight: true).scaffoldBackgroundColor,
         ),
         trailingRotation: 1,
-        title: Text('Device Color',
+        title: Text('Device Color'.tr,
             style:
                 MyStyles().fontSize14WeightBold.copyWith(color: Colors.black)),
         content: Container(

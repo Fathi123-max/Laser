@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:laser/app/components/custom_image_widget.dart';
 
 class CustomListTile extends StatelessWidget {
@@ -24,7 +25,7 @@ class CustomListTile extends StatelessWidget {
         child: Row(children: [
           AssetImageView(fileName: iconPath ?? "history.png"),
           const Gap(17),
-          Text(text ?? "Activity History",
+          Text(text != null ? text!.tr : "Activity History".tr,
               style: TextStyle(
                 color: const Color(0xFFF1F0F5),
                 fontSize: 12.sp,

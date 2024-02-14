@@ -23,7 +23,7 @@ class DeviceBrandPage extends GetWidget<HomeController> {
           const PageBanner(
               pageIndex: 2,
               pageTitle: "Device Brand",
-              pageSubTitle: "Select your device Brand"),
+              pageSubTitle: "Select your device brand"),
           const Gap(20),
           const DeviceBrandWidget(),
           const Gap(25),

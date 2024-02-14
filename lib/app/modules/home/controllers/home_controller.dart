@@ -359,6 +359,72 @@ class HomeController extends GetxController {
           );
   }
 
+//?  image picker functions and video picker functions
+/**
+// handle image before to make result as string pass to upload image function
+// get image from device and upload it to API
+Future<void> handleImageFromCamera() async {
+  final image = await ImagePicker().pickImage(source: ImageSource.camera);
+  if (image != null) {
+    final file = File(image.path);
+    await uploadImage(file);
+  }
+}
+
+// upload image to API
+uploadImage(File image) async {
+  // *) perform api call
+  await BaseClient.safeApiCall(
+    Constants.uploadImageUrl, // url
+    RequestType.post, // request type (get,post,delete,put)
+    onLoading: () {
+      // *) indicate loading state
+    },
+    onSuccess: (response) {
+      // *) indicate success state
+    },
+    // if you don't pass this method base client
+    // will automatically handle error and show message to user
+    onError: (error) {
+      // show error message to user
+      BaseClient.handleApiError(error);
+    },
+  );
+}
+
+ // create function to get video from device and upload it to API
+ Future<void> handleVideoFromCamera() async {
+   final video = await ImagePicker().pickVideo(source: ImageSource.camera);
+   if (video != null) {
+     final file = File(video.path);
+     await uploadVideo(file);
+   }
+ }
+
+ // upload video to API
+ uploadVideo(File video) async {
+   // perform api call
+   await BaseClient.safeApiCall(
+     Constants.uploadVideoUrl, // url
+     RequestType.post, // request type (get,post,delete,put)
+     onLoading: () {
+       // indicate loading state
+     },
+     onSuccess: (response) {
+       // indicate success state
+     },
+     // if you don't pass this method base client
+     // will automatically handle error and show message to user
+     onError: (error) {
+       // show error message to user
+       BaseClient.handleApiError(error);
+     },
+   );
+ }
+
+
+ */
+
   signout() async {
     // *) perform api call
     await BaseClient.safeApiCall(

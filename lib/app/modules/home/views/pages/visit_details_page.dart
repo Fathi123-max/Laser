@@ -134,63 +134,73 @@ class VisitDetailsPage extends GetWidget<HomeController> {
               child: Stack(
                 children: [
                   Obx(() {
-                    return ListView.separated(
-                        shrinkWrap: true,
-                        separatorBuilder: (context, index) {
-                          return const CustomDivider(
-                            fullWidth: true,
-                          );
-                        },
-                        itemCount: controller.hoursList.value.length,
-                        padding: EdgeInsets.all(10.h),
-                        primary: true,
-                        itemBuilder: (context, index) {
-                          return Obx(() {
-                            bool isActive =
-                                controller.activeHoureIndex.value == index;
-                            return GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              onTap: () {
-                                controller.setHoursIndex(index);
-                              },
-                              child: Container(
-                                height: 38.h,
-                                alignment: Alignment.center,
-                                child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Spacer(),
-                                      Text(
-                                        controller.hoursList.value[index]
-                                            .toString()
-                                            .toString(),
-                                        style: MyStyles()
-                                            .languageButtonStyle
-                                            .copyWith(
-                                              fontSize: 20.sp,
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                      ),
-                                      const Gap(56),
-                                      Transform.scale(
-                                        scale: 1,
-                                        child: Checkbox(
-                                          value: isActive,
-                                          activeColor: Colors.black,
-                                          checkColor: Colors.white,
-                                          // Add this line to set the disabled color to grey
+                    return controller.hoursList.value.length == 0
+                        ? Container(
+                            alignment: Alignment.center,
+                            child: Text(
+                              "Click Date to Show Hours".tr,
+                              style: TextStyle(
+                                  color: Colors.black, fontSize: 23.sp),
+                            ),
+                          )
+                        : ListView.separated(
+                            shrinkWrap: true,
+                            separatorBuilder: (context, index) {
+                              return const CustomDivider(
+                                fullWidth: true,
+                              );
+                            },
+                            itemCount: controller.hoursList.value.length,
+                            padding: EdgeInsets.all(10.h),
+                            primary: true,
+                            itemBuilder: (context, index) {
+                              return Obx(() {
+                                bool isActive =
+                                    controller.activeHoureIndex.value == index;
+                                return GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  onTap: () {
+                                    controller.setHoursIndex(index);
+                                  },
+                                  child: Container(
+                                    height: 38.h,
+                                    alignment: Alignment.center,
+                                    child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const Spacer(),
+                                          Text(
+                                            controller.hoursList.value[index]
+                                                .toString()
+                                                .toString(),
+                                            style: MyStyles()
+                                                .languageButtonStyle
+                                                .copyWith(
+                                                  fontSize: 20.sp,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                          ),
+                                          const Gap(56),
+                                          Transform.scale(
+                                            scale: 1,
+                                            child: Checkbox(
+                                              value: isActive,
+                                              activeColor: Colors.black,
+                                              checkColor: Colors.white,
+                                              // Add this line to set the disabled color to grey
 
-                                          shape: const CircleBorder(),
-                                          onChanged: (value) {
-                                            controller.setHoursIndex(index);
-                                          },
-                                        ),
-                                      ),
-                                    ]),
-                              ),
-                            );
-                          });
-                        });
+                                              shape: const CircleBorder(),
+                                              onChanged: (value) {
+                                                controller.setHoursIndex(index);
+                                              },
+                                            ),
+                                          ),
+                                        ]),
+                                  ),
+                                );
+                              });
+                            });
                   }),
                   Align(
                       alignment: Alignment.bottomCenter,
@@ -207,15 +217,8 @@ class VisitDetailsPage extends GetWidget<HomeController> {
               children: [
                 AuthButton(
                   onPressed: () {
-                    Get.find<HomeController>()
-                        .pageController
-                        .value
-                        .nextPage(
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.easeInOut)
-                        .then((value) => Get.find<HomeController>()
-                            .visibilityOfBanner
-                            .value = false);
+                    controller.createOrder(
+                        lang: LocalizationService.isItEnglish() ? "en" : "ar");
                   },
                   data: "Place Order",
                   height: 37.h,

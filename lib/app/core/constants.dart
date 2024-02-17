@@ -12,4 +12,7 @@ class Constants {
   static const getServicesUrl = '$baseUrl/get-services';
   static const logoutUrl = '$baseUrl/logout';
   static const getworkingtimeUrl = '$baseUrl/get-working-time';
+  static const createMaintenanceOrderUrl = '$baseUrl/create-maintenance-order';
+  static const getAllMaintenanceOrderUrl =
+      '$baseUrl/get-all-maintenance-orders';
 }

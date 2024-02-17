@@ -51,7 +51,8 @@ class HomeController extends GetxController {
   ScrollController serviceScrollController = ScrollController();
   ScrollController hoursScrollController = ScrollController();
 
-  RxString date = RxString("");
+  RxString chosenDate = RxString("");
+  RxString chosenHours = RxString("");
 
   TextEditingController addressController = TextEditingController();
   TextEditingController noteController = TextEditingController();
@@ -78,10 +79,10 @@ class HomeController extends GetxController {
   controlleDate(String date) {
     String desiredOutput = date.toString().substring(0, 10);
 
-    this.date.value = desiredOutput;
+    this.chosenDate.value = desiredOutput;
     getWorkingHours(
         lang: LocalizationService.isItEnglish() ? "en" : "ar",
-        date: this.date.value);
+        date: this.chosenDate.value);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       scroll(isHours: true);
@@ -340,6 +341,89 @@ class HomeController extends GetxController {
         BaseClient.handleApiError(error);
         // *) indicate error status
         apiWorkingHoursCallStatus.value = ApiCallStatus.error;
+        update();
+      },
+    );
+  }
+
+  createOrder({String? lang}) async {
+    await BaseClient.safeApiCall(
+      Constants.createMaintenanceOrderUrl,
+      headers: {
+        "Accept-Language": lang,
+        "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
+      },
+      RequestType.post,
+      data: {
+        "device_type": "1",
+        "device_brand": "13",
+        "device_model": "5",
+        "device_color_name": "Black",
+        "problem_info": "Test",
+        "address": "test address",
+        "arrival_date": "2024-02-20",
+        "arrival_time": "10:00 : 11:00",
+        "payment_type": "1",
+        "device_services[]": "2",
+        "device_services[]": "6"
+      },
+      onLoading: () {
+        // apiWorkingHoursCallStatus.value = ApiCallStatus.loading;
+        update();
+      },
+      onSuccess: (response) {
+        // hoursList.value = RxList<dynamic>.from(
+        //     response.data["payload"]["working_times"].map((e) => e));
+        print(response.data["payload"]["order_id"].toString());
+        pageController.value
+            .nextPage(
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.easeInOut)
+            .then((value) =>
+                Get.find<HomeController>().visibilityOfBanner.value = false);
+        // apiDeviceModelCallStatus.value = ApiCallStatus.success;
+        // deviceModelVisibleController.value = true;
+        update();
+      },
+      onError: (error) {
+        // show error message to user
+        BaseClient.handleApiError(error);
+        // *) indicate error status
+        // apiWorkingHoursCallStatus.value = ApiCallStatus.error;
+        update();
+      },
+    );
+  }
+
+  getAllOrders({String? lang}) async {
+    await BaseClient.safeApiCall(
+      Constants.getAllMaintenanceOrderUrl,
+      headers: {
+        "Accept-Language": lang,
+        "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
+      },
+      RequestType.get,
+      onLoading: () {
+        // apiDeviceTypesCallStatus.value = ApiCallStatus.loading;
+        // update();
+      },
+      onSuccess: (response) {
+        // apiDeviceTypesCallStatus.value = ApiCallStatus.success;
+
+        // deviceTypeList = RxList<DeviceType>.from(response.data["payload"]
+        //         ["device_types"]
+        //     .map((e) => DeviceType.fromJson(e as Map<String, dynamic>))
+        //     .toList());
+
+        print(response.data["payload"]["data"]);
+
+        update();
+      },
+      onError: (error) {
+        // show error message to user
+        BaseClient.handleApiError(error);
+        // *) indicate error status
+        // apiDeviceTypesCallStatus.value = ApiCallStatus.error;
         update();
       },
     );

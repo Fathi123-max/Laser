@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
+import 'package:laser/app/modules/home/controllers/home_controller.dart';
 
-class BigTextFiled extends StatelessWidget {
+class BigTextFiled extends GetView<HomeController> {
   const BigTextFiled({
+    this.isNote,
     super.key,
     this.width,
     this.height,
   });
   final double? width;
   final double? height;
+  final bool? isNote;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,6 +21,9 @@ class BigTextFiled extends StatelessWidget {
       height: height ?? 97.h, // Your custom height
       decoration: MyStyles().shapeDecoration,
       child: TextField(
+        controller: isNote == false
+            ? controller.addressController
+            : controller.noteController,
         maxLines: 50,
         decoration: InputDecoration(
           hintText: "Add your address here...",

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
+import 'package:laser/app/modules/Auth/view/widgets/auth_button.dart';
 import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_add_media_widget.dart';
 import 'package:laser/app/modules/home/views/widgets/expanded_tiles/custom_expandedtile_widget_services.dart';
@@ -73,8 +74,14 @@ class ServicePage extends GetView<HomeController> {
             ],
           ),
           const Gap(14),
-          const BigTextFiled(),
-          const Gap(41)
+          const BigTextFiled(
+            isNote: true,
+          ),
+          const Gap(41),
+          AuthButton(
+            data: "Submit".tr,
+            onPressed: () => controller.supmitService(),
+          )
         ],
       ),
     );

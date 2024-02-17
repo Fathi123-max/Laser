@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
+import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/modules/Auth/view/widgets/auth_button.dart';
 import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/big_text_filed.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
 import 'package:laser/app/modules/home/views/widgets/page_banner.dart';
 
-class VisitDetailsPage extends StatelessWidget {
+class VisitDetailsPage extends GetWidget<HomeController> {
   const VisitDetailsPage({
     super.key,
   });
@@ -18,21 +20,22 @@ class VisitDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      controller: controller.hoursScrollController,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 25.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Gap(30),
-            const PageBanner(
-                pageIndex: 1,
-                pageTitle: "Device Type",
-                pageSubTitle: "Select your device type"),
+            PageBanner(
+                pageIndex: 4,
+                pageTitle: "Visit details".tr,
+                pageSubTitle: "Please add information needed".tr),
             const Gap(26),
             Row(
               children: [
                 Gap(13.w),
-                Text('Delivery location',
+                Text('Delivery location'.tr,
                     textAlign: TextAlign.center,
                     style: MyStyles().authBigTextStyle.copyWith(
                           color: const Color(0xFF1B1926),
@@ -42,6 +45,7 @@ class VisitDetailsPage extends StatelessWidget {
             ),
             const Gap(12),
             BigTextFiled(
+              isNote: false,
               width: 300.w,
             ),
             const Gap(14),
@@ -51,7 +55,7 @@ class VisitDetailsPage extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Technician arrival date',
+                    Text('Technician arrival date'.tr,
                         textAlign: TextAlign.center,
                         style: MyStyles()
                             .fontSize12Weight700
@@ -59,7 +63,7 @@ class VisitDetailsPage extends StatelessWidget {
                     Opacity(
                       opacity: 0.30,
                       child: Text(
-                        'January, 2024',
+                        DateFormat('MMMM, yyyy').format(DateTime.now()),
                         textAlign: TextAlign.start,
                         style: MyStyles().fontSize12Weight400.copyWith(
                               color: const Color(0xFF1B1926),
@@ -74,9 +78,8 @@ class VisitDetailsPage extends StatelessWidget {
             EasyDateTimeLine(
               initialDate: DateTime.now(),
               timeLineProps: const EasyTimeLineProps(),
-              onDateChange: (selectedDate) {
-                //`selectedDate` the new date selected.
-              },
+              onDateChange: (selectedDate) =>
+                  controller.controlleDate(selectedDate.toString()),
               headerProps: const EasyHeaderProps(
                 showHeader: false,
               ),
@@ -96,13 +99,13 @@ class VisitDetailsPage extends StatelessWidget {
                             width: 2, color: const Color(0xFF1B1D28)),
                         borderRadius: BorderRadius.all(Radius.circular(10.r)))),
               ),
-              locale: "en",
+              locale: LocalizationService.isItEnglish() ? "en" : "ar",
             ),
             const Gap(14),
             Row(
               children: [
                 Gap(13.w),
-                Text('Technician arrival time',
+                Text('Technician arrival time'.tr,
                     textAlign: TextAlign.center,
                     style: MyStyles().languageButtonStyle.copyWith(
                           fontSize: 12.sp,
@@ -114,58 +117,6 @@ class VisitDetailsPage extends StatelessWidget {
             Container(
               width: 311.w,
               height: 210.h,
-              child: Stack(
-                children: [
-                  ListView.separated(
-                      shrinkWrap: true,
-                      separatorBuilder: (context, index) {
-                        return const CustomDivider(
-                          fullWidth: true,
-                        );
-                      },
-                      itemCount: 2,
-                      padding: EdgeInsets.all(10.h),
-                      primary: true,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          height: 38.h,
-                          alignment: Alignment.center,
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Spacer(),
-                                Text(
-                                  '11:00 - 12:00',
-                                  style:
-                                      MyStyles().languageButtonStyle.copyWith(
-                                            fontSize: 20.sp,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                ),
-                                const Gap(56),
-                                Transform.scale(
-                                  scale: 1,
-                                  child: Checkbox(
-                                    value: true,
-                                    activeColor: Colors.black,
-                                    checkColor: Colors.white,
-                                    // Add this line to set the disabled color to grey
-
-                                    shape: const CircleBorder(),
-                                    onChanged: (value) {},
-                                  ),
-                                ),
-                              ]),
-                        );
-                      }),
-                  Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Icon(
-                        Icons.arrow_drop_down_rounded,
-                        size: 50.w,
-                      ))
-                ],
-              ),
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
@@ -178,6 +129,75 @@ class VisitDetailsPage extends StatelessWidget {
                     offset: Offset(0, 4),
                     spreadRadius: 1,
                   )
+                ],
+              ),
+              child: Stack(
+                children: [
+                  Obx(() {
+                    return ListView.separated(
+                        shrinkWrap: true,
+                        separatorBuilder: (context, index) {
+                          return const CustomDivider(
+                            fullWidth: true,
+                          );
+                        },
+                        itemCount: controller.hoursList.value.length,
+                        padding: EdgeInsets.all(10.h),
+                        primary: true,
+                        itemBuilder: (context, index) {
+                          return Obx(() {
+                            bool isActive =
+                                controller.activeHoureIndex.value == index;
+                            return GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: () {
+                                controller.setHoursIndex(index);
+                              },
+                              child: Container(
+                                height: 38.h,
+                                alignment: Alignment.center,
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Spacer(),
+                                      Text(
+                                        controller.hoursList.value[index]
+                                            .toString()
+                                            .toString(),
+                                        style: MyStyles()
+                                            .languageButtonStyle
+                                            .copyWith(
+                                              fontSize: 20.sp,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                      ),
+                                      const Gap(56),
+                                      Transform.scale(
+                                        scale: 1,
+                                        child: Checkbox(
+                                          value: isActive,
+                                          activeColor: Colors.black,
+                                          checkColor: Colors.white,
+                                          // Add this line to set the disabled color to grey
+
+                                          shape: const CircleBorder(),
+                                          onChanged: (value) {
+                                            controller.setHoursIndex(index);
+                                          },
+                                        ),
+                                      ),
+                                    ]),
+                              ),
+                            );
+                          });
+                        });
+                  }),
+                  Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Icon(
+                        Icons.arrow_drop_down_rounded,
+                        size: 50.w,
+                      ))
                 ],
               ),
             ),

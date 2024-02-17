@@ -20,7 +20,7 @@ class DeviceModel extends HiveObject {
   DeviceModel copyWith({
     int? id,
     String? name,
-    List<String>? colors,
+    List<dynamic>? colors,
   }) =>
       DeviceModel(
         id: id ?? this.id,

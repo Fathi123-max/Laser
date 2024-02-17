@@ -87,7 +87,10 @@ class DeviceColorExpandtileWidget extends GetWidget<HomeController> {
                               const Gap(23),
                               Obx(() {
                                 return Text(
-                                  controller.deviceColorList[index],
+                                  (controller.deviceColorList[index])[
+                                              'color_name']
+                                          .toString() ??
+                                      '',
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 14.sp,
@@ -104,7 +107,9 @@ class DeviceColorExpandtileWidget extends GetWidget<HomeController> {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: controller.hexToColor(
-                                        controller.deviceColorList[index]),
+                                        (controller.deviceColorList[index])[
+                                                'hex_code'] ??
+                                            ''),
                                   ),
                                 );
                               }),

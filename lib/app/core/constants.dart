@@ -11,4 +11,5 @@ class Constants {
   static const modelsUrl = '$baseUrl/get-models';
   static const getServicesUrl = '$baseUrl/get-services';
   static const logoutUrl = '$baseUrl/logout';
+  static const getworkingtimeUrl = '$baseUrl/get-working-time';
 }

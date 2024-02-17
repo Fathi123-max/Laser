@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
+import 'package:geocoding/geocoding.dart' as geocoding;
 import 'package:get/get.dart';
 import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/data/local/my_shared_pref.dart';
@@ -8,6 +9,7 @@ import 'package:laser/app/data/models/device_model.dart';
 import 'package:laser/app/data/models/device_type_model.dart';
 import 'package:laser/app/data/models/service_model.dart';
 import 'package:laser/app/routes/app_pages.dart';
+import 'package:location/location.dart';
 
 import '../../../core/constants.dart';
 import '../../../services/api_call_status.dart';
@@ -23,12 +25,14 @@ class HomeController extends GetxController {
   RxList<DeviceBrandModel> deviceBrandList = RxList([]);
   RxList<DeviceModel> deviceModelList = RxList([]);
   RxList<ServiceModel> serviceList = RxList([]);
+  RxList<dynamic> hoursList = RxList([]);
   RxList<dynamic> deviceColorList = RxList([]);
   var deviceModelVisibleController = false.obs;
   var deviceColorVisibleController = false.obs;
   var apiDeviceTypesCallStatus = (ApiCallStatus.holding).obs;
   var apiDeviceBrandsCallStatus = (ApiCallStatus.holding).obs;
   var apiDeviceModelCallStatus = (ApiCallStatus.holding).obs;
+  var apiWorkingHoursCallStatus = (ApiCallStatus.holding).obs;
   List<bool> dviceTypeWidgetTapped = [false, false, false, false].obs;
   List<RxBool> dviceBrandWidgetTapped = [
     false.obs,
@@ -41,9 +45,16 @@ class HomeController extends GetxController {
   var activeModelIndex = (-1).obs; // Start with no active model
   var activeColorModelIndex = (-1).obs; // Start with no active model
   var activeServiceModelIndex = (-1).obs; // Start with no active model
+  var activeHoureIndex = (-1).obs; // Start with no active model
 
   ScrollController brandScrollController = ScrollController();
   ScrollController serviceScrollController = ScrollController();
+  ScrollController hoursScrollController = ScrollController();
+
+  RxString date = RxString("");
+
+  TextEditingController addressController = TextEditingController();
+  TextEditingController noteController = TextEditingController();
 
 // controll tapping of device and visibilty of buttons ***************************************************************
   void controlleDeviceTypeTap(
@@ -62,6 +73,19 @@ class HomeController extends GetxController {
     pageController.value.nextPage(
         duration: const Duration(milliseconds: 1000), curve: Curves.easeInOut);
     update();
+  }
+
+  controlleDate(String date) {
+    String desiredOutput = date.toString().substring(0, 10);
+
+    this.date.value = desiredOutput;
+    getWorkingHours(
+        lang: LocalizationService.isItEnglish() ? "en" : "ar",
+        date: this.date.value);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      scroll(isHours: true);
+    });
   }
 
   void controlleDeviceBrandTap(
@@ -102,7 +126,7 @@ class HomeController extends GetxController {
     activeColorModelIndex.value = index;
     // Add any other logic necessary when an item becomes active
 
-    deviceColoeClicked(
+    deviceColorClicked(
       index: index,
     );
     update(); // Call this if you're using GetX and you need to update the UI
@@ -112,10 +136,15 @@ class HomeController extends GetxController {
     activeServiceModelIndex.value = index;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      scroll(isBrand: false);
+      scroll(isService: true);
     });
 
     MySharedPref.saveService(serviceList[index].serviceId.toString());
+    update();
+  }
+
+  void setHoursIndex(int index) {
+    activeHoureIndex.value = index;
     update();
   }
 
@@ -130,9 +159,10 @@ class HomeController extends GetxController {
     update();
   }
 
-  void deviceColoeClicked({required int index}) {
+  void deviceColorClicked({required int index}) {
     // save device color and device type in shared pref
-    MySharedPref.saveDeviceColor(deviceColorList[index].toString());
+    MySharedPref.saveDeviceColor(
+        deviceColorList[index]['color_name'].toString());
     MySharedPref.saveDeviceType(
         deviceModelList[activeModelIndex.value].name.toString());
 
@@ -284,6 +314,37 @@ class HomeController extends GetxController {
     );
   }
 
+  getWorkingHours({String? lang, String? date}) async {
+    await BaseClient.safeApiCall(
+      Constants.getworkingtimeUrl,
+      headers: {
+        "Accept-Language": lang,
+        "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
+      },
+      RequestType.post,
+      data: {"date": date},
+      onLoading: () {
+        apiWorkingHoursCallStatus.value = ApiCallStatus.loading;
+        update();
+      },
+      onSuccess: (response) {
+        hoursList.value = RxList<dynamic>.from(
+            response.data["payload"]["working_times"].map((e) => e));
+
+        apiDeviceModelCallStatus.value = ApiCallStatus.success;
+        // deviceModelVisibleController.value = true;
+        update();
+      },
+      onError: (error) {
+        // show error message to user
+        BaseClient.handleApiError(error);
+        // *) indicate error status
+        apiWorkingHoursCallStatus.value = ApiCallStatus.error;
+        update();
+      },
+    );
+  }
+
 //? initialization block ******************************************************************************************
   @override
   void onInit() {
@@ -345,18 +406,31 @@ class HomeController extends GetxController {
     });
   }
 
-  void scroll({bool? isBrand = false}) {
+  void scroll(
+      {bool? isBrand = false, bool? isService = false, bool? isHours = false}) {
     isBrand!
         ? brandScrollController.animateTo(
             brandScrollController.position.maxScrollExtent,
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
           )
-        : serviceScrollController.animateTo(
+        : null;
+
+    isService!
+        ? serviceScrollController.animateTo(
             serviceScrollController.position.maxScrollExtent,
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
-          );
+          )
+        : null;
+
+    isHours!
+        ? hoursScrollController.animateTo(
+            hoursScrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          )
+        : null;
   }
 
 //?  image picker functions and video picker functions
@@ -448,5 +522,51 @@ uploadImage(File image) async {
         // BaseClient.handleApiError(error);
       },
     );
+  }
+
+  Future<String> getCurrentLocationAddress() async {
+    Location location = Location();
+
+    bool serviceEnabled;
+    PermissionStatus permissionGranted;
+    LocationData locationData;
+
+    // Check if location service is enabled
+    serviceEnabled = await location.serviceEnabled();
+    if (!serviceEnabled) {
+      serviceEnabled = await location.requestService();
+      if (!serviceEnabled) {
+        // Handle case when user denies location service
+        return "";
+      }
+    }
+
+    // Check if location permission is granted
+    permissionGranted = await location.hasPermission();
+    if (permissionGranted == PermissionStatus.denied) {
+      permissionGranted = await location.requestPermission();
+      if (permissionGranted != PermissionStatus.granted) {
+        // Handle case when user denies location permission
+        return "";
+      }
+    }
+
+    // Get current location
+    locationData = await location.getLocation();
+
+    // Get address from coordinates
+    List<geocoding.Placemark> placemarks =
+        await geocoding.placemarkFromCoordinates(
+      locationData.latitude!,
+      locationData.longitude!,
+    );
+
+    return "${placemarks[0].name! + ',' + placemarks[0].street! + ',' + placemarks[0].country!}";
+  }
+
+  Future<void> supmitService() async {
+    addressController.text = await getCurrentLocationAddress();
+    return pageController.value.nextPage(
+        duration: const Duration(milliseconds: 300), curve: Curves.ease);
   }
 }

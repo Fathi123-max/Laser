@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:laser/app/components/custom_loading_overlay.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/modules/Auth/view/widgets/auth_button.dart';
 import 'package:laser/app/modules/home/controllers/home_controller.dart';
@@ -55,9 +56,15 @@ class ServicePage extends GetView<HomeController> {
           const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CustomAddMediaWidget(photoName: "pixel-video.png"),
+              CustomAddMediaWidget(
+                photoName: "pixel-video.png",
+                isvideo: true,
+              ),
               Gap(10),
-              CustomAddMediaWidget(photoName: "npixel-camera.png"),
+              CustomAddMediaWidget(
+                photoName: "npixel-camera.png",
+                isvideo: false,
+              ),
             ],
           ),
           const Gap(26),
@@ -80,7 +87,9 @@ class ServicePage extends GetView<HomeController> {
           const Gap(41),
           AuthButton(
             data: "Submit".tr,
-            onPressed: () => controller.supmitService(),
+            onPressed: () => showLoadingOverLay(
+                asyncFunction: () => controller.supmitService(),
+                msg: "Loading ...".tr),
           )
         ],
       ),

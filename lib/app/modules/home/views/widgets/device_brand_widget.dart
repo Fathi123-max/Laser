@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:laser/app/components/custom_loading_overlay.dart';
 import 'package:laser/app/components/my_widgets_animator.dart';
 import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/device_type_widget.dart';
@@ -32,7 +33,11 @@ class DeviceBrandWidget extends GetWidget<HomeController> {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      controller.controlleDeviceBrandTap(index);
+                      showLoadingOverLay(
+                        asyncFunction: () async {
+                          return controller.controlleDeviceBrandTap(index);
+                        },
+                      );
                     },
                     child: Obx(() {
                       return DeviceTypeWidget(

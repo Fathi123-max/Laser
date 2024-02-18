@@ -1,7 +1,10 @@
+import 'package:dio/dio.dart' as dio;
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
 import 'package:geocoding/geocoding.dart' as geocoding;
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/data/local/my_shared_pref.dart';
 import 'package:laser/app/data/models/device_brand_model.dart';
@@ -56,6 +59,9 @@ class HomeController extends GetxController {
 
   TextEditingController addressController = TextEditingController();
   TextEditingController noteController = TextEditingController();
+
+  RxList<dio.MultipartFile> pickedImages = <dio.MultipartFile>[].obs;
+  RxList<dio.MultipartFile> pickedVideos = <dio.MultipartFile>[].obs;
 
 // controll tapping of device and visibilty of buttons ***************************************************************
   void controlleDeviceTypeTap(
@@ -347,6 +353,20 @@ class HomeController extends GetxController {
   }
 
   createOrder({String? lang}) async {
+    dio.FormData formData = dio.FormData.fromMap({
+      "device_type": "1",
+      "device_brand": "13",
+      "device_model": "5",
+      "device_color_name": "Black",
+      "problem_info": "Test",
+      "address": "test address",
+      "arrival_date": "2024-02-20",
+      "arrival_time": "10:00 : 11:00",
+      "payment_type": "1",
+      "device_services": ["1", "6"],
+      // "images": ["jfhjef.jpj"]
+    });
+    print(pickedImages);
     await BaseClient.safeApiCall(
       Constants.createMaintenanceOrderUrl,
       headers: {
@@ -364,8 +384,8 @@ class HomeController extends GetxController {
         "arrival_date": "2024-02-20",
         "arrival_time": "10:00 : 11:00",
         "payment_type": "1",
-        "device_services[]": "2",
-        "device_services[]": "6"
+        "device_services": ["1", "6"],
+        // "images": ["jfhjef.jpj"]
       },
       onLoading: () {
         // apiWorkingHoursCallStatus.value = ApiCallStatus.loading;
@@ -517,71 +537,32 @@ class HomeController extends GetxController {
         : null;
   }
 
-//?  image picker functions and video picker functions
-/**
-// handle image before to make result as string pass to upload image function
-// get image from device and upload it to API
-Future<void> handleImageFromCamera() async {
-  final image = await ImagePicker().pickImage(source: ImageSource.camera);
-  if (image != null) {
-    final file = File(image.path);
-    await uploadImage(file);
+//? pick multiple images from device
+  pickImages() async {
+    List<XFile> images = await ImagePicker().pickMultiImage();
+
+    pickedImages.value = await Future.wait(images.map((image) async {
+      return await dio.MultipartFile.fromFile(image.path, filename: image.name);
+    }).toList());
+
+    // return images;
   }
-}
 
-// upload image to API
-uploadImage(File image) async {
-  // *) perform api call
-  await BaseClient.safeApiCall(
-    Constants.uploadImageUrl, // url
-    RequestType.post, // request type (get,post,delete,put)
-    onLoading: () {
-      // *) indicate loading state
-    },
-    onSuccess: (response) {
-      // *) indicate success state
-    },
-    // if you don't pass this method base client
-    // will automatically handle error and show message to user
-    onError: (error) {
-      // show error message to user
-      BaseClient.handleApiError(error);
-    },
-  );
-}
+//? pick multiple videos from device using file picker
+  pickVideos() async {
+    List<PlatformFile> videos = (await FilePicker.platform.pickFiles(
+          type: FileType.video,
+          allowMultiple: true,
+          allowCompression: true,
+        ))
+            ?.files ??
+        [];
 
- // create function to get video from device and upload it to API
- Future<void> handleVideoFromCamera() async {
-   final video = await ImagePicker().pickVideo(source: ImageSource.camera);
-   if (video != null) {
-     final file = File(video.path);
-     await uploadVideo(file);
-   }
- }
-
- // upload video to API
- uploadVideo(File video) async {
-   // perform api call
-   await BaseClient.safeApiCall(
-     Constants.uploadVideoUrl, // url
-     RequestType.post, // request type (get,post,delete,put)
-     onLoading: () {
-       // indicate loading state
-     },
-     onSuccess: (response) {
-       // indicate success state
-     },
-     // if you don't pass this method base client
-     // will automatically handle error and show message to user
-     onError: (error) {
-       // show error message to user
-       BaseClient.handleApiError(error);
-     },
-   );
- }
-
-
- */
+    videos.take(2).forEach((element) {
+      pickedVideos.value.add(dio.MultipartFile.fromFileSync(element.path!,
+          filename: element.name));
+    });
+  }
 
   signout() async {
     // *) perform api call

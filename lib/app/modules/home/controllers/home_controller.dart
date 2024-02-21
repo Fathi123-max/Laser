@@ -10,6 +10,7 @@ import 'package:laser/app/data/local/my_shared_pref.dart';
 import 'package:laser/app/data/models/device_brand_model.dart';
 import 'package:laser/app/data/models/device_model.dart';
 import 'package:laser/app/data/models/device_type_model.dart';
+import 'package:laser/app/data/models/order_model.dart';
 import 'package:laser/app/data/models/service_model.dart';
 import 'package:laser/app/routes/app_pages.dart';
 import 'package:location/location.dart';
@@ -25,9 +26,12 @@ class HomeController extends GetxController {
   RxBool visibilityOfBackButton = false.obs;
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   RxList<DeviceType> deviceTypeList = RxList([]);
+  RxList<OrderModel> oederList = RxList([]);
   RxList<DeviceBrandModel> deviceBrandList = RxList([]);
   RxList<DeviceModel> deviceModelList = RxList([]);
   RxList<ServiceModel> serviceList = RxList([]);
+  RxList<String> selectedServiceList = RxList([]);
+  var selectedItems = <int>{}.obs;
   RxList<dynamic> hoursList = RxList([]);
   RxList<dynamic> deviceColorList = RxList([]);
   var deviceModelVisibleController = false.obs;
@@ -68,7 +72,7 @@ class HomeController extends GetxController {
     int index,
   ) {
     dviceTypeIndex = index;
-
+    MySharedPref.saveDeviceType("${index + 1}");
     for (int i = 0; i < deviceTypeList!.length; i++) {
       dviceTypeWidgetTapped[i] = (i == index);
     }
@@ -107,6 +111,8 @@ class HomeController extends GetxController {
 // get device Models
     getModels((deviceBrandList![index]).id!,
         lang: LocalizationService.isItEnglish() ? "en" : "ar");
+    MySharedPref.savedeviceBrand("${(deviceBrandList![index]).id!}");
+
 // navgate to Brand page
   }
 
@@ -139,25 +145,45 @@ class HomeController extends GetxController {
     update(); // Call this if you're using GetX and you need to update the UI
   }
 
-  void setActiveServicesIndex(int index) {
-    activeServiceModelIndex.value = index;
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      scroll(isService: true);
-    });
-
-    MySharedPref.saveService(serviceList[index].serviceId.toString());
-    update();
+  void toggleSelection(int index) {
+    if (selectedItems.contains(index)) {
+      selectedServiceList.remove(serviceList[index].serviceId.toString());
+      selectedItems.remove(index);
+    } else {
+      selectedItems.add(index);
+      selectedServiceList.add(serviceList[index].serviceId.toString());
+    }
+    update(); // Triggers a UI update
   }
+
+  RxBool isSelected(int index) {
+    return selectedItems.contains(index).obs;
+  }
+
+  // void toggleSelection(
+  //   int index,
+  // ) {
+  //   serviceListBool[index].value =
+  //       !serviceListBool[index].value; // Corrected toggle
+  //   activeServiceModelIndex.value = index;
+  //   serviceListBool.refresh();
+  // }
+
+  // serviceListBool.refresh();
+
+  // WidgetsBinding.instance.addPostFrameCallback((_) {
+  //   scroll(isService: true);
+  // });
 
   void setHoursIndex(int index) {
     activeHoureIndex.value = index;
-    update();
+
+    chosenHours.value = hoursList[activeHoureIndex.value];
+    // update();
   }
 
   void setActiveModelIndex(int index) {
     activeModelIndex.value = index;
-
     deviceModelClicked(index: index).then((_) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         scroll(isBrand: true);
@@ -170,8 +196,8 @@ class HomeController extends GetxController {
     // save device color and device type in shared pref
     MySharedPref.saveDeviceColor(
         deviceColorList[index]['color_name'].toString());
-    MySharedPref.saveDeviceType(
-        deviceModelList[activeModelIndex.value].name.toString());
+    MySharedPref.saveDeviceModelType(
+        deviceModelList[activeModelIndex.value].id.toString());
 
     // hide model and color
     deviceModelVisibleController.value = true;
@@ -236,10 +262,12 @@ class HomeController extends GetxController {
                 ["device_brands"]
             .map((e) => DeviceBrandModel.fromJson(e as Map<String, dynamic>))
             .toList());
+
         dviceBrandWidgetTapped =
             deviceBrandList?.map((_) => false.obs).toList() ?? [];
 
         apiDeviceBrandsCallStatus.value = ApiCallStatus.success;
+
         update();
       },
       onError: (error) {
@@ -306,8 +334,8 @@ class HomeController extends GetxController {
                 ["device_services"]
             .map((e) => ServiceModel.fromJson(e as Map<String, dynamic>))
             .toList());
-
         apiDeviceModelCallStatus.value = ApiCallStatus.success;
+
         deviceModelVisibleController.value = true;
         update();
       },
@@ -322,6 +350,7 @@ class HomeController extends GetxController {
   }
 
   getWorkingHours({String? lang, String? date}) async {
+    dio.FormData dateFormData = dio.FormData.fromMap({"date": date});
     await BaseClient.safeApiCall(
       Constants.getworkingtimeUrl,
       headers: {
@@ -329,7 +358,7 @@ class HomeController extends GetxController {
         "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
       },
       RequestType.post,
-      data: {"date": date},
+      data: dateFormData,
       onLoading: () {
         apiWorkingHoursCallStatus.value = ApiCallStatus.loading;
         update();
@@ -353,63 +382,50 @@ class HomeController extends GetxController {
   }
 
   createOrder({String? lang}) async {
-    dio.FormData formData = dio.FormData.fromMap({
-      "device_type": "1",
-      "device_brand": "13",
-      "device_model": "5",
-      "device_color_name": "Black",
-      "problem_info": "Test",
-      "address": "test address",
-      "arrival_date": "2024-02-20",
-      "arrival_time": "10:00 : 11:00",
-      "payment_type": "1",
-      "device_services": ["1", "6"],
-      // "images": ["jfhjef.jpj"]
-    });
-    print(pickedImages);
+    List<String> services = MySharedPref.getServiceIds()!;
+    dio.FormData orderFormData = dio.FormData.fromMap(
+      {
+        "device_type": MySharedPref.getDeviceType(),
+        "device_brand": MySharedPref.getDeviceBrand(),
+        "device_model": MySharedPref.getDeviceModelType(),
+        "device_color_name": MySharedPref.getDeviceColor(),
+        "problem_info": noteController.text,
+        "address": addressController.text,
+        "arrival_date": chosenDate.value,
+        "arrival_time": chosenHours.value,
+        'payment_type': "1",
+        "device_services[]": services,
+        "images[]": pickedImages,
+        "videos[]": pickedVideos
+      },
+    );
+
     await BaseClient.safeApiCall(
       Constants.createMaintenanceOrderUrl,
       headers: {
+        "Content-Type": "application/json",
         "Accept-Language": lang,
         "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
       },
       RequestType.post,
-      data: {
-        "device_type": "1",
-        "device_brand": "13",
-        "device_model": "5",
-        "device_color_name": "Black",
-        "problem_info": "Test",
-        "address": "test address",
-        "arrival_date": "2024-02-20",
-        "arrival_time": "10:00 : 11:00",
-        "payment_type": "1",
-        "device_services": ["1", "6"],
-        // "images": ["jfhjef.jpj"]
-      },
-      onLoading: () {
-        // apiWorkingHoursCallStatus.value = ApiCallStatus.loading;
-        update();
-      },
+      data: orderFormData,
       onSuccess: (response) {
-        // hoursList.value = RxList<dynamic>.from(
-        //     response.data["payload"]["working_times"].map((e) => e));
-        print(response.data["payload"]["order_id"].toString());
+        MySharedPref.saveOrderId(
+            response.data["payload"]["order_id"].toString());
+
         pageController.value
             .nextPage(
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.easeInOut)
-            .then((value) =>
-                Get.find<HomeController>().visibilityOfBanner.value = false);
-        // apiDeviceModelCallStatus.value = ApiCallStatus.success;
-        // deviceModelVisibleController.value = true;
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+        )
+            .then((value) {
+          Get.find<HomeController>().visibilityOfBanner.value = false;
+        });
+
         update();
       },
       onError: (error) {
-        // show error message to user
         BaseClient.handleApiError(error);
-        // *) indicate error status
-        // apiWorkingHoursCallStatus.value = ApiCallStatus.error;
         update();
       },
     );
@@ -424,18 +440,18 @@ class HomeController extends GetxController {
       },
       RequestType.get,
       onLoading: () {
-        // apiDeviceTypesCallStatus.value = ApiCallStatus.loading;
-        // update();
+        apiDeviceTypesCallStatus.value = ApiCallStatus.loading;
+        update();
       },
       onSuccess: (response) {
-        // apiDeviceTypesCallStatus.value = ApiCallStatus.success;
+        apiDeviceTypesCallStatus.value = ApiCallStatus.success;
 
-        // deviceTypeList = RxList<DeviceType>.from(response.data["payload"]
-        //         ["device_types"]
-        //     .map((e) => DeviceType.fromJson(e as Map<String, dynamic>))
-        //     .toList());
+        oederList = RxList<OrderModel>.from(response.data["payload"]["data"]
+            .map((e) => OrderModel.fromJson(e as Map<String, dynamic>))
+            .toList());
 
         print(response.data["payload"]["data"]);
+        getAllOrders(lang: LocalizationService.isItEnglish() ? "en" : "ar");
 
         update();
       },
@@ -443,7 +459,7 @@ class HomeController extends GetxController {
         // show error message to user
         BaseClient.handleApiError(error);
         // *) indicate error status
-        // apiDeviceTypesCallStatus.value = ApiCallStatus.error;
+        apiDeviceTypesCallStatus.value = ApiCallStatus.error;
         update();
       },
     );
@@ -631,6 +647,9 @@ class HomeController extends GetxController {
 
   Future<void> supmitService() async {
     addressController.text = await getCurrentLocationAddress();
+
+    MySharedPref.saveService(selectedServiceList.value);
+
     return pageController.value.nextPage(
         duration: const Duration(milliseconds: 300), curve: Curves.ease);
   }

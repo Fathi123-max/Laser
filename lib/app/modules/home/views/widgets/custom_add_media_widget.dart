@@ -28,23 +28,35 @@ class CustomAddMediaWidget extends GetWidget<HomeController> {
             width: 90.w,
             enableMargin: true,
           ),
-          Positioned(
-            top: 0,
-            right: 0,
-            child: Container(
-              width: 20.w,
-              height: 20.w,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.black, // Replace with your desired color
+          Obx(() {
+            return Positioned(
+              top: 0,
+              right: 0,
+              child: Container(
+                width: 20.w,
+                height: 20.w,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.black, // Replace with your desired color
+                ),
+                child: isvideo
+                    ? Icon(
+                        controller.pickedVideos.value.isNotEmpty
+                            ? Icons.check
+                            : Icons.add,
+                        size: 15.w,
+                        color: Colors.white,
+                      )
+                    : Icon(
+                        controller.pickedImages.value.isNotEmpty
+                            ? Icons.check
+                            : Icons.add,
+                        size: 15.w,
+                        color: Colors.white,
+                      ),
               ),
-              child: Icon(
-                Icons.add,
-                size: 15.w,
-                color: Colors.white,
-              ),
-            ),
-          ),
+            );
+          }),
         ],
       ),
     );

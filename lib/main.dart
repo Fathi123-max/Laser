@@ -6,6 +6,7 @@ import 'package:laser/app/config/theme/my_theme.dart';
 import 'package:laser/app/data/models/device_brand_model.dart';
 import 'package:laser/app/data/models/device_model.dart';
 import 'package:laser/app/data/models/device_type_model.dart';
+import 'package:laser/app/data/models/order_model.dart';
 import 'package:laser/app/data/models/payload.dart';
 import 'package:laser/app/data/models/register_response.dart';
 import 'package:laser/app/data/models/service_model.dart';
@@ -34,6 +35,7 @@ Future<void> main() async {
     hive.registerAdapter(DeviceTypeAdapter());
     hive.registerAdapter(DeviceModelAdapter());
     hive.registerAdapter(ServiceModelAdapter());
+    hive.registerAdapter(OrderModelAdapter());
 
     // hive.registerAdapter(DeviceTypeAdapter());
 

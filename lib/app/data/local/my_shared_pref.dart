@@ -18,10 +18,13 @@ class MySharedPref {
   static const String _userMobileNUmber =
       'user_mobile_number'; // user token = '';
   static const String _onBoarding = 'onboarding'; // onboarding = '';
-  static const String _deviceType = 'device_type';
+  static const String _deviceModelType = 'device_type';
+  static const String _deviceType = 'device_model_type';
   static const String _deviceColor = 'device_color';
-  static const String _device_id = 'device_id';
-  static const String _service_id = 'service_id';
+  static const String _deviceId = 'device_id';
+  static const String _service = 'service_ids';
+  static const String _deviceBrand = 'device_brand';
+  static const String _orderId = 'order_id';
 
   /// init get storage services
   static Future<void> init() async {
@@ -56,17 +59,30 @@ class MySharedPref {
 
   /// save current Mobile Number
   static Future<void> setCurrentMobileNumber(String mobileNumber) =>
-      _sharedPreferences.setString(_userMobileNUmber, mobileNumber);
-
-  static void saveDeviceType(String deviceType) =>
-      _sharedPreferences.setString(_deviceType, deviceType);
-
-  static void saveDeviceColor(String deviceColor) =>
-      _sharedPreferences.setString(_deviceColor, deviceColor);
-  static void saveDeviceId(String deviceId) =>
-      _sharedPreferences.setString(_device_id, deviceId);
-  static void saveService(String servicesId) =>
-      _sharedPreferences.setString(_service_id, servicesId);
+      _sharedPreferences
+          .setString(_userMobileNUmber, mobileNumber)
+          .then((value) => print('Set mobile number: $mobileNumber'));
+  static void saveDeviceModelType(String deviceModelType) => _sharedPreferences
+      .setString(_deviceModelType, deviceModelType)
+      .then((value) => print('Set device model type: $deviceModelType'));
+  static void saveDeviceType(String deviceType) => _sharedPreferences
+      .setString(_deviceType, deviceType)
+      .then((value) => print('Set device type: $deviceType'));
+  static void saveDeviceColor(String deviceColor) => _sharedPreferences
+      .setString(_deviceColor, deviceColor)
+      .then((value) => print('Set device color: $deviceColor'));
+  static void saveDeviceId(String deviceId) => _sharedPreferences
+      .setString(_deviceId, deviceId)
+      .then((value) => print('Set device id: $deviceId'));
+  static void saveService(List<String> services) => _sharedPreferences
+      .setStringList(_service, services)
+      .then((value) => print('Set service id: $services'));
+  static void savedeviceBrand(String deviceBrandId) => _sharedPreferences
+      .setString(_deviceBrand, deviceBrandId)
+      .then((value) => print('Set device brand: $deviceBrandId'));
+  static void saveOrderId(String orderId) => _sharedPreferences
+      .setString(_orderId, orderId)
+      .then((value) => print('Set device brand: $orderId'));
 
   /// get current locale
   static Locale getCurrentLocal() {
@@ -96,13 +112,20 @@ class MySharedPref {
   static String? getCurrentMobileNumber() =>
       _sharedPreferences.getString(_userMobileNUmber);
 
-  /// get device type
+  /// get device Model type
+  static String? getDeviceModelType() =>
+      _sharedPreferences.getString(_deviceModelType);
+
+  /// get device  type
   static String? getDeviceType() => _sharedPreferences.getString(_deviceType);
 
   /// get device type
   static String? getDeviceColor() => _sharedPreferences.getString(_deviceColor);
-  static String? getDeviceId() => _sharedPreferences.getString(_device_id);
-  static String? getServiceId() => _sharedPreferences.getString(_service_id);
+  static String? getDeviceId() => _sharedPreferences.getString(_deviceId);
+  static List<String>? getServiceIds() =>
+      _sharedPreferences.getStringList(_service);
+  static String? getDeviceBrand() => _sharedPreferences.getString(_deviceBrand);
+  static String? getOrderId() => _sharedPreferences.getString(_orderId);
 
   /// clear all data from shared pref
   static Future<void> clear() async => await _sharedPreferences.clear();

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:laser/app/components/custom_loading_overlay.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/modules/Auth/view/widgets/auth_button.dart';
@@ -217,8 +218,11 @@ class VisitDetailsPage extends GetWidget<HomeController> {
               children: [
                 AuthButton(
                   onPressed: () {
-                    controller.createOrder(
-                        lang: LocalizationService.isItEnglish() ? "en" : "ar");
+                    showLoadingOverLay(asyncFunction: () {
+                      return controller.createOrder(
+                          lang:
+                              LocalizationService.isItEnglish() ? "en" : "ar");
+                    });
                   },
                   data: "Place Order",
                   height: 37.h,

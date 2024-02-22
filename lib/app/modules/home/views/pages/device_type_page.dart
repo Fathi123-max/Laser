@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/components/my_widgets_animator.dart';
-import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/device_type_widget.dart';
 import 'package:laser/app/modules/home/views/widgets/page_banner.dart';
@@ -34,9 +33,6 @@ class DeviceTypePage extends GetView<HomeController> {
                 Obx(() => DeviceTypeWidget(
                     onTap: () {
                       controller.controlleDeviceTypeTap(0);
-                      controller.getAllOrders(
-                          lang:
-                              LocalizationService.isItEnglish() ? "en" : "ar");
                     },
                     tapped: controller.dviceTypeWidgetTapped[0],
                     fileName: "phone.png",

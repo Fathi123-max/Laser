@@ -32,7 +32,9 @@ class OrderDitailsPage extends StatelessWidget {
                       )),
             ),
             const Gap(28),
-            const CardDetails(),
+            const CardDetails(
+              index: 0,
+            ),
             const DliveryTimeAndDate(),
             const Gap(14),
             const Address(),

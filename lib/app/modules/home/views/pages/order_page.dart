@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
+import 'package:laser/app/modules/home/controllers/home_controller.dart';
 
 import '../widgets/orders/card_details.dart';
 
-class OrderPage extends StatelessWidget {
+class OrderPage extends GetView<HomeController> {
   const OrderPage({
     super.key,
   });
@@ -13,6 +15,7 @@ class OrderPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics: const NeverScrollableScrollPhysics(),
       child: Padding(
         padding: EdgeInsets.all(27.w),
         child: Column(
@@ -33,10 +36,26 @@ class OrderPage extends StatelessWidget {
                     'After order is accepted you can pay the amount needed.',
                     style: MyStyles().fontSize12Weight400)),
             const Gap(19),
-            const CardDetails(),
-            const CardDetails(),
-            const CardDetails(),
-            const CardDetails(),
+            Obx(() {
+              return SizedBox(
+                height: 430.h,
+                child: ListView.builder(
+                  controller: controller.scrollOrderController,
+                  scrollDirection: Axis.vertical,
+                  itemCount: controller.orderList.value.length,
+                  itemBuilder: (context, index) {
+                    return CardDetails(
+                      index: index,
+                    );
+                  },
+                ),
+              );
+            })
+
+            // const ,
+            // const CardDetails(),
+            // const CardDetails(),
+            // const CardDetails(),
           ],
         ),
       ),

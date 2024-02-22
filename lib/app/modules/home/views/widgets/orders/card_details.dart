@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:laser/app/components/custom_image_widget.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
+import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
 
 import 'custom_card_button.dart';
 
-class CardDetails extends StatelessWidget {
+class CardDetails extends GetWidget<HomeController> {
   const CardDetails({
+    required this.index,
     super.key,
   });
-
+  final int index;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -19,12 +22,26 @@ class CardDetails extends StatelessWidget {
       child: Container(
         width: 300.w,
         height: 185.h,
+        decoration: ShapeDecoration(
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.r),
+          ),
+          shadows: const [
+            BoxShadow(
+              color: Color(0x02000000),
+              blurRadius: 4,
+              offset: Offset(0, 4),
+              spreadRadius: 1,
+            )
+          ],
+        ),
         child: Column(children: [
           Gap(13.h),
           Row(
             children: [
               const Gap(24),
-              Text('Order number 226',
+              Text('Order number ${controller.orderList.value[index].orderId}',
                   textAlign: TextAlign.center,
                   style: MyStyles().fontSize12Weight700),
               const Spacer(),
@@ -42,7 +59,7 @@ class CardDetails extends StatelessWidget {
               const Gap(28),
               AssetImageView(fileName: "phone.png", height: 26.h, width: 20.w),
               const Gap(31),
-              Text('Mobiles-iphone 8 plus',
+              Text('${controller.orderList.value[index].deviceName}',
                   textAlign: TextAlign.center,
                   style: MyStyles().fontSize12Weight400)
             ],
@@ -71,8 +88,9 @@ class CardDetails extends StatelessWidget {
               CustomCardButton(
                 width: 74.sp,
                 heaight: 22.h,
-                text: "Pending",
-                color: const Color(0xFFFFEB3C),
+                text: "${controller.orderList.value[index].currentStatusName}",
+                color: controller.hexToColor(
+                    controller.orderList.value[index].currentStatusColor!),
                 onTap: () {},
               ),
               const Gap(12),
@@ -85,9 +103,9 @@ class CardDetails extends StatelessWidget {
               ),
               const Gap(13),
               Text('Total ', style: MyStyles().fontSize12Weight400),
-              const Text(
-                '200 SAR',
-                style: TextStyle(
+              Text(
+                '${controller.orderList.value[index].totalPrice} SAR',
+                style: const TextStyle(
                   color: Color(0xFF1B1926),
                   fontSize: 14,
                   fontFamily: 'Inter',
@@ -99,20 +117,6 @@ class CardDetails extends StatelessWidget {
           ),
           const Gap(19)
         ]),
-        decoration: ShapeDecoration(
-          color: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.r),
-          ),
-          shadows: const [
-            BoxShadow(
-              color: Color(0x02000000),
-              blurRadius: 4,
-              offset: Offset(0, 4),
-              spreadRadius: 1,
-            )
-          ],
-        ),
       ),
     );
   }

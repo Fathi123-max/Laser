@@ -26,7 +26,7 @@ class HomeController extends GetxController {
   RxBool visibilityOfBackButton = false.obs;
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   RxList<DeviceType> deviceTypeList = RxList([]);
-  RxList<OrderModel> oederList = RxList([]);
+  RxList<OrderModel> orderList = RxList([]);
   RxList<DeviceBrandModel> deviceBrandList = RxList([]);
   RxList<DeviceModel> deviceModelList = RxList([]);
   RxList<ServiceModel> serviceList = RxList([]);
@@ -67,6 +67,7 @@ class HomeController extends GetxController {
   RxList<dio.MultipartFile> pickedImages = <dio.MultipartFile>[].obs;
   RxList<dio.MultipartFile> pickedVideos = <dio.MultipartFile>[].obs;
 
+  ScrollController scrollOrderController = ScrollController();
 // controll tapping of device and visibilty of buttons ***************************************************************
   void controlleDeviceTypeTap(
     int index,
@@ -410,19 +411,17 @@ class HomeController extends GetxController {
       RequestType.post,
       data: orderFormData,
       onSuccess: (response) {
+        getAllOrders(lang: LocalizationService.isItEnglish() ? "en" : "ar")
+            .then((value) => pageController.value
+                    .nextPage(
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.easeInOut,
+                )
+                    .then((value) {
+                  Get.find<HomeController>().visibilityOfBanner.value = false;
+                }));
         MySharedPref.saveOrderId(
             response.data["payload"]["order_id"].toString());
-
-        pageController.value
-            .nextPage(
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.easeInOut,
-        )
-            .then((value) {
-          Get.find<HomeController>().visibilityOfBanner.value = false;
-        });
-
-        update();
       },
       onError: (error) {
         BaseClient.handleApiError(error);
@@ -431,9 +430,9 @@ class HomeController extends GetxController {
     );
   }
 
-  getAllOrders({String? lang}) async {
+  Future<void> getAllOrders({String? lang, int? index}) async {
     await BaseClient.safeApiCall(
-      Constants.getAllMaintenanceOrderUrl,
+      Constants.getAllMaintenanceOrderUrl(index ?? 0),
       headers: {
         "Accept-Language": lang,
         "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
@@ -446,14 +445,11 @@ class HomeController extends GetxController {
       onSuccess: (response) {
         apiDeviceTypesCallStatus.value = ApiCallStatus.success;
 
-        oederList = RxList<OrderModel>.from(response.data["payload"]["data"]
+        orderList = RxList<OrderModel>.from(response.data["payload"]["data"]
             .map((e) => OrderModel.fromJson(e as Map<String, dynamic>))
             .toList());
-
-        print(response.data["payload"]["data"]);
-        getAllOrders(lang: LocalizationService.isItEnglish() ? "en" : "ar");
-
-        update();
+        orderList.refresh();
+        print(orderList.value.first.orderId);
       },
       onError: (error) {
         // show error message to user
@@ -463,6 +459,7 @@ class HomeController extends GetxController {
         update();
       },
     );
+    return Future(() => true);
   }
 
 //? initialization block ******************************************************************************************

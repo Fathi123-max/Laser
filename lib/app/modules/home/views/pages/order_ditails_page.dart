@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
+import 'package:laser/app/modules/home/controllers/home_controller.dart';
 
 import '../widgets/orders/address.dart';
 import '../widgets/orders/back_but.dart';
@@ -11,7 +13,7 @@ import '../widgets/orders/dlivery_time_and_date.dart';
 import '../widgets/orders/technician_visit_status.dart';
 import '../widgets/orders/warrenty_claimed.dart';
 
-class OrderDitailsPage extends StatelessWidget {
+class OrderDitailsPage extends GetView<HomeController> {
   const OrderDitailsPage({
     super.key,
   });
@@ -32,8 +34,8 @@ class OrderDitailsPage extends StatelessWidget {
                       )),
             ),
             const Gap(28),
-            const CardDetails(
-              index: 0,
+            CardDetails(
+              index: controller.orderindex!.value,
             ),
             const DliveryTimeAndDate(),
             const Gap(14),
@@ -45,7 +47,11 @@ class OrderDitailsPage extends StatelessWidget {
             const Gap(17),
             const ContactEmail(),
             const Gap(65),
-            const BackBut()
+            BackBut(OnTap: () {
+              controller.pageController.value.previousPage(
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.ease);
+            })
           ],
         ),
       ),

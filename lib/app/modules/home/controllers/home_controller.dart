@@ -11,6 +11,7 @@ import 'package:laser/app/data/local/my_shared_pref.dart';
 import 'package:laser/app/data/models/device_brand_model.dart';
 import 'package:laser/app/data/models/device_model.dart';
 import 'package:laser/app/data/models/device_type_model.dart';
+import 'package:laser/app/data/models/order_details_model.dart';
 import 'package:laser/app/data/models/order_model.dart';
 import 'package:laser/app/data/models/service_model.dart';
 import 'package:laser/app/routes/app_pages.dart';
@@ -28,6 +29,7 @@ class HomeController extends GetxController {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   RxList<DeviceType> deviceTypeList = RxList([]);
   RxList<OrderModel> orderList = RxList([]);
+  OrderDetailsModel orderDetailsModel = OrderDetailsModel();
   RxList<DeviceBrandModel> deviceBrandList = RxList([]);
   RxList<DeviceModel> deviceModelList = RxList([]);
   RxList<ServiceModel> serviceList = RxList([]);
@@ -69,6 +71,7 @@ class HomeController extends GetxController {
   RxList<dio.MultipartFile> pickedVideos = <dio.MultipartFile>[].obs;
 
   ScrollController scrollOrderController = ScrollController();
+
 // controll tapping of device and visibilty of buttons ***************************************************************
   void controlleDeviceTypeTap(
     int index,
@@ -84,7 +87,7 @@ class HomeController extends GetxController {
 
 // navgate to Brand page
     pageController.value.nextPage(
-        duration: const Duration(milliseconds: 1000), curve: Curves.easeInOut);
+        duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
     update();
   }
 
@@ -208,7 +211,7 @@ class HomeController extends GetxController {
     // navgate to Service page
     pageController.value.nextPage(
       duration: const Duration(milliseconds: 500),
-      curve: Curves.ease,
+      curve: Curves.easeInOut,
     );
   }
 
@@ -431,11 +434,6 @@ class HomeController extends GetxController {
     );
   }
 
-  int pagesOfPagnation = 0;
-  void getMoreOrders() {
-    getAllOrders(index: pagesOfPagnation + 1);
-  }
-
   Future<void> getAllOrders({String? lang, int? index}) async {
     await BaseClient.safeApiCall(
       Constants.getAllMaintenanceOrderUrl(index ?? 0),
@@ -488,6 +486,80 @@ class HomeController extends GetxController {
     return Future(() => true);
   }
 
+  cancelOrder({String? lang = "", int? orderId}) async {
+    // *) perform api call
+    await BaseClient.safeApiCall(
+      Constants.cancelOrderUrl,
+      headers: {
+        "Accept-Language": lang,
+        "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
+      },
+      RequestType.post,
+      queryParameters: {"order_id": orderId},
+      // data: {"order_id", orderId},
+      onLoading: () {
+        // *) indicate loading state
+        // apiDeviceBrandsCallStatus.value = ApiCallStatus.loading;
+        update();
+      },
+      onSuccess: (response) {
+        // *) indicate success
+        orderList.removeWhere((element) => element.orderId == orderId);
+        orderList.refresh();
+
+        update();
+      },
+      onError: (error) {
+        // show error message to user
+        BaseClient.handleApiError(error);
+        // *) indicate error status
+        // apiDeviceBrandsCallStatus.value = ApiCallStatus.error;
+        update();
+      },
+    );
+  }
+
+  RxInt orderindex = RxInt(0);
+  orderDetails({String? lang = "", int? orderId, int? index}) async {
+    // *) perform api call
+    await BaseClient.safeApiCall(
+      Constants.orderDetailsUrl,
+      headers: {
+        "Accept-Language": lang,
+        "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
+      },
+      RequestType.post,
+      queryParameters: {"order_id": orderId},
+      // data: {"order_id", orderId},
+      onLoading: () {
+        // *) indicate loading state
+        // apiDeviceBrandsCallStatus.value = ApiCallStatus.loading;
+        update();
+      },
+      onSuccess: (response) {
+        // *) indicate success
+
+        orderDetailsModel = OrderDetailsModel.fromJson(
+          response.data["payload"]["data"] as Map<String, dynamic>,
+        );
+        orderindex.value = index!;
+
+        pageController.value.nextPage(
+          curve: Curves.easeInOut,
+          duration: const Duration(milliseconds: 500),
+        );
+        update();
+      },
+      onError: (error) {
+        // show error message to user
+        BaseClient.handleApiError(error);
+        // *) indicate error status
+        // apiDeviceBrandsCallStatus.value = ApiCallStatus.error;
+        update();
+      },
+    );
+  }
+
 //? initialization block ******************************************************************************************
   @override
   void onInit() {
@@ -506,6 +578,9 @@ class HomeController extends GetxController {
   }
 
   onPopInvoked() {
+    if (pageController.value.page == 4.0) {
+      return false;
+    }
     pageController.value.previousPage(
         duration: const Duration(milliseconds: 300), curve: Curves.ease);
   }
@@ -527,7 +602,8 @@ class HomeController extends GetxController {
     pageController.value.addListener(() {
       int currentPage = pageController.value.page?.round() ?? 0;
       // Example: Update UI based on the current page
-      visibilityOfBackButton.value = currentPage > 0;
+      // visibilityOfBackButton.value = currentPage > 0 && currentPage < 2;
+      visibilityOfBackButton.value = false;
 
       // Set the visibility of the next button based on the current page
       visibilityOfNextButton.value = currentPage > 500;
@@ -674,6 +750,6 @@ class HomeController extends GetxController {
     MySharedPref.saveService(selectedServiceList.value);
 
     return pageController.value.nextPage(
-        duration: const Duration(milliseconds: 300), curve: Curves.ease);
+        duration: const Duration(milliseconds: 500), curve: Curves.ease);
   }
 }

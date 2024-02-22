@@ -13,6 +13,8 @@ class Constants {
   static const logoutUrl = '$baseUrl/logout';
   static const getworkingtimeUrl = '$baseUrl/get-working-time';
   static const createMaintenanceOrderUrl = '$baseUrl/create-maintenance-order';
+  static const cancelOrderUrl = '$baseUrl/cancel-order';
+  static const orderDetailsUrl = '$baseUrl/maintenance-order-detail';
   static String getAllMaintenanceOrderUrl(int index) {
     return '$baseUrl/get-all-maintenance-orders?per_page=3&page=$index';
   }

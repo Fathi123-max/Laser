@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:laser/app/components/custom_image_widget.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
+import 'package:laser/app/modules/home/controllers/home_controller.dart';
 
-class Address extends StatelessWidget {
+class Address extends GetView<HomeController> {
   const Address({
     super.key,
     this.customWidth,
@@ -15,6 +17,7 @@ class Address extends StatelessWidget {
     return Container(
       width: customWidth ?? 300.w,
       height: 80.h,
+      decoration: MyStyles().shapeDecoration,
       child: Column(
         children: [
           const Gap(14),
@@ -39,13 +42,12 @@ class Address extends StatelessWidget {
                 height: 17.h,
               ),
               const Gap(4),
-              Text('Alrehab District, Jeddah, Saudi Arabia',
+              Text(controller.orderDetailsModel.address!,
                   style: MyStyles().fontSize12Weight400)
             ],
           )
         ],
       ),
-      decoration: MyStyles().shapeDecoration,
     );
   }
 }

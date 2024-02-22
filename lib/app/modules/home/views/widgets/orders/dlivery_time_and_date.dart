@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:laser/app/components/custom_image_widget.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
+import 'package:laser/app/modules/home/controllers/home_controller.dart';
 
-class DliveryTimeAndDate extends StatelessWidget {
+class DliveryTimeAndDate extends GetView<HomeController> {
   const DliveryTimeAndDate({
     super.key,
   });
@@ -14,6 +17,7 @@ class DliveryTimeAndDate extends StatelessWidget {
     return Container(
       width: 300.w,
       height: 100.h,
+      decoration: MyStyles().shapeDecoration,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -36,7 +40,8 @@ class DliveryTimeAndDate extends StatelessWidget {
                 fileName: "time.png",
               ),
               const Gap(7),
-              Text('11:00 - 12:00', style: MyStyles().fontSize12Weight400)
+              Text(controller.orderDetailsModel.time!,
+                  style: MyStyles().fontSize12Weight400)
             ],
           ),
           const Gap(10),
@@ -49,12 +54,15 @@ class DliveryTimeAndDate extends StatelessWidget {
                 fileName: "date.png",
               ),
               const Gap(7),
-              Text('8-1-2024', style: MyStyles().fontSize12Weight400)
+              Text(
+                  DateFormat('yyyy-MM-dd')
+                      .format(controller.orderDetailsModel.date!)
+                      .toString(),
+                  style: MyStyles().fontSize12Weight400)
             ],
           )
         ],
       ),
-      decoration: MyStyles().shapeDecoration,
     );
   }
 }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:laser/app/components/custom_image_widget.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
+import 'package:laser/app/modules/home/controllers/home_controller.dart';
 
-class TechnicianVisitStatus extends StatelessWidget {
+class TechnicianVisitStatus extends GetView<HomeController> {
   const TechnicianVisitStatus({
     super.key,
   });
@@ -14,6 +16,7 @@ class TechnicianVisitStatus extends StatelessWidget {
     return Container(
         width: 300.w,
         height: 365.h,
+        decoration: MyStyles().shapeDecoration,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -83,7 +86,7 @@ class TechnicianVisitStatus extends StatelessWidget {
                             title: Text('Requested',
                                 style: MyStyles().fontSize12Weight400),
                             content: const Text(""),
-                            isActive: false),
+                            isActive: true),
                         Step(
                             state: StepState.indexed,
                             title: Text('Requested',
@@ -95,7 +98,6 @@ class TechnicianVisitStatus extends StatelessWidget {
               ],
             ),
           ],
-        ),
-        decoration: MyStyles().shapeDecoration);
+        ));
   }
 }

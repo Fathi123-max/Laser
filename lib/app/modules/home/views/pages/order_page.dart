@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -14,6 +16,9 @@ class OrderPage extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    Timer? _debounce;
+    int currentPageIndex = 1;
+
     return SingleChildScrollView(
       physics: const NeverScrollableScrollPhysics(),
       child: Padding(
@@ -37,25 +42,38 @@ class OrderPage extends GetView<HomeController> {
                     style: MyStyles().fontSize12Weight400)),
             const Gap(19),
             Obx(() {
-              return SizedBox(
-                height: 430.h,
-                child: ListView.builder(
-                  controller: controller.scrollOrderController,
-                  scrollDirection: Axis.vertical,
-                  itemCount: controller.orderList.value.length,
-                  itemBuilder: (context, index) {
-                    return CardDetails(
-                      index: index,
-                    );
-                  },
+              return NotificationListener(
+                onNotification: (ScrollNotification scrollInfo) {
+                  if (scrollInfo.metrics.pixels ==
+                      scrollInfo.metrics.maxScrollExtent) {
+                    if (_debounce?.isActive ?? false) {
+                      _debounce!.cancel();
+                    }
+                    _debounce = Timer(const Duration(milliseconds: 500), () {
+                      // Increment the page index and call getAllOrders with the new index.
+                      currentPageIndex++;
+                      controller.getAllOrders(index: currentPageIndex);
+
+                      // You might want to check if there's more data to load before calling this.
+                    });
+                  }
+                  return true;
+                },
+                child: SizedBox(
+                  height: 430.h,
+                  child: ListView.builder(
+                    controller: controller.scrollOrderController,
+                    scrollDirection: Axis.vertical,
+                    itemCount: controller.orderList.value.length,
+                    itemBuilder: (context, index) {
+                      return CardDetails(
+                        index: index,
+                      );
+                    },
+                  ),
                 ),
               );
             })
-
-            // const ,
-            // const CardDetails(),
-            // const CardDetails(),
-            // const CardDetails(),
           ],
         ),
       ),

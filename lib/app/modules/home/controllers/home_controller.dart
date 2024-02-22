@@ -5,6 +5,7 @@ import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
 import 'package:geocoding/geocoding.dart' as geocoding;
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:laser/app/components/custom_snackbar.dart';
 import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/data/local/my_shared_pref.dart';
 import 'package:laser/app/data/models/device_brand_model.dart';
@@ -430,6 +431,11 @@ class HomeController extends GetxController {
     );
   }
 
+  int pagesOfPagnation = 0;
+  void getMoreOrders() {
+    getAllOrders(index: pagesOfPagnation + 1);
+  }
+
   Future<void> getAllOrders({String? lang, int? index}) async {
     await BaseClient.safeApiCall(
       Constants.getAllMaintenanceOrderUrl(index ?? 0),
@@ -445,15 +451,35 @@ class HomeController extends GetxController {
       onSuccess: (response) {
         apiDeviceTypesCallStatus.value = ApiCallStatus.success;
 
-        orderList = RxList<OrderModel>.from(response.data["payload"]["data"]
-            .map((e) => OrderModel.fromJson(e as Map<String, dynamic>))
-            .toList());
+        // If this is not the first page, append the new orders to the existing list.
+        if (index != null && index > 1) {
+          var newOrders = RxList<OrderModel>.from(response.data["payload"]
+                  ["data"]
+              .map((e) => OrderModel.fromJson(e as Map<String, dynamic>))
+              .toList());
+
+          // Add the new orders to the existing list.
+          orderList.addAll(newOrders);
+        } else {
+          // If this is the first page, replace the existing list with the new orders.
+          orderList = RxList<OrderModel>.from(response.data["payload"]["data"]
+              .map((e) => OrderModel.fromJson(e as Map<String, dynamic>))
+              .toList());
+        }
+
         orderList.refresh();
         print(orderList.value.first.orderId);
       },
       onError: (error) {
-        // show error message to user
-        BaseClient.handleApiError(error);
+        if (error.response!.data["error"] == true) {
+          CustomSnackBar.showCustomSnackBar(
+            title: "End Of Orders",
+            message: "No More Orders",
+          );
+        } else {
+          BaseClient.handleApiError(error);
+        }
+
         // *) indicate error status
         apiDeviceTypesCallStatus.value = ApiCallStatus.error;
         update();

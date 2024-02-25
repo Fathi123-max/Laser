@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
+import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/payment/payment_receipt.dart';
 
-class ReceiptButton extends StatelessWidget {
+class ReceiptButton extends GetView<HomeController> {
   const ReceiptButton({
     super.key,
   });

@@ -85,7 +85,7 @@ class CardDetails extends GetWidget<HomeController> {
                 style: MyStyles().fontSize12Weight400,
               ),
               const Gap(25),
-              Text('Checking',
+              Text('${controller.orderList.value[index].services!}',
                   textAlign: TextAlign.center,
                   style: MyStyles()
                       .languageButtonStyle

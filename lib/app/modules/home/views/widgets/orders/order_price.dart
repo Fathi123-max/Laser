@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:laser/app/components/custom_image_widget.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
 
-class OrderPrice extends StatelessWidget {
+import '../../../controllers/home_controller.dart';
+
+class OrderPrice extends GetView<HomeController> {
   const OrderPrice({
     super.key,
   });
@@ -18,7 +21,9 @@ class OrderPrice extends StatelessWidget {
           TextSpan(
             children: [
               TextSpan(text: 'Total ', style: MyStyles().fontSize12Weight400),
-              TextSpan(text: '300 SAR', style: MyStyles().fontSize14Weight700),
+              TextSpan(
+                  text: '${controller.orderDetailsModel.totalPrice!} SAR',
+                  style: MyStyles().fontSize14Weight700),
             ],
           ),
           textAlign: TextAlign.center,
@@ -36,7 +41,7 @@ class OrderPrice extends StatelessWidget {
           // color: Colors.transparent,
         ),
         const Gap(7),
-        Text('Paid in cash',
+        Text('Paid in Credit',
             textAlign: TextAlign.center, style: MyStyles().fontSize12Weight400)
       ],
     );

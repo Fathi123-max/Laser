@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
-import 'package:laser/app/modules/home/views/widgets/device_type_widget.dart';
 
+import '../../../controllers/home_controller.dart';
 import 'device_issues.dart';
 import 'technician_commet.dart';
 
-class ServiceDetailes extends StatelessWidget {
+class ServiceDetailes extends GetView<HomeController> {
   const ServiceDetailes({
     super.key,
   });
@@ -17,6 +18,7 @@ class ServiceDetailes extends StatelessWidget {
     return Container(
         width: 326.w,
         height: 220.h,
+        decoration: MyStyles().shapeDecoration,
         child: Column(
           children: [
             const Gap(22),
@@ -31,16 +33,32 @@ class ServiceDetailes extends StatelessWidget {
               ],
             ),
             const Gap(29),
-            DeviceTypeWidget(
-              tapped: false,
+
+            Row(
+              children: [
+                const Gap(18),
+                Text(
+                  '${controller.orderDetailsModel.deviceName}',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: const Color(0xFF1B1926),
+                    fontSize: 12.sp,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
             ),
+            // DeviceTypeWidget(
+            //   fileName: "logo_black.png",
+            //   tapped: false,
+            // ),
             const Gap(10),
             const DeviceIssues(),
             const Gap(30),
             const TechnicianCommet(),
             const Gap(53),
           ],
-        ),
-        decoration: MyStyles().shapeDecoration);
+        ));
   }
 }

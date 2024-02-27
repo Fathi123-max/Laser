@@ -10,7 +10,7 @@ dependencies:
   get: ^4.6.5 # for state management and context less stuff
   flutter_expanded_tile: ^0.3.7
   logger: ^1.4.0 # log events in clear way insted of (print)
-
+  flutter_paymob : 
   flutter_screenutil: ^5.8.4 # make app responsive
   image_picker: ^1.0.7
   dio: ^5.4.1 # for api requests

@@ -86,13 +86,21 @@ class TechnicianVisitStatus extends GetView<HomeController> {
                             content: const Text(""),
                             isActive: true),
                         Step(
-                            state: StepState.indexed,
+                            state:
+                                controller.orderDetailsModel.techVisitStatus ==
+                                        "Accepted"
+                                    ? StepState.complete
+                                    : StepState.indexed,
                             title: Text('Accepted',
                                 style: MyStyles().fontSize12Weight400),
                             content: const Text(""),
                             isActive: true),
                         Step(
-                            state: StepState.indexed,
+                            state:
+                                controller.orderDetailsModel.techVisitStatus ==
+                                        "Done"
+                                    ? StepState.complete
+                                    : StepState.indexed,
                             title: Text('Done',
                                 style: MyStyles().fontSize12Weight400),
                             content: const Text(""),

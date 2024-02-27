@@ -10,6 +10,7 @@ abstract class Routes {
   static const AuthModelPage = _Paths.AuthModelPage;
   static const LoginPage = _Paths.LoginPage;
   static const RegisterPage = _Paths.RegisterPage;
+  static const UpdateOrderPage = _Paths.UpdateOrderPage;
   static const ForgotPasswordlPage = _Paths.ForgotPasswordlPage;
   static const OtpPage = _Paths.OtpPage;
   static const NewPassword = _Paths.NewPassword;
@@ -24,6 +25,7 @@ abstract class _Paths {
   static const AuthModelPage = '/authmodelpage';
   static const LoginPage = '/login';
   static const RegisterPage = '/register';
+  static const UpdateOrderPage = '/update-order-page';
   static const ForgotPasswordlPage = '/forgot-password';
   static const OtpPage = '/otp';
   static const NewPassword = '/newpassword';

@@ -12,6 +12,7 @@ import 'package:laser/app/modules/Auth/view/screens/new_password_screen.dart';
 import 'package:laser/app/modules/Auth/view/screens/otp_screen.dart';
 import 'package:laser/app/modules/Auth/view/screens/register_screen.dart';
 import 'package:laser/app/modules/Auth/view/widgets/model_layout.dart';
+import 'package:laser/app/modules/home/views/pages/update_order.dart';
 import 'package:laser/app/modules/language/binding/language_binding.dart';
 import 'package:laser/app/modules/language/view/language_screen.dart';
 import 'package:laser/app/modules/onboarding/binding/onboarding_binding.dart';
@@ -73,5 +74,10 @@ class AppPages {
         name: Routes.NewPassword,
         page: () => const NewPassword(),
         binding: NewPasswordBinding()),
+    GetPage(
+      name: Routes.UpdateOrderPage,
+      page: () => const UpdateOrderPage(),
+      binding: HomeBinding(),
+    )
   ];
 }

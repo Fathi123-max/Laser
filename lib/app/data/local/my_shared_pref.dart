@@ -25,6 +25,7 @@ class MySharedPref {
   static const String _service = 'service_ids';
   static const String _deviceBrand = 'device_brand';
   static const String _orderId = 'order_id';
+  static const String _rescheduleOrderId = 'reschedule_order_id';
 
   /// init get storage services
   static Future<void> init() async {
@@ -83,6 +84,10 @@ class MySharedPref {
   static void saveOrderId(String orderId) => _sharedPreferences
       .setString(_orderId, orderId)
       .then((value) => print('Set device brand: $orderId'));
+  static void save_rescheduleOrderId(String rescheduleOrderId) =>
+      _sharedPreferences
+          .setString(_rescheduleOrderId, rescheduleOrderId)
+          .then((value) => print('Set device brand: $rescheduleOrderId'));
 
   /// get current locale
   static Locale getCurrentLocal() {
@@ -126,6 +131,8 @@ class MySharedPref {
       _sharedPreferences.getStringList(_service);
   static String? getDeviceBrand() => _sharedPreferences.getString(_deviceBrand);
   static String? getOrderId() => _sharedPreferences.getString(_orderId);
+  static String? getRescheduleOrderId() =>
+      _sharedPreferences.getString(_rescheduleOrderId);
 
   /// clear all data from shared pref
   static Future<void> clear() async => await _sharedPreferences.clear();

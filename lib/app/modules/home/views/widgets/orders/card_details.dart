@@ -107,51 +107,15 @@ class CardDetails extends GetWidget<HomeController> {
                   onTap: () {},
                 ),
                 const Gap(12),
-                CustomCardButton(
-                    heaight: 22.h,
-                    width: 96.sp,
-                    text: "Cancel Order",
-                    color: const Color(0xFFF1F0F5),
-                    onTap: () {
-                      Get.dialog(
-                          //create an alart dialog for cancel order
-                          AlertDialog(
-                              insetPadding:
-                                  EdgeInsets.symmetric(horizontal: 50.w),
-                              //color
-                              backgroundColor: const Color(0xFFF1F0F5),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.r),
-                              ),
-                              title: const Text(
-                                'Cancel Order',
-                                style: TextStyle(color: Color(0xFF1B1926)),
-                              ),
-                              content: const Text(
-                                'Are you sure you want to cancel this order?',
-                              ),
-                              actions: [
-                            TextButton(
-                                onPressed: () {
-                                  Get.back();
-                                },
-                                child: const Text('No')),
-                            TextButton(
-                                onPressed: () {
-                                  showLoadingOverLay(
-                                      asyncFunction: () =>
-                                          controller.cancelOrder(
-                                              lang: LocalizationService
-                                                      .isItEnglish()
-                                                  ? "en"
-                                                  : "ar",
-                                              orderId: controller.orderList
-                                                  .value[index].orderId!));
-                                  Get.back();
-                                },
-                                child: const Text('Yes')),
-                          ]));
-                    }),
+                if (controller.orderList.value[index].nextStatusName != null)
+                  CustomCardButton(
+                      heaight: 22.h,
+                      width: 96.sp,
+                      text:
+                          "${controller.orderList.value[index].nextStatusName}",
+                      color: const Color(0xFFF1F0F5),
+                      onTap: controller.controlOrderStatusButton(
+                          controller.orderList.value[index], context)),
                 const Gap(13),
                 Text('Total ', style: MyStyles().fontSize12Weight400),
                 Text(

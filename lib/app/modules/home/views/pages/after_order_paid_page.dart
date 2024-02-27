@@ -37,7 +37,9 @@ class AfterOrderPaidPage extends GetView<HomeController> {
           const Gap(18),
           const ReceiptButton(),
           const Gap(59),
-          const BackBut()
+          BackBut(
+            OnTap: () => controller.backButtonLogic(),
+          )
         ],
       ),
     );

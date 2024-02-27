@@ -2,6 +2,7 @@ import 'package:dio/dio.dart' as dio;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geocoding/geocoding.dart' as geocoding;
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,24 +11,27 @@ import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/data/local/my_shared_pref.dart';
 import 'package:laser/app/data/models/device_brand_model.dart';
 import 'package:laser/app/data/models/device_model.dart';
-import 'package:laser/app/data/models/device_type_model.dart';
+import 'package:laser/app/data/models/device_type_model.dart'
+    as device_type_model;
 import 'package:laser/app/data/models/order_details_model.dart';
 import 'package:laser/app/data/models/order_model.dart';
 import 'package:laser/app/data/models/service_model.dart';
+import 'package:laser/app/modules/home/views/pages/update_order.dart';
 import 'package:laser/app/routes/app_pages.dart';
 import 'package:location/location.dart';
 
+import '../../../components/custom_loading_overlay.dart';
 import '../../../core/constants.dart';
 import '../../../services/api_call_status.dart';
 import '../../../services/base_client.dart';
 
-class HomeController extends GetxController {
+class HomeController extends GetxController with GetxServiceMixin {
   Rx<PageController> pageController = Rx(PageController());
   RxBool visibilityOfBanner = true.obs;
   RxBool visibilityOfNextButton = false.obs;
   RxBool visibilityOfBackButton = false.obs;
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  RxList<DeviceType> deviceTypeList = RxList([]);
+  RxList<device_type_model.DeviceType> deviceTypeList = RxList([]);
   RxList<OrderModel> orderList = RxList([]);
   OrderDetailsModel orderDetailsModel = OrderDetailsModel();
   RxList<DeviceBrandModel> deviceBrandList = RxList([]);
@@ -166,7 +170,7 @@ class HomeController extends GetxController {
   }
 
   // void toggleSelection(
-  //   int index,
+  //   int index,f
   // ) {
   //   serviceListBool[index].value =
   //       !serviceListBool[index].value; // Corrected toggle
@@ -231,9 +235,10 @@ class HomeController extends GetxController {
       onSuccess: (response) {
         apiDeviceTypesCallStatus.value = ApiCallStatus.success;
 
-        deviceTypeList = RxList<DeviceType>.from(response.data["payload"]
-                ["device_types"]
-            .map((e) => DeviceType.fromJson(e as Map<String, dynamic>))
+        deviceTypeList = RxList<device_type_model.DeviceType>.from(response
+            .data["payload"]["device_types"]
+            .map((e) => device_type_model.DeviceType.fromJson(
+                e as Map<String, dynamic>))
             .toList());
 
         update();
@@ -484,6 +489,47 @@ class HomeController extends GetxController {
       },
     );
     return Future(() => true);
+  }
+
+  rescheduleOrder({
+    String? lang = "",
+    String? orderId,
+  }) async {
+    // *) perform api call
+    await BaseClient.safeApiCall(
+      Constants.rescheduleOrderUrl,
+      headers: {
+        "Accept-Language": lang,
+        "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
+      },
+      RequestType.post,
+      queryParameters: {
+        "order_id": orderId,
+        "arrival_date": chosenDate.value,
+        "arrival_time": chosenHours.value
+      },
+      // data: {"order_id", orderId},
+      onLoading: () {
+        // *) indicate loading state
+        // apiDeviceBrandsCallStatus.value = ApiCallStatus.loading;
+        update();
+      },
+      onSuccess: (response) {
+        // *) indicate success
+        // orderList.removeWhere((element) => element.orderId == orderId);
+        orderList.refresh();
+
+        update();
+        Get.back();
+      },
+      onError: (error) {
+        // show error message to user
+        BaseClient.handleApiError(error);
+        // *) indicate error status
+        // apiDeviceBrandsCallStatus.value = ApiCallStatus.error;
+        update();
+      },
+    );
   }
 
   cancelOrder({String? lang = "", int? orderId}) async {
@@ -752,4 +798,91 @@ class HomeController extends GetxController {
     return pageController.value.nextPage(
         duration: const Duration(milliseconds: 500), curve: Curves.ease);
   }
+
+  Function()? controlOrderStatusButton(OrderModel order, BuildContext context) {
+    switch (order.currentStatusName) {
+      case "Pending":
+        return () {
+          Get.dialog(
+            //create an alart dialog for cancel order
+            AlertDialog(
+              insetPadding: EdgeInsets.symmetric(horizontal: 50.w),
+              backgroundColor: const Color(0xFFF1F0F5),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.r),
+              ),
+              title: const Text(
+                'Cancel Order',
+                style: TextStyle(color: Color(0xFF1B1926)),
+              ),
+              content: const Text(
+                'Are you sure you want to cancel this order?',
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  child: const Text('No'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    showLoadingOverLay(
+                      asyncFunction: () => cancelOrder(
+                        lang: LocalizationService.isItEnglish() ? "en" : "ar",
+                        orderId: order.orderId!,
+                      ),
+                    );
+                    Get.back();
+                  },
+                  child: const Text('Yes'),
+                ),
+              ],
+            ),
+          );
+        };
+      case "Accepted":
+        return () {};
+      case "Paid":
+        return () {};
+      case "On Hold":
+        return () {
+          Get.defaultDialog(
+            title: "",
+            contentPadding: EdgeInsets.zero,
+            backgroundColor: Colors.green,
+            titlePadding: EdgeInsets.zero,
+            content: Container(
+              decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.r),
+                ),
+                shadows: const [
+                  BoxShadow(
+                    color: Color(0x02000000),
+                    blurRadius: 4,
+                    offset: Offset(0, 4),
+                    spreadRadius: 1,
+                  )
+                ],
+              ),
+              height: Get.height * .75,
+              width: Get.width,
+              child: UpdateOrderPage(
+                key: const ValueKey("UpdateOrderPage"),
+                order: order,
+              ),
+            ),
+          );
+        };
+      case "Updated":
+        return () {};
+      case "Finished":
+        return () {};
+      default:
+        return null;
+    }
+  }
 }
+/**   */

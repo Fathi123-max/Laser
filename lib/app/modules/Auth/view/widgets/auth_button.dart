@@ -23,7 +23,7 @@ class AuthButton extends StatelessWidget {
         onPressed: onPressed ?? () {},
         child: SizedBox(
           height: 20.h,
-          width: width != null ? 70.w : 50.w,
+          width: width != null ? 90.w : 50.w,
           child: Center(
             child: AutoSizeText(
               data ?? "Sign in",

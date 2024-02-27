@@ -115,7 +115,11 @@ class CardDetails extends GetWidget<HomeController> {
                           "${controller.orderList.value[index].nextStatusName}",
                       color: const Color(0xFFF1F0F5),
                       onTap: controller.controlOrderStatusButton(
-                          controller.orderList.value[index], context)),
+                          controller.orderList.value[index], context))
+                else
+                  Container(
+                    width: 96.sp,
+                  ),
                 const Gap(13),
                 Text('Total ', style: MyStyles().fontSize12Weight400),
                 Text(

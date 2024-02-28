@@ -18,6 +18,7 @@ import 'package:laser/app/data/models/order_model.dart';
 import 'package:laser/app/data/models/service_model.dart';
 import 'package:laser/app/modules/home/views/pages/update_order.dart';
 import 'package:laser/app/routes/app_pages.dart';
+import 'package:laser/app/services/payment/flutter_paymob.dart';
 import 'package:location/location.dart';
 
 import '../../../components/custom_loading_overlay.dart';
@@ -842,7 +843,42 @@ class HomeController extends GetxController with GetxServiceMixin {
           );
         };
       case "Accepted":
-        return () {};
+        return () async {
+          await FlutterPaymob.instance
+              .initialize(
+                  apiKey:
+                      "ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2ljSEp2Wm1sc1pWOXdheUk2TnpjNUxDSnVZVzFsSWpvaWFXNXBkR2xoYkNKOS40UTVRb0lpa3BoVFN1T0lBVktfTnJIMll3QXBoRmd4cjJBc0NMNVQ3V2RGNlFPNW9Jc1F1TFVON2dQTmFQWTlyT0R1S04zUzhWWUpuLTdqMzBPdUY5UQ==", // from dashboard Select Settings -> Account Info -> API Key
+                  integrationID:
+                      2038, // optional => from dashboard Select Developers -> Payment Integrations -> Online Card ID
+                  walletIntegrationId:
+                      123456, // optional => from dashboard Select Developers -> Payment Integrations -> Online wallet
+                  iFrameID: 904)
+              .then((value) async {
+            await FlutterPaymob.instance.payWithCard(
+              context:
+                  context, // Passes the BuildContext required for UI interactions
+              currency:
+                  "SAR", // Specifies the currency for the transaction (Egyptian Pound)
+              amount: order.totalPrice!
+                  .toDouble(), // Sets the amount of money to be paid (100 EGP)
+              // Optional callback function invoked when the payment process is completed
+              onPayment: (response) {
+                // Checks if the payment was successful
+                if (response.success == true) {
+                  // If successful, displays a snackbar with the success message
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(response.message ??
+                          "Success"), // Shows "Success" message or response message
+                    ),
+                  );
+                }
+              },
+            );
+          }); // from paymob Select Developers -> iframes
+
+          // Initiates a payment with a card using the FlutterPaymob instance
+        };
       case "Paid":
         return () {};
       case "On Hold":
@@ -877,7 +913,30 @@ class HomeController extends GetxController with GetxServiceMixin {
           );
         };
       case "Updated":
-        return () {};
+        return () {
+          // Initiates a payment with a card using the FlutterPaymob instance
+          FlutterPaymob.instance.payWithCard(
+            context:
+                context, // Passes the BuildContext required for UI interactions
+            currency:
+                "SAR", // Specifies the currency for the transaction (Egyptian Pound)
+            amount: order.totalPrice!
+                .toDouble(), // Sets the amount of money to be paid (100 EGP)
+            // Optional callback function invoked when the payment process is completed
+            onPayment: (response) {
+              // Checks if the payment was successful
+              if (response.success == true) {
+                // If successful, displays a snackbar with the success message
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(response.message ??
+                        "Success"), // Shows "Success" message or response message
+                  ),
+                );
+              }
+            },
+          );
+        };
       case "Finished":
         return () {};
       default:

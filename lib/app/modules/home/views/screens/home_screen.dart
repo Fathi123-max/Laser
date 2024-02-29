@@ -24,6 +24,7 @@ class HomeView extends GetView<HomeController> {
         return false;
       },
       child: HomeBaseViewModel(
+        key: GlobalObjectKey("home"),
         child: SizedBox(
           height: 300.h,
           child: PageView(

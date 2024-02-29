@@ -850,6 +850,7 @@ class HomeController extends GetxController with GetxServiceMixin {
               context,
               MaterialPageRoute(
                   builder: (context) => HomeBaseViewModel(
+                      key: GlobalObjectKey("paymrnt details page "),
                       child: PaymentDetailsPage(order: order))));
         };
       case "Paid":
@@ -893,6 +894,7 @@ class HomeController extends GetxController with GetxServiceMixin {
               context,
               MaterialPageRoute(
                   builder: (context) => HomeBaseViewModel(
+                      key: GlobalObjectKey("payment details"),
                       child: PaymentDetailsPage(order: order))));
         };
       case "Finished":
@@ -907,8 +909,8 @@ class HomeController extends GetxController with GetxServiceMixin {
         (value) => Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) =>
-                    const HomeBaseViewModel(child: OrderPage()))));
+                builder: (context) => const HomeBaseViewModel(
+                    key: GlobalObjectKey("orders"), child: OrderPage()))));
     // Get.to(() => ,
     //     transition: Transition.cupertino));
   }

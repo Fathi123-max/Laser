@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:laser/app/components/custom_snackbar.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/data/models/order_model.dart';
 import 'package:laser/app/modules/home/controllers/home_controller.dart';
-import 'package:laser/app/modules/home/views/pages/after_order_paid_page.dart';
 import 'package:laser/app/modules/home/views/widgets/big_text_filed.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
 import 'package:laser/app/modules/home/views/widgets/orders/custom_card_button.dart';
@@ -16,6 +14,7 @@ import 'package:laser/app/modules/home/views/widgets/page_banner.dart';
 import 'package:laser/app/modules/home/views/widgets/payment/number_of_service_needed.dart';
 import 'package:laser/app/modules/home/views/widgets/payment/payment_method_list_tile.dart';
 import 'package:laser/app/modules/home/views/widgets/payment/total_price.dart';
+import 'package:laser/app/routes/app_pages.dart';
 import 'package:laser/app/services/payment/billing_data.dart';
 import 'package:laser/app/services/payment/flutter_paymob.dart';
 
@@ -115,83 +114,35 @@ class PaymentDetailsPage extends GetView<HomeController> {
                     context, // Passes the BuildContext required for UI interactions
                 currency:
                     "SAR", // Specifies the currency for the transaction (Egyptian Pound)
-                amount: order!.totalPrice!
-                    .toDouble(), // Sets the amount of money to be paid (100 EGP)
+                amount: 1, // Sets the amount of money to be paid (100 EGP)
                 // Optional callback function invoked when the payment process is completed
                 onPayment: (response) {
                   // Checks if the payment was successful
+
                   if (response.success == true) {
                     controller.orderDetails(
                         lang: LocalizationService.isItEnglish() ? "en" : "ar",
                         orderId: order!.orderId!,
                         index: 0);
-                    Get.to(() => const AfterOrderPaidPage());
-                  } else {
-                    Navigator.push(
+
+                    Navigator.pushNamedAndRemoveUntil(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => PaymentErrorPage(
-                          errorMessage:
-                              'Your payment could not be processed. Please try again.',
-                          onRetry: () async {
-                            await FlutterPaymob.instance.payWithCard(
-                              billingData: BillingData(
-                                email: "claudette09@exa.com",
-                                firstName: "Clifford",
-                                lastName: "Nicolas",
-                                phoneNumber: "+86(8)9135210487",
-                                postalCode: "01898",
-                                city: "Jaskolskiburgh",
-                                country: "SAU",
-                                state: "Saudi Arabia",
-                                building: "8028",
-                                floor: "42",
-                                apartment: "803",
-                                street: "Ethan Land",
-                                shippingMethod: "PKG",
-                              ),
-                              context:
-                                  context, // Passes the BuildContext required for UI interactions
-                              currency:
-                                  "SAR", // Specifies the currency for the transaction (Egyptian Pound)
-                              amount: order!.totalPrice!
-                                  .toDouble(), // Sets the amount of money to be paid (100 EGP)
-                              // Optional callback function invoked when the payment process is completed
-                              onPayment: (response) {
-                                // Checks if the payment was successful
-                                if (response.success == true) {
-                                  controller.orderDetails(
-                                      lang: LocalizationService.isItEnglish()
-                                          ? "en"
-                                          : "ar",
-                                      orderId: order!.orderId!,
-                                      index: 0);
-                                  Get.to(() => const AfterOrderPaidPage());
-                                } else {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => PaymentErrorPage(
-                                        errorMessage:
-                                            'Your payment could not be processed. Please try again.',
-                                        onRetry: () {},
-                                        onGoBack: () {
-                                          Navigator.pop(
-                                              context); // Go back to the previous screen.
-                                        },
-                                      ),
-                                    ),
-                                  );
-                                }
-                              },
-                            );
-                          },
-                          onGoBack: () {
-                            Navigator.pop(
-                                context); // Go back to the previous screen.
-                          },
-                        ),
-                      ),
+                      Routes.AFTER_ORDER_PAID_PAGE,
+                      (route) => false,
+                    );
+                  } else if (response.success == false) {
+                    // Navigator.pushNamedAndRemoveUntil(
+                    //   context,
+                    //   Routes.AFTER_ORDER_PAID_PAGE,
+                    //   (route) => false,
+                    // );
+                    print(response.message);
+                    print(response.responseCode);
+                    print(response.success);
+                    print(response.transactionID);
+                    CustomSnackBar.showCustomSnackBar(
+                      title: "begin payment",
+                      message: "payment ",
                     );
                   }
                 },
@@ -223,6 +174,7 @@ class PaymentErrorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: UniqueKey(),
       appBar: AppBar(
         title: const Text('Payment Error'),
       ),

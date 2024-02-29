@@ -13,6 +13,7 @@ class LanguagePage extends GetView<LanguageController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: UniqueKey(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

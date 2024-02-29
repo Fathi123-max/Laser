@@ -17,6 +17,7 @@ class RegisterPage extends GetView<RegisterController> {
   Widget build(BuildContext context) {
     Animate.restartOnHotReload = true;
     return Scaffold(
+      key: UniqueKey(),
       body: AuthModelPage(
         authContant: Form(
           key: controller.registerFormKey.value,

@@ -2,8 +2,8 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:laser/app/utils/awesome_notifications_helper.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:laser/app/utils/awesome_notifications_helper.dart';
 
 /// test awesome notifications helper class
 /// 1- check if notifications shows up
@@ -115,6 +115,7 @@ class TestWidget extends GetWidget<TestController> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       home: Scaffold(
+        key: UniqueKey(),
         body: SafeArea(
           child: Center(
             child: Obx(() => Column(

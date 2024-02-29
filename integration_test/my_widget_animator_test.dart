@@ -18,6 +18,7 @@ class TestView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        key: UniqueKey(),
         body: Center(
           child: Obx(
             () => MyWidgetsAnimator(

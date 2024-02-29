@@ -14,6 +14,7 @@ abstract class Routes {
   static const ForgotPasswordlPage = _Paths.ForgotPasswordlPage;
   static const OtpPage = _Paths.OtpPage;
   static const NewPassword = _Paths.NewPassword;
+  static const AFTER_ORDER_PAID_PAGE = _Paths.AFTER_ORDER_PAID_PAGE;
 }
 
 abstract class _Paths {
@@ -29,4 +30,5 @@ abstract class _Paths {
   static const ForgotPasswordlPage = '/forgot-password';
   static const OtpPage = '/otp';
   static const NewPassword = '/newpassword';
+  static const AFTER_ORDER_PAID_PAGE = '/afterorderpaidpage';
 }

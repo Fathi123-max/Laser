@@ -17,6 +17,20 @@ class PaymentMethodListTile extends StatelessWidget {
     return Container(
       width: 318.w,
       height: 34.h,
+      decoration: ShapeDecoration(
+        color: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        shadows: [
+          BoxShadow(
+            color: const Color(0x02000000),
+            blurRadius: 4.r,
+            offset: const Offset(0, 4),
+            spreadRadius: 1,
+          )
+        ],
+      ),
       child: Row(
         children: [
           const Gap(14),
@@ -26,7 +40,7 @@ class PaymentMethodListTile extends StatelessWidget {
             height: 17.h,
           ),
           const Gap(7),
-          Text('Cash on delivery',
+          Text('Cash With Credit',
               textAlign: TextAlign.center,
               style: MyStyles().languageButtonStyle.copyWith(
                     fontSize: 12.sp,
@@ -46,20 +60,6 @@ class PaymentMethodListTile extends StatelessWidget {
             ),
           ),
           const Gap(12)
-        ],
-      ),
-      decoration: ShapeDecoration(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        shadows: [
-          BoxShadow(
-            color: const Color(0x02000000),
-            blurRadius: 4.r,
-            offset: const Offset(0, 4),
-            spreadRadius: 1,
-          )
         ],
       ),
     );

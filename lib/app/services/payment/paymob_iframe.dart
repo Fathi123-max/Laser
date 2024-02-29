@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:laser/app/services/payment/paymob_response.dart';
 //import webview
 import 'package:webview_flutter/webview_flutter.dart';
 
 class PaymobIFrame extends StatefulWidget {
   const PaymobIFrame({
-    Key? key,
+    super.key,
     required this.redirectURL,
     this.onPayment,
-  }) : super(key: key);
+  });
 
   final String redirectURL;
   final void Function(PaymentPaymobResponse)? onPayment;
@@ -64,16 +65,23 @@ class _PaymobIFrameState extends State<PaymobIFrame> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: controller == null
-          ? const Center(
-              child: CircularProgressIndicator.adaptive(),
-            )
-          : SafeArea(
-              child: WebViewWidget(
-                controller: controller!,
+    return WillPopScope(
+      onWillPop: () {
+        Get.back();
+        Get.back();
+        return Future.value(false);
+      },
+      child: Scaffold(
+        body: controller == null
+            ? const Center(
+                child: CircularProgressIndicator.adaptive(),
+              )
+            : SafeArea(
+                child: WebViewWidget(
+                  controller: controller!,
+                ),
               ),
-            ),
+      ),
     );
   }
 

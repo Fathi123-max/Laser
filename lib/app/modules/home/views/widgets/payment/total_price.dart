@@ -7,8 +7,9 @@ import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
 class TotalPrice extends StatelessWidget {
   const TotalPrice({
     super.key,
+    this.counter,
   });
-
+  final int? counter;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -22,7 +23,7 @@ class TotalPrice extends StatelessWidget {
             ),
             const Spacer(),
             Text(
-              "304 SAR",
+              "${counter.toString()} SAR",
               style: MyStyles().languageButtonStyle.copyWith(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.bold,

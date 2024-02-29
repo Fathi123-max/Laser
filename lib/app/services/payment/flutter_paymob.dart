@@ -70,8 +70,9 @@ class FlutterPaymob {
     _integrationId = integrationID!;
     _walletIntegrationId = walletIntegrationId!;
     _iFrameID = iFrameID;
+
     _iFrameURL =
-        'https://accept.paymobsolutions.com/api/acceptance/iframes/$_iFrameID?payment_token=';
+        'https://ksa.paymob.com/api/acceptance/iframes/$_iFrameID?payment_token=';
     _isInitialized = true;
     _userTokenExpiration = userTokenExpiration;
     return _isInitialized;

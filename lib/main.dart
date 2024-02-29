@@ -13,6 +13,7 @@ import 'package:laser/app/data/models/register_response.dart';
 import 'package:laser/app/data/models/service_model.dart';
 import 'package:laser/app/data/models/user.dart';
 import 'package:laser/app/modules/Auth/binding/text_form_field_biniding.dart';
+import 'package:laser/app/services/payment/flutter_paymob.dart';
 import 'package:laser/app/utils/awesome_notifications_helper.dart';
 
 import 'app/config/translations/localization_service.dart';
@@ -50,7 +51,15 @@ Future<void> main() async {
 
   // inti fcm services
   await FcmHelper.initFcm();
-
+  // init flutter paymob
+  await FlutterPaymob.instance
+      .initialize(
+          walletIntegrationId: 12,
+          apiKey:
+              "ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2ljSEp2Wm1sc1pWOXdheUk2TnpjNUxDSnVZVzFsSWpvaWFXNXBkR2xoYkNKOS40UTVRb0lpa3BoVFN1T0lBVktfTnJIMll3QXBoRmd4cjJBc0NMNVQ3V2RGNlFPNW9Jc1F1TFVON2dQTmFQWTlyT0R1S04zUzhWWUpuLTdqMzBPdUY5UQ==",
+          iFrameID: 904,
+          integrationID: 2038)
+      .then((value) async {});
   // initialize local notifications service
   await AwesomeNotificationsHelper.init();
 

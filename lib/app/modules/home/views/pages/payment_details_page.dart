@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:get/get.dart';
 import 'package:laser/app/components/custom_snackbar.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/config/translations/localization_service.dart';
@@ -125,25 +125,30 @@ class PaymentDetailsPage extends GetView<HomeController> {
                         orderId: order!.orderId!,
                         index: 0);
 
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
+                    Get.offNamed(
                       Routes.AFTER_ORDER_PAID_PAGE,
-                      (route) => false,
                     );
                   } else if (response.success == false) {
-                    // Navigator.pushNamedAndRemoveUntil(
-                    //   context,
-                    //   Routes.AFTER_ORDER_PAID_PAGE,
-                    //   (route) => false,
-                    // );
                     print(response.message);
                     print(response.responseCode);
                     print(response.success);
                     print(response.transactionID);
                     CustomSnackBar.showCustomSnackBar(
-                      title: "begin payment",
+                      title: "Faild payment",
                       message: "payment ",
                     );
+                    Get.off(() => PaymentErrorPage(
+                          errorMessage: response.message!,
+                          onRetry: () async {
+                            CustomSnackBar.showCustomSnackBar(
+                              title: "Retry the payment",
+                              message: "",
+                            );
+                          },
+                          onGoBack: () => Get.back(),
+                        ));
+
+                    Get.back();
                   }
                 },
               );

@@ -6,12 +6,12 @@ import 'package:laser/app/modules/home/controllers/home_controller.dart';
 
 import '../custom_appbar_icon.dart';
 import '../custom_drawer.dart';
-import '../navgation_text_buttons.dart';
 
 class HomeBaseViewModel extends GetView<HomeController> {
   const HomeBaseViewModel({required this.child, super.key});
   final Widget child;
-
+  final GlobalObjectKey<ScaffoldState> scaffoldKey =
+      const GlobalObjectKey<ScaffoldState>("ScaffoldKey");
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -19,20 +19,22 @@ class HomeBaseViewModel extends GetView<HomeController> {
       child: SafeArea(
         child: Scaffold(
           drawer: const CustomDrawer(),
-          // key: controller.scaffoldKey,
+          // key: scaffoldKey,
           body: SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
             child: Column(
               children: [
                 const Gap(19),
                 Row(children: [
                   const Gap(24),
-                  CustomAppbarIcon(
-                    fileName: "drawer.png",
-                    height: 15.h,
-                    width: 16.w,
-                    onTap: () =>
-                        controller.scaffoldKey.currentState?.openDrawer(),
-                  ),
+                  Builder(builder: (context) {
+                    return CustomAppbarIcon(
+                      fileName: "drawer.png",
+                      height: 15.h,
+                      width: 16.w,
+                      onTap: () => Scaffold.of(context).openDrawer(),
+                    );
+                  }),
                   const Spacer(),
                   CustomAppbarIcon(
                     fileName: "message.png",
@@ -49,38 +51,41 @@ class HomeBaseViewModel extends GetView<HomeController> {
                   ),
                   const Gap(19)
                 ]),
-                SizedBox(height: 550.h, child: child),
-                Row(
-                  children: [
-                    const Gap(50),
-                    Obx(() => Visibility(
-                          visible: controller.visibilityOfBackButton
-                              .value, // Replace isVisible with your visibility condition
-                          child: NavgationTextButtons(
-                            text: "Back",
-                            onTap: () {
-                              controller.backButtonLogic();
-                            },
-                          ),
-                        )),
-                    const Spacer(),
-                    Obx(() => Visibility(
-                          visible: controller.visibilityOfNextButton
-                              .value, // Replace isVisible with your visibility condition
-                          child: NavgationTextButtons(
-                            text: "Next",
-                            onTap: () {
-                              controller.pageController.value.nextPage(
-                                  duration: const Duration(milliseconds: 500),
-                                  curve: Curves.easeInOut);
+                SizedBox(
+                    height: (0.90 * MediaQuery.of(context).size.height)
+                        .roundToDouble(),
+                    child: child),
+                // Row(
+                //   children: [
+                //     const Gap(50),
+                //     Obx(() => Visibility(
+                //           visible: controller.visibilityOfBackButton
+                //               .value, // Replace isVisible with your visibility condition
+                //           child: NavgationTextButtons(
+                //             text: "Back",
+                //             onTap: () {
+                //               controller.backButtonLogic();
+                //             },
+                //           ),
+                //         )),
+                //     const Spacer(),
+                //     Obx(() => Visibility(
+                //           visible: controller.visibilityOfNextButton
+                //               .value, // Replace isVisible with your visibility condition
+                //           child: NavgationTextButtons(
+                //             text: "Next",
+                //             onTap: () {
+                //               controller.pageController.value.nextPage(
+                //                   duration: const Duration(milliseconds: 500),
+                //                   curve: Curves.easeInOut);
 
-                              // controller.controllVisibilityOfButtons();
-                            },
-                          ),
-                        )),
-                    const Gap(51)
-                  ],
-                )
+                //               // controller.controllVisibilityOfButtons();
+                //             },
+                //           ),
+                //         )),
+                //     const Gap(51)
+                //   ],
+                // )
               ],
             ),
           ),

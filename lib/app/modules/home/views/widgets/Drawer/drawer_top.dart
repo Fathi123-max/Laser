@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
 import 'package:laser/app/components/custom_image_widget.dart';
-import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
 
 class DrawerTop extends StatelessWidget {
@@ -21,10 +19,7 @@ class DrawerTop extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                Get.find<HomeController>()
-                    .scaffoldKey
-                    .currentState
-                    ?.closeDrawer();
+                Scaffold.of(context).closeDrawer();
               },
               child: Icon(
                 Icons.close,

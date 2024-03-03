@@ -134,21 +134,9 @@ class PaymentDetailsPage extends GetView<HomeController> {
                     print(response.success);
                     print(response.transactionID);
                     CustomSnackBar.showCustomSnackBar(
-                      title: "Faild payment",
-                      message: "payment ",
+                      title: "Error",
+                      message: "Payment Failed",
                     );
-                    Get.off(() => PaymentErrorPage(
-                          errorMessage: response.message!,
-                          onRetry: () async {
-                            CustomSnackBar.showCustomSnackBar(
-                              title: "Retry the payment",
-                              message: "",
-                            );
-                          },
-                          onGoBack: () => Get.back(),
-                        ));
-
-                    Get.back();
                   }
                 },
               );

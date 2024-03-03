@@ -22,7 +22,7 @@ class OrderPage extends GetView<HomeController> {
     return SingleChildScrollView(
       physics: const NeverScrollableScrollPhysics(),
       child: Padding(
-        padding: EdgeInsets.all(27.w),
+        padding: EdgeInsets.only(right: 27.w, left: 27.w, top: 27.h),
         child: Column(
           children: [
             SizedBox(
@@ -60,7 +60,7 @@ class OrderPage extends GetView<HomeController> {
                   return true;
                 },
                 child: SizedBox(
-                  height: 430.h,
+                  height: 490.h,
                   child: ListView.builder(
                     controller: controller.scrollOrderController,
                     scrollDirection: Axis.vertical,

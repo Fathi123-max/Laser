@@ -33,7 +33,7 @@ class HomeController extends GetxController with GetxServiceMixin {
   RxBool visibilityOfBanner = true.obs;
   RxBool visibilityOfNextButton = false.obs;
   RxBool visibilityOfBackButton = false.obs;
-  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   RxList<device_type_model.DeviceType> deviceTypeList = RxList([]);
   RxList<OrderModel> orderList = RxList([]);
   OrderDetailsModel orderDetailsModel = OrderDetailsModel();

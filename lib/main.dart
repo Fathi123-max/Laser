@@ -1,4 +1,3 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -68,48 +67,49 @@ Future<void> main() async {
         child:  MyApp(selectedLanguage)
       ), */
   runApp(
-    DevicePreview(
-      // enabled: !kReleaseMode, // Disable it in release builds.
-      builder: (context) => ScreenUtilInit(
-        // todo add your (Xd / Figma) artboard size
-        designSize: const Size(375, 667),
-        minTextAdapt: true,
-        splitScreenMode: true,
-        useInheritedMediaQuery: true,
-        rebuildFactor: (old, data) => true,
-        builder: (context, widget) {
-          return GetMaterialApp(
-            // builder: DevicePreview.appBuilder, // Add the builder here
-            // locale: DevicePreview.locale(context), // Add the locale here
-            initialBinding: TextFormFieldBinding(),
-            title: "ليزر",
-            useInheritedMediaQuery: true,
-            debugShowCheckedModeBanner: false,
-            // initialBinding: SplashScreenBinding(),
-            builder: (context, widget) {
-              bool themeIsLight = MySharedPref.getThemeIsLight();
-              return Theme(
-                // data: MyTheme.getThemeData(isLight: !themeIsLight),
-                data: MyTheme.getThemeData(isLight: !themeIsLight),
-                child: MediaQuery(
-                  // prevent font from scalling (some people use big/small device fonts)
-                  // but we want our app font to still the same and dont get affected
-                  data: MediaQuery.of(context)
-                      .copyWith(textScaler: const TextScaler.linear(1.0)),
-                  child: widget!,
-                ),
-              );
-            },
-            defaultTransition: Transition.cupertino,
-            initialRoute:
-                AppPages.iNITIAL, // first screen to show when app is running
-            getPages: AppPages.routes, // app screens
-            locale: MySharedPref.getCurrentLocal(), // app language
-            translations: LocalizationService
-                .getInstance(), // localization services in app (controller app language)
-          );
-        },
-      ),
+    // DevicePreview(
+    //   // enabled: !kReleaseMode, // Disable it in release builds.
+    //   builder: (context) =>
+    ScreenUtilInit(
+      // Todo add your (Xd / Figma) artboard size
+      designSize: const Size(375, 667),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      useInheritedMediaQuery: true,
+      rebuildFactor: (old, data) => true,
+      builder: (context, widget) {
+        return GetMaterialApp(
+          // builder: DevicePreview.appBuilder, // Add the builder here
+          // locale: DevicePreview.locale(context), // Add the locale here
+          initialBinding: TextFormFieldBinding(),
+          title: "ليزر",
+          useInheritedMediaQuery: true,
+          debugShowCheckedModeBanner: false,
+          // initialBinding: SplashScreenBinding(),
+          builder: (context, widget) {
+            bool themeIsLight = MySharedPref.getThemeIsLight();
+            return Theme(
+              // data: MyTheme.getThemeData(isLight: !themeIsLight),
+              data: MyTheme.getThemeData(isLight: !themeIsLight),
+              child: MediaQuery(
+                // prevent font from scalling (some people use big/small device fonts)
+                // but we want our app font to still the same and dont get affected
+                data: MediaQuery.of(context)
+                    .copyWith(textScaler: const TextScaler.linear(1.0)),
+                child: widget!,
+              ),
+            );
+          },
+          defaultTransition: Transition.cupertino,
+          initialRoute:
+              AppPages.iNITIAL, // first screen to show when app is running
+          getPages: AppPages.routes, // app screens
+          locale: MySharedPref.getCurrentLocal(), // app language
+          translations: LocalizationService
+              .getInstance(), // localization services in app (controller app language)
+        );
+      },
     ),
+    // ),
   );
 }

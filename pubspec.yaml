@@ -7,10 +7,11 @@ environment:
 
 dependencies:
   cupertino_icons: ^1.0.5
+
   get: ^4.6.5 # for state management and context less stuff
   flutter_expanded_tile: ^0.3.7
   logger: ^1.4.0 # log events in clear way insted of (print)
-
+  intl: ^0.19.0
   flutter_screenutil: ^5.8.4 # make app responsive
   image_picker: ^1.0.7
   dio: ^5.4.1 # for api requests
@@ -23,7 +24,7 @@ dependencies:
 
   firebase_core: ^2.14.0 # to initialize firebase services
   firebase_messaging: ^14.6.4 # fcm services
-  awesome_notifications: ^0.7.5 # notifications services (will be used for fcm)
+  awesome_notifications: 0.9.2 # notifications services (will be used for fcm)
 
   change_app_package_name: # change package name
 
@@ -42,7 +43,7 @@ dependencies:
   google_fonts: ^6.1.0
   flutter_otp_text_field: ^1.1.1
   flutter_animate: ^4.4.0
-  easy_date_timeline: ^1.0.3
+  easy_date_timeline: ^1.0.5
   order_tracker_zen: ^1.0.0+4
   device_preview: ^1.1.0
   flutter_spinkit: ^5.2.0

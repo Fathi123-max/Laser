@@ -98,9 +98,10 @@ class HomeController extends GetxController with GetxServiceMixin {
     update();
   }
 
-  controlleDate(String date) {
+  var dateTime = DateTime.now().obs;
+  controlleDate(DateTime date) {
     String desiredOutput = date.toString().substring(0, 10);
-
+    dateTime.value = date;
     this.chosenDate.value = desiredOutput;
     getWorkingHours(
         lang: LocalizationService.isItEnglish() ? "en" : "ar",
@@ -705,7 +706,18 @@ class HomeController extends GetxController with GetxServiceMixin {
   pickImages() async {
     List<XFile> images = await ImagePicker().pickMultiImage();
 
-    pickedImages.value = await Future.wait(images.map((image) async {
+    if (images.length > 2) {
+      return CustomSnackBar.showCustomErrorSnackBar(
+          title: "Error", message: "Please Select Only 2 Photos");
+    }
+    if (images.isEmpty) {
+      return CustomSnackBar.showCustomErrorSnackBar(
+        title: "Error",
+        message: "Please Select Photo ",
+      );
+    }
+
+    pickedImages.value = await Future.wait(images.take(2).map((image) async {
       return await dio.MultipartFile.fromFile(image.path, filename: image.name);
     }).toList());
 
@@ -721,6 +733,16 @@ class HomeController extends GetxController with GetxServiceMixin {
         ))
             ?.files ??
         [];
+    if (videos.isEmpty) {
+      return CustomSnackBar.showCustomErrorSnackBar(
+        title: "Error",
+        message: "Please Select Video ",
+      );
+    }
+    if (videos.length > 2) {
+      return CustomSnackBar.showCustomErrorSnackBar(
+          title: "Error", message: "Please Select Only 2 Videos");
+    }
 
     videos.take(2).forEach((element) {
       pickedVideos.value.add(dio.MultipartFile.fromFileSync(element.path!,

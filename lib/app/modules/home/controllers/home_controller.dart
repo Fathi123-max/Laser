@@ -931,8 +931,8 @@ class HomeController extends GetxController with GetxServiceMixin {
         (value) => Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => const HomeBaseViewModel(
-                    key: GlobalObjectKey("orders"), child: OrderPage()))));
+                builder: (context) =>
+                    const HomeBaseViewModel(child: OrderPage()))));
     // Get.to(() => ,
     //     transition: Transition.cupertino));
   }

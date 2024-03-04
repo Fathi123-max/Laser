@@ -53,9 +53,61 @@ final Map<String, String> arAR = {
   //chat with us
   Strings.chatWithUs: "تواصل معنا",
   //Service
-  Strings.service: "الخدمات",
-  //You can add a pic or video of your device if \nneeded here!
-  Strings.addPicOrVideo: "يمكنك أضافة صورة أو فيديو للجهاز \nهنا!",
+  Strings.service: "الخدمة",
+  //You can add a pic or video of your device if needed here!
+  Strings.addPicOrVideo: "يمكنك أضافة صورة أو فيديو للجهاز إذا كنت تحتاجها",
   //Add photo/ Video
-  Strings.addPhotoVideo: "اضافة صورة / فيديو",
+  Strings.addPhotoVideo: "إضافة صورة / فيديو",
+  //details
+  Strings.details: "التفاصيل",
+  //Cancel Order
+  Strings.cancelOrder: "إلغاء الطلب",
+  //Order number
+  Strings.orderNumber: "رقم الطلب",
+  //isuue
+  Strings.issue: "المشكلة",
+  //pay now
+  Strings.payNow: "دفع الآن",
+  //Accepted
+  Strings.accepted: "مقبول",
+  //Pending
+  Strings.pending: "قيد العمل",
+  //updated
+  Strings.updated: "تم التحديث",
+  //On Hold
+  Strings.onHold: "تم توقيته",
+  //Finished
+  Strings.finished: "منتهي",
+  //Total
+  Strings.total: "المجموع",
+  //orders
+  Strings.orders: "الطلبات",
+  //error
+  Strings.error: "خطأ",
+  //please select photo
+  Strings.pleaseSelectPhoto: "الرجاء إختيار الصورة",
+  //please select video
+  Strings.pleaseSelectVideo: "الرجاء إختيار الفيديو",
+  //problem information if needed
+  Strings.problemInformationIfNeeded: "معلومات عن المشكلة إذا كان هناك",
+  //...add your address here
+  Strings.addYourAddressHere: "...إضافة عنوانك هنا",
+  //Submit
+  Strings.submit: "إرسال",
+  //Visit Details
+  Strings.visitDetails: "تفاصيل الزيارة",
+  //please add information needed
+  Strings.pleaseAddInformationNeeded: "الرجاء إضافة المعلومات المطلوبة",
+  //delivery location
+  Strings.deliveryLocation: "مكان التوصيل",
+  // Technician arrival date
+  Strings.technicianArrivalDate: "تاريخ وصول الفني",
+  // Technician arrival time
+  Strings.technicianArrivalTime: "وقت وصول الفني",
+  //Click Date to Show Hours
+  Strings.clickDateToShowHours: "اضغط على التاريخ لعرض الساعات",
+  //place order
+  Strings.placeOrder: "إعداد الطلب",
+  //SAR
+  Strings.sar: "ر.س.‏",
 };

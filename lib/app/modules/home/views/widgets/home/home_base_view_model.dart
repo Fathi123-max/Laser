@@ -19,7 +19,6 @@ class HomeBaseViewModel extends GetView<HomeController> {
       child: SafeArea(
         child: Scaffold(
           drawer: const CustomDrawer(),
-          // key: scaffoldKey,
           body: SingleChildScrollView(
             physics: const NeverScrollableScrollPhysics(),
             child: Column(

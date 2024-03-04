@@ -114,4 +114,10 @@ class Strings {
   static const String technicianArrivalDate = "Technician arrival date";
   // Technician arrival time
   static const String technicianArrivalTime = "Technician arrival time";
+  //Click Date to Show Hours
+  static const String clickDateToShowHours = "Click Date to Show Hours";
+  //place order
+  static const String placeOrder = "Place Order";
+  //SAR
+  static const String sar = "SAR";
 }

@@ -66,4 +66,52 @@ class Strings {
   //Add photo/ Video
 
   static const String addPhotoVideo = "Add photo/ Video";
+  //details
+  static const String details = "Details";
+  //Cancel Order
+  static const String cancelOrder = "Cancel Order";
+  //Order number
+  static const String orderNumber = "Order Number";
+  //isuue
+  static const String issue = "Issue";
+  //pay now
+  static const String payNow = "Pay Now";
+  //Accepted
+  static const String accepted = "Accepted";
+  //Pending
+  static const String pending = "Pending";
+  //updated
+  static const String updated = "Updated";
+  //On Hold
+  static const String onHold = "On Hold";
+  //Finished
+  static const String finished = "Finished";
+  //Total
+  static const String total = "Total";
+  //orders
+  static const String orders = "Orders";
+  //error
+  static const String error = "Error";
+  //please select photo
+  static const String pleaseSelectPhoto = "Please select photo";
+  //please select video
+  static const String pleaseSelectVideo = "Please select video";
+  //problem information if needed
+  static const String problemInformationIfNeeded =
+      "Problem information if needed";
+  //...add your address here
+  static const String addYourAddressHere = "...Add your address here";
+  //Submit
+  static const String submit = "Submit";
+  //Visit Details
+  static const String visitDetails = "Visit Details";
+  //please add information needed
+  static const String pleaseAddInformationNeeded =
+      "Please add information needed";
+  //delivery location
+  static const String deliveryLocation = "Delivery Location";
+  // Technician arrival date
+  static const String technicianArrivalDate = "Technician arrival date";
+  // Technician arrival time
+  static const String technicianArrivalTime = "Technician arrival time";
 }

@@ -72,7 +72,7 @@ class ServicePage extends GetView<HomeController> {
             children: [
               const Gap(55),
               Text(
-                'Problem Information if needed',
+                'Problem information if needed'.tr,
                 textAlign: TextAlign.center,
                 style: MyStyles()
                     .languageButtonStyle

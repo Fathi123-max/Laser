@@ -30,13 +30,13 @@ class VisitDetailsPage extends GetWidget<HomeController> {
             const Gap(30),
             PageBanner(
                 pageIndex: 4,
-                pageTitle: "Visit details".tr,
+                pageTitle: "Visit Details".tr,
                 pageSubTitle: "Please add information needed".tr),
             const Gap(26),
             Row(
               children: [
                 Gap(13.w),
-                Text('Delivery location'.tr,
+                Text('Delivery Location'.tr,
                     textAlign: TextAlign.center,
                     style: MyStyles().authBigTextStyle.copyWith(
                           color: const Color(0xFF1B1926),
@@ -235,7 +235,7 @@ class VisitDetailsPage extends GetWidget<HomeController> {
                               LocalizationService.isItEnglish() ? "en" : "ar");
                     });
                   },
-                  data: "Place Order",
+                  data: "Place Order".tr,
                   height: 37.h,
                   width: 131.w,
                 ),

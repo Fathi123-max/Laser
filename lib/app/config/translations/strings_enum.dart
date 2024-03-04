@@ -100,7 +100,7 @@ class Strings {
   static const String problemInformationIfNeeded =
       "Problem information if needed";
   //...add your address here
-  static const String addYourAddressHere = "...Add your address here";
+  static const String addYourAddressHere = "Add your address here";
   //Submit
   static const String submit = "Submit";
   //Visit Details
@@ -120,4 +120,8 @@ class Strings {
   static const String placeOrder = "Place Order";
   //SAR
   static const String sar = "SAR";
+  static const String ifYouHaveMoreThanOneDevice =
+      "*If you have more than one device, finish it \n one by one and you can add it after you finish the process.";
+
+  /***If you have more than one device, finish it \n one by one and you can add it after you finish the process. */
 }

@@ -91,9 +91,9 @@ final Map<String, String> arAR = {
   //problem information if needed
   Strings.problemInformationIfNeeded: "معلومات عن المشكلة إذا كان هناك",
   //...add your address here
-  Strings.addYourAddressHere: "...إضافة عنوانك هنا",
+  Strings.addYourAddressHere: "إضافة عنوانك هنا",
   //Submit
-  Strings.submit: "إرسال",
+  Strings.submit: "التالى",
   //Visit Details
   Strings.visitDetails: "تفاصيل الزيارة",
   //please add information needed
@@ -110,4 +110,8 @@ final Map<String, String> arAR = {
   Strings.placeOrder: "إعداد الطلب",
   //SAR
   Strings.sar: "ر.س.‏",
+
+  /***If you have more than one device, finish it \n one by one and you can add it after you finish the process. */
+  Strings.ifYouHaveMoreThanOneDevice:
+      "*اذا كان لديك أكثر من عنصر واحد  يرجى الانتهاء من الأول ويمكنك أضافة عنصر اخر  بعد نهاية العملية .",
 };

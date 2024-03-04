@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:get/get.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/modules/home/controllers/home_controller.dart';
 
@@ -26,7 +26,7 @@ class BigTextFiled extends GetView<HomeController> {
             : controller.noteController,
         maxLines: 50,
         decoration: InputDecoration(
-          hintText: "Add your address here...",
+          hintText: "Add your address here".tr,
           filled: true,
           hintStyle: const TextStyle(
             color: Color(0xFF1B1926),

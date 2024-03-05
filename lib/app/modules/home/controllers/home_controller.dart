@@ -1,11 +1,7 @@
 import 'package:dio/dio.dart' as dio;
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:geocoding/geocoding.dart' as geocoding;
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:laser/app/components/custom_snackbar.dart';
 import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/data/local/my_shared_pref.dart';
@@ -16,14 +12,10 @@ import 'package:laser/app/data/models/device_type_model.dart'
 import 'package:laser/app/data/models/order_details_model.dart';
 import 'package:laser/app/data/models/order_model.dart';
 import 'package:laser/app/data/models/service_model.dart';
-import 'package:laser/app/modules/home/views/pages/order_page.dart';
-import 'package:laser/app/modules/home/views/pages/payment_details_page.dart';
-import 'package:laser/app/modules/home/views/pages/update_order.dart';
-import 'package:laser/app/modules/home/views/widgets/home/home_base_view_model.dart';
+import 'package:laser/app/modules/home/controllers/controller_helper/location_services.dart';
+import 'package:laser/app/modules/home/controllers/controller_helper/pick_controller.dart';
 import 'package:laser/app/routes/app_pages.dart';
-import 'package:location/location.dart';
 
-import '../../../components/custom_loading_overlay.dart';
 import '../../../core/constants.dart';
 import '../../../services/api_call_status.dart';
 import '../../../services/base_client.dart';
@@ -409,8 +401,8 @@ class HomeController extends GetxController with GetxServiceMixin {
         "arrival_time": chosenHours.value,
         'payment_type': "1",
         "device_services[]": services,
-        "images[]": pickedImages,
-        "videos[]": pickedVideos
+        "images[]": Get.find<PickController>().pickedImages,
+        "videos[]": Get.find<PickController>().pickedVideos
       },
     );
 
@@ -702,54 +694,6 @@ class HomeController extends GetxController with GetxServiceMixin {
         : null;
   }
 
-//? pick multiple images from device
-  pickImages() async {
-    List<XFile> images = await ImagePicker().pickMultiImage();
-
-    if (images.length > 2) {
-      return CustomSnackBar.showCustomErrorSnackBar(
-          title: "Error", message: "Please Select Only 2 Photos");
-    }
-    if (images.isEmpty) {
-      return CustomSnackBar.showCustomErrorSnackBar(
-        title: "Error",
-        message: "Please Select Photo ",
-      );
-    }
-
-    pickedImages.value = await Future.wait(images.take(2).map((image) async {
-      return await dio.MultipartFile.fromFile(image.path, filename: image.name);
-    }).toList());
-
-    // return images;
-  }
-
-//? pick multiple videos from device using file picker
-  pickVideos() async {
-    List<PlatformFile> videos = (await FilePicker.platform.pickFiles(
-          type: FileType.video,
-          allowMultiple: true,
-          allowCompression: true,
-        ))
-            ?.files ??
-        [];
-    if (videos.isEmpty) {
-      return CustomSnackBar.showCustomErrorSnackBar(
-        title: "Error",
-        message: "Please Select Video ",
-      );
-    }
-    if (videos.length > 2) {
-      return CustomSnackBar.showCustomErrorSnackBar(
-          title: "Error", message: "Please Select Only 2 Videos");
-    }
-
-    videos.take(2).forEach((element) {
-      pickedVideos.value.add(dio.MultipartFile.fromFileSync(element.path!,
-          filename: element.name));
-    });
-  }
-
   signout() async {
     // *) perform api call
     await BaseClient.safeApiCall(
@@ -775,48 +719,9 @@ class HomeController extends GetxController with GetxServiceMixin {
     );
   }
 
-  Future<String> getCurrentLocationAddress() async {
-    Location location = Location();
-
-    bool serviceEnabled;
-    PermissionStatus permissionGranted;
-    LocationData locationData;
-
-    // Check if location service is enabled
-    serviceEnabled = await location.serviceEnabled();
-    if (!serviceEnabled) {
-      serviceEnabled = await location.requestService();
-      if (!serviceEnabled) {
-        // Handle case when user denies location service
-        return "";
-      }
-    }
-
-    // Check if location permission is granted
-    permissionGranted = await location.hasPermission();
-    if (permissionGranted == PermissionStatus.denied) {
-      permissionGranted = await location.requestPermission();
-      if (permissionGranted != PermissionStatus.granted) {
-        // Handle case when user denies location permission
-        return "";
-      }
-    }
-
-    // Get current location
-    locationData = await location.getLocation();
-
-    // Get address from coordinates
-    List<geocoding.Placemark> placemarks =
-        await geocoding.placemarkFromCoordinates(
-      locationData.latitude!,
-      locationData.longitude!,
-    );
-
-    return "${placemarks[0].name! + ',' + placemarks[0].street! + ',' + placemarks[0].country!}";
-  }
-
   Future<void> supmitService() async {
-    addressController.text = await getCurrentLocationAddress();
+    addressController.text =
+        await Get.put(LocationController()).getCurrentLocationAddress();
 
     MySharedPref.saveService(selectedServiceList.value);
 
@@ -824,115 +729,9 @@ class HomeController extends GetxController with GetxServiceMixin {
         duration: const Duration(milliseconds: 500), curve: Curves.ease);
   }
 
-  controlOrderStatusButton(OrderModel order, BuildContext context) {
-    switch (order.currentStatusName) {
-      case "Pending":
-        return () {
-          Get.dialog(
-            //create an alart dialog for cancel order
-            AlertDialog(
-              insetPadding: EdgeInsets.symmetric(horizontal: 50.w),
-              backgroundColor: const Color(0xFFF1F0F5),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.r),
-              ),
-              title: const Text(
-                'Cancel Order',
-                style: TextStyle(color: Color(0xFF1B1926)),
-              ),
-              content: const Text(
-                'Are you sure you want to cancel this order?',
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Get.back();
-                  },
-                  child: const Text('No'),
-                ),
-                TextButton(
-                  onPressed: () {
-                    showLoadingOverLay(
-                      asyncFunction: () => cancelOrder(
-                        lang: LocalizationService.isItEnglish() ? "en" : "ar",
-                        orderId: order.orderId!,
-                      ),
-                    );
-                    Get.back();
-                  },
-                  child: const Text('Yes'),
-                ),
-              ],
-            ),
-          );
-        };
-      case "Accepted":
-        return () async {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => HomeBaseViewModel(
-                      key: GlobalObjectKey("paymrnt details page "),
-                      child: PaymentDetailsPage(order: order))));
-        };
-      case "Paid":
-        return () {};
-      case "On Hold":
-        return () {
-          Get.defaultDialog(
-            title: "",
-            contentPadding: EdgeInsets.zero,
-            backgroundColor: Colors.green,
-            titlePadding: EdgeInsets.zero,
-            content: Container(
-              decoration: ShapeDecoration(
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.r),
-                ),
-                shadows: const [
-                  BoxShadow(
-                    color: Color(0x02000000),
-                    blurRadius: 4,
-                    offset: Offset(0, 4),
-                    spreadRadius: 1,
-                  )
-                ],
-              ),
-              height: Get.height * .75,
-              width: Get.width,
-              child: UpdateOrderPage(
-                key: const ValueKey("UpdateOrderPage"),
-                order: order,
-              ),
-            ),
-          );
-        };
-      case "Updated":
-        return () async {
-          // Initiates a payment with a card using the FlutterPaymob instance
-
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => HomeBaseViewModel(
-                      key: GlobalObjectKey("payment details"),
-                      child: PaymentDetailsPage(order: order))));
-        };
-      case "Finished":
-        return () {};
-      default:
-        return null;
-    }
-  }
-
   toOrderList(context) {
-    getAllOrders(lang: LocalizationService.isItEnglish() ? "en" : "ar").then(
-        (value) => Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    const HomeBaseViewModel(child: OrderPage()))));
+    getAllOrders(lang: LocalizationService.isItEnglish() ? "en" : "ar")
+        .then((value) => Get.toNamed(Routes.ORDER_LIST));
     // Get.to(() => ,
     //     transition: Transition.cupertino));
   }
@@ -942,4 +741,3 @@ class HomeController extends GetxController with GetxServiceMixin {
     // Get.to(() => const HomeView());
   }
 }
-/**   */

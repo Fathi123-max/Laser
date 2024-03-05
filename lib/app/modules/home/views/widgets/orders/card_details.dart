@@ -6,6 +6,7 @@ import 'package:laser/app/components/custom_image_widget.dart';
 import 'package:laser/app/components/custom_loading_overlay.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/config/translations/localization_service.dart';
+import 'package:laser/app/modules/home/controllers/controller_helper/controll_order_status.dart';
 import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
 
@@ -114,8 +115,9 @@ class CardDetails extends GetWidget<HomeController> {
                       text:
                           "${controller.orderList.value[index].nextStatusName}",
                       color: const Color(0xFFF1F0F5),
-                      onTap: controller.controlOrderStatusButton(
-                          controller.orderList.value[index], context))
+                      onTap: Get.find<OrderStatusController>()
+                          .controlOrderStatusButton(
+                              controller.orderList.value[index], context))
                 else
                   Container(
                     width: 96.sp,

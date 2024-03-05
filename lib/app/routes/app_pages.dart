@@ -12,8 +12,11 @@ import 'package:laser/app/modules/Auth/view/screens/new_password_screen.dart';
 import 'package:laser/app/modules/Auth/view/screens/otp_screen.dart';
 import 'package:laser/app/modules/Auth/view/screens/register_screen.dart';
 import 'package:laser/app/modules/Auth/view/widgets/model_layout.dart';
+import 'package:laser/app/modules/home/bindings/bindings_helpers/orderstatus_bindings.dart';
 import 'package:laser/app/modules/home/views/pages/after_order_paid_page.dart';
+import 'package:laser/app/modules/home/views/pages/order_page.dart';
 import 'package:laser/app/modules/home/views/pages/update_order.dart';
+import 'package:laser/app/modules/home/views/widgets/home/home_base_view_model.dart';
 import 'package:laser/app/modules/language/binding/language_binding.dart';
 import 'package:laser/app/modules/language/view/language_screen.dart';
 import 'package:laser/app/modules/onboarding/binding/onboarding_binding.dart';
@@ -83,6 +86,10 @@ class AppPages {
     GetPage(
       name: Routes.AFTER_ORDER_PAID_PAGE,
       page: () => const AfterOrderPaidPage(),
-    )
+    ),
+    GetPage(
+        name: Routes.ORDER_LIST,
+        binding: OrderStatusBinding(),
+        page: () => const HomeBaseViewModel(child: OrderPage())),
   ];
 }

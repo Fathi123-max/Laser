@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/components/custom_loading_overlay.dart';
-import 'package:laser/app/modules/home/controllers/home_controller.dart';
+import 'package:laser/app/modules/home/controllers/controller_helper/pick_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/device_type_widget.dart';
 
-class CustomAddMediaWidget extends GetWidget<HomeController> {
+class CustomAddMediaWidget extends GetWidget<PickController> {
   const CustomAddMediaWidget(
       {super.key, required this.photoName, required this.isvideo});
   final String photoName;

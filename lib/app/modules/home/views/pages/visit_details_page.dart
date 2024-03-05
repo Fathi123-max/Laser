@@ -8,6 +8,7 @@ import 'package:laser/app/components/custom_loading_overlay.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/modules/Auth/view/widgets/auth_button.dart';
+import 'package:laser/app/modules/home/controllers/controller_helper/controll_order_status.dart';
 import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/big_text_filed.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
@@ -230,6 +231,7 @@ class VisitDetailsPage extends GetWidget<HomeController> {
                 AuthButton(
                   onPressed: () {
                     showLoadingOverLay(asyncFunction: () {
+                      Get.put(OrderStatusController());
                       return controller.createOrder(
                           lang:
                               LocalizationService.isItEnglish() ? "en" : "ar");

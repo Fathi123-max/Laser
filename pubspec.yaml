@@ -12,6 +12,7 @@ dependencies:
   flutter_expanded_tile: ^0.3.7
   logger: ^1.4.0 # log events dein clear way insted of (print)
   intl: ^0.19.0
+  pay: ^2.0.0
   flutter_screenutil: ^5.8.4 # make app responsive
   image_picker: ^1.0.7
   dio: ^5.4.1 # for api requests

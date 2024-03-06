@@ -47,6 +47,8 @@ class _PaymobIFrameState extends State<PaymobIFrame> {
                 request.url.contains('success') &&
                 request.url.contains('id')) {
               final params = _getParamFromURL(request.url);
+              print("params");
+              print(params);
               final response = PaymentPaymobResponse.fromJson(params);
               if (widget.onPayment != null) {
                 widget.onPayment!(response);

@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/components/custom_snackbar.dart';
+import 'package:laser/app/config/payment/payment_configurations.dart' as pay;
 import 'package:laser/app/config/theme/my_styles.dart';
-import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/data/models/order_model.dart';
 import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/big_text_filed.dart';
@@ -14,9 +14,9 @@ import 'package:laser/app/modules/home/views/widgets/page_banner.dart';
 import 'package:laser/app/modules/home/views/widgets/payment/number_of_service_needed.dart';
 import 'package:laser/app/modules/home/views/widgets/payment/payment_method_list_tile.dart';
 import 'package:laser/app/modules/home/views/widgets/payment/total_price.dart';
-import 'package:laser/app/routes/app_pages.dart';
 import 'package:laser/app/services/payment/billing_data.dart';
 import 'package:laser/app/services/payment/flutter_paymob.dart';
+import 'package:pay/pay.dart';
 
 class PaymentDetailsPage extends GetView<HomeController> {
   const PaymentDetailsPage({
@@ -27,6 +27,13 @@ class PaymentDetailsPage extends GetView<HomeController> {
   final OrderModel? order;
   @override
   Widget build(BuildContext context) {
+    var paymentItems = [
+      const PaymentItem(
+        label: 'Test',
+        amount: "1",
+        status: PaymentItemStatus.final_price,
+      )
+    ];
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -82,73 +89,132 @@ class PaymentDetailsPage extends GetView<HomeController> {
                 ],
               ),
               Gap(13.h),
-              const PaymentMethodListTile(
+              PaymentMethodListTile(
+                ontap: () async {
+                  await FlutterPaymob.instance.payWithCard(
+                    billingData: BillingData(
+                      email: "claudette09@exa.com",
+                      firstName: "Clifford",
+                      lastName: "Nicolas",
+                      phoneNumber: "+86(8)9135210487",
+                      postalCode: "01898",
+                      city: "Jaskolskiburgh",
+                      country: "SAU",
+                      state: "Saudi Arabia",
+                      building: "8028",
+                      floor: "42",
+                      apartment: "803",
+                      street: "Ethan Land",
+                      shippingMethod: "PKG",
+                    ),
+                    context:
+                        context, // Passes the BuildContext required for UI interactions
+                    currency:
+                        "SAR", // Specifies the currency for the transaction (Egyptian Pound)
+                    amount: 1, // Sets the amount of money to be paid (100 EGP)
+                    // Optional callback function invoked when the payment process is completed
+                    onPayment: (response) {
+                      // Checks if the payment was successful
+
+                      if (response.success == "true") {
+                        // print(response.message);
+                        // print(response.responseCode);
+                        // print(response.success);
+                        // print(response.transactionID);
+                        CustomSnackBar.showCustomSnackBar(
+                          title: "Success",
+                          message: "Payment Success",
+                        );
+                        // controller.orderDetails(
+                        //     lang:
+                        //         LocalizationService.isItEnglish() ? "en" : "ar",
+                        //     orderId: order!.orderId!,
+                        //     index: 0);
+
+                        // Get.offNamed(
+                        //   Routes.AFTER_ORDER_PAID_PAGE,
+                        // );
+                      } else if (response.success == "false") {
+                        print("paymrnt failed");
+
+                        CustomSnackBar.showCustomSnackBar(
+                          title: "Error",
+                          message: "Payment Failed",
+                        );
+                      } else {}
+                    },
+                  );
+                },
                 fileName: "credit.png",
                 done: true,
               ),
+              const Gap(5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ApplePayButton(
+                    paymentConfiguration: PaymentConfiguration.fromJsonString(
+                        pay.defaultApplePay),
+                    paymentItems: paymentItems,
+                    style: ApplePayButtonStyle.black,
+                    type: ApplePayButtonType.buy,
+                    margin: const EdgeInsets.only(top: 15.0),
+                    onPaymentResult: onApplePayResult,
+                    loadingIndicator: const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                  const Gap(5),
+                  GooglePayButton(
+                    paymentConfiguration: PaymentConfiguration.fromJsonString(
+                        pay.defaultGooglePay),
+                    paymentItems: paymentItems,
+                    type: GooglePayButtonType.buy,
+                    margin: const EdgeInsets.only(top: 15.0),
+                    onPaymentResult: onGooglePayResult,
+                    loadingIndicator: const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
-          const Gap(20),
-          CustomCardButton(
-            color: Colors.black,
-            heaight: 30.h,
-            bold: true,
-            onTap: () async {
-              await FlutterPaymob.instance.payWithCard(
-                billingData: BillingData(
-                  email: "claudette09@exa.com",
-                  firstName: "Clifford",
-                  lastName: "Nicolas",
-                  phoneNumber: "+86(8)9135210487",
-                  postalCode: "01898",
-                  city: "Jaskolskiburgh",
-                  country: "SAU",
-                  state: "Saudi Arabia",
-                  building: "8028",
-                  floor: "42",
-                  apartment: "803",
-                  street: "Ethan Land",
-                  shippingMethod: "PKG",
-                ),
-                context:
-                    context, // Passes the BuildContext required for UI interactions
-                currency:
-                    "SAR", // Specifies the currency for the transaction (Egyptian Pound)
-                amount: 1, // Sets the amount of money to be paid (100 EGP)
-                // Optional callback function invoked when the payment process is completed
-                onPayment: (response) {
-                  // Checks if the payment was successful
-
-                  if (response.success == true) {
-                    controller.orderDetails(
-                        lang: LocalizationService.isItEnglish() ? "en" : "ar",
-                        orderId: order!.orderId!,
-                        index: 0);
-
-                    Get.offNamed(
-                      Routes.AFTER_ORDER_PAID_PAGE,
-                    );
-                  } else if (response.success == false) {
-                    print(response.message);
-                    print(response.responseCode);
-                    print(response.success);
-                    print(response.transactionID);
-                    CustomSnackBar.showCustomSnackBar(
-                      title: "Error",
-                      message: "Payment Failed",
-                    );
-                  }
-                },
-              );
-            },
-            text: "Pay Now",
-            colorText: Colors.white,
-            width: 101.w,
-            fontsize: 14.sp,
-          )
         ],
       ),
     );
+  }
+
+  void onApplePayResult(Map<String, dynamic> result) {
+    if (result['error'] != null) {
+      CustomSnackBar.showCustomSnackBar(
+        title: "Error",
+        message: result['error'],
+      );
+    } else {
+      if (result['status'] == 'success') {
+        CustomSnackBar.showCustomSnackBar(
+          title: "Success",
+          message: result['status'],
+        );
+      }
+    }
+  }
+
+  void onGooglePayResult(Map<String, dynamic> result) {
+    if (result['error'] != null) {
+      CustomSnackBar.showCustomSnackBar(
+        title: "Error",
+        message: result['error'],
+      );
+    } else {
+      if (result['status'] == 'success') {
+        CustomSnackBar.showCustomSnackBar(
+          title: "Success",
+          message: result['status'],
+        );
+      }
+    }
   }
 }
 

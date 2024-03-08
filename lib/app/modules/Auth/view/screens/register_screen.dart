@@ -11,16 +11,18 @@ import 'package:laser/app/modules/Auth/view/widgets/model_layout.dart';
 import 'package:laser/app/routes/app_pages.dart';
 
 class RegisterPage extends GetView<RegisterController> {
-  const RegisterPage({super.key});
+  RegisterPage({
+    super.key,
+  });
+  GlobalKey<FormState>? registerFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     Animate.restartOnHotReload = true;
     return Scaffold(
-      key: UniqueKey(),
       body: AuthModelPage(
         authContant: Form(
-          key: controller.registerFormKey.value,
+          key: registerFormKey,
           child: Column(
             children: [
               Row(
@@ -71,7 +73,7 @@ class RegisterPage extends GetView<RegisterController> {
               AuthButton(
                 data: "Sign up",
                 onPressed: () {
-                  controller.register();
+                  controller.register(registerFormKey);
                   FocusScope.of(context).unfocus();
                 },
               ),

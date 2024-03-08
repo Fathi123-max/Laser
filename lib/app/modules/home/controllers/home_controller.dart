@@ -12,7 +12,6 @@ import 'package:laser/app/data/models/device_type_model.dart'
 import 'package:laser/app/data/models/order_details_model.dart';
 import 'package:laser/app/data/models/order_model.dart';
 import 'package:laser/app/data/models/service_model.dart';
-import 'package:laser/app/modules/home/controllers/controller_helper/location_services.dart';
 import 'package:laser/app/modules/home/controllers/controller_helper/pick_controller.dart';
 import 'package:laser/app/routes/app_pages.dart';
 
@@ -94,10 +93,10 @@ class HomeController extends GetxController with GetxServiceMixin {
   controlleDate(DateTime date) {
     String desiredOutput = date.toString().substring(0, 10);
     dateTime.value = date;
-    this.chosenDate.value = desiredOutput;
+    chosenDate.value = desiredOutput;
     getWorkingHours(
         lang: LocalizationService.isItEnglish() ? "en" : "ar",
-        date: this.chosenDate.value);
+        date: chosenDate.value);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       scroll(isHours: true);
@@ -417,6 +416,7 @@ class HomeController extends GetxController with GetxServiceMixin {
       data: orderFormData,
       onSuccess: (response) {
         getAllOrders(lang: LocalizationService.isItEnglish() ? "en" : "ar")
+            .then((value) => isOrderSelected.value = false)
             .then((value) => pageController.value
                     .nextPage(
                   duration: const Duration(milliseconds: 500),
@@ -562,7 +562,9 @@ class HomeController extends GetxController with GetxServiceMixin {
   }
 
   RxInt orderindex = RxInt(0);
-  orderDetails({String? lang = "", int? orderId, int? index}) async {
+
+  Future<void> orderDetails(
+      {String? lang = "", int? orderId, int? index}) async {
     // *) perform api call
     await BaseClient.safeApiCall(
       Constants.orderDetailsUrl,
@@ -720,8 +722,10 @@ class HomeController extends GetxController with GetxServiceMixin {
   }
 
   Future<void> supmitService() async {
-    addressController.text =
-        await Get.put(LocationController()).getCurrentLocationAddress();
+    // addressController.text =
+    //     await Get.put(LocationController()).getCurrentLocationAddress();
+    addressController.text = "hello";
+    // await Get.put(LocationController()).getCurrentLocationAddress();
 
     MySharedPref.saveService(selectedServiceList.value);
 
@@ -729,9 +733,13 @@ class HomeController extends GetxController with GetxServiceMixin {
         duration: const Duration(milliseconds: 500), curve: Curves.ease);
   }
 
+  RxBool isOrderSelected = RxBool(true);
   toOrderList(context) {
-    getAllOrders(lang: LocalizationService.isItEnglish() ? "en" : "ar")
-        .then((value) => Get.toNamed(Routes.ORDER_LIST));
+    isOrderSelected.value == true
+        ? getAllOrders(lang: LocalizationService.isItEnglish() ? "en" : "ar")
+            .then((value) => Get.toNamed(Routes.ORDER_LIST))
+        : Get.back();
+    isOrderSelected.toggle();
     // Get.to(() => ,
     //     transition: Transition.cupertino));
   }

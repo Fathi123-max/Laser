@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:laser/app/components/custom_snackbar.dart';
 import 'package:laser/app/config/payment/payment_configurations.dart' as pay;
 import 'package:laser/app/config/theme/my_styles.dart';
+import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/data/models/order_model.dart';
 import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/big_text_filed.dart';
@@ -14,6 +15,7 @@ import 'package:laser/app/modules/home/views/widgets/page_banner.dart';
 import 'package:laser/app/modules/home/views/widgets/payment/number_of_service_needed.dart';
 import 'package:laser/app/modules/home/views/widgets/payment/payment_method_list_tile.dart';
 import 'package:laser/app/modules/home/views/widgets/payment/total_price.dart';
+import 'package:laser/app/routes/app_pages.dart';
 import 'package:laser/app/services/payment/billing_data.dart';
 import 'package:laser/app/services/payment/flutter_paymob.dart';
 import 'package:pay/pay.dart';
@@ -125,15 +127,20 @@ class PaymentDetailsPage extends GetView<HomeController> {
                           title: "Success",
                           message: "Payment Success",
                         );
-                        // controller.orderDetails(
-                        //     lang:
-                        //         LocalizationService.isItEnglish() ? "en" : "ar",
-                        //     orderId: order!.orderId!,
-                        //     index: 0);
-
-                        // Get.offNamed(
-                        //   Routes.AFTER_ORDER_PAID_PAGE,
-                        // );
+                        controller
+                            .orderDetails(
+                                lang: LocalizationService.isItEnglish()
+                                    ? "en"
+                                    : "ar",
+                                orderId: order!.orderId!,
+                                index: 0)
+                            .then((value) => Get.offNamed(
+                                  Routes.AFTER_ORDER_PAID_PAGE,
+                                ));
+                        CustomSnackBar.showCustomSnackBar(
+                          title: "Success",
+                          message: "Payment Success",
+                        );
                       } else if (response.success == "false") {
                         print("paymrnt failed");
 
@@ -153,11 +160,14 @@ class PaymentDetailsPage extends GetView<HomeController> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ApplePayButton(
+                    width: 200.w,
+                    height: 50.h,
+                    cornerRadius: 10.r,
                     paymentConfiguration: PaymentConfiguration.fromJsonString(
                         pay.defaultApplePay),
                     paymentItems: paymentItems,
                     style: ApplePayButtonStyle.black,
-                    type: ApplePayButtonType.buy,
+                    type: ApplePayButtonType.checkout,
                     margin: const EdgeInsets.only(top: 15.0),
                     onPaymentResult: onApplePayResult,
                     loadingIndicator: const Center(
@@ -165,17 +175,6 @@ class PaymentDetailsPage extends GetView<HomeController> {
                     ),
                   ),
                   const Gap(5),
-                  GooglePayButton(
-                    paymentConfiguration: PaymentConfiguration.fromJsonString(
-                        pay.defaultGooglePay),
-                    paymentItems: paymentItems,
-                    type: GooglePayButtonType.buy,
-                    margin: const EdgeInsets.only(top: 15.0),
-                    onPaymentResult: onGooglePayResult,
-                    loadingIndicator: const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  ),
                 ],
               ),
             ],
@@ -186,19 +185,18 @@ class PaymentDetailsPage extends GetView<HomeController> {
   }
 
   void onApplePayResult(Map<String, dynamic> result) {
-    if (result['error'] != null) {
-      CustomSnackBar.showCustomSnackBar(
-        title: "Error",
-        message: result['error'],
-      );
-    } else {
-      if (result['status'] == 'success') {
-        CustomSnackBar.showCustomSnackBar(
-          title: "Success",
-          message: result['status'],
-        );
-      }
-    }
+    controller
+        .orderDetails(
+            lang: LocalizationService.isItEnglish() ? "en" : "ar",
+            orderId: order!.orderId!,
+            index: 0)
+        .then((value) => Get.offNamed(
+              Routes.AFTER_ORDER_PAID_PAGE,
+            ));
+    CustomSnackBar.showCustomSnackBar(
+      title: "Success",
+      message: "Payment Success",
+    );
   }
 
   void onGooglePayResult(Map<String, dynamic> result) {

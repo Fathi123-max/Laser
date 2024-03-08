@@ -8,12 +8,11 @@ import 'package:laser/app/services/base_client.dart';
 class LoginController extends GetxController {
   RxBool isPasswordVisible = true.obs;
   // craete a key for loginFormKey
-  GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
 
   TextEditingController mobileNumber = TextEditingController(text: "966");
   TextEditingController password = TextEditingController();
 
-  login() async {
+  login([loginFormKey]) async {
     if (loginFormKey.currentState!.validate()) {
       await BaseClient.safeApiCall(
         Constants.loginUrl,

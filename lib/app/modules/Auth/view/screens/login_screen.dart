@@ -11,14 +11,15 @@ import '../../../../components/custom_text_form_field.dart';
 import '../widgets/auth_button.dart';
 
 class LoginPage extends GetView<LoginController> {
-  const LoginPage({super.key});
+  LoginPage({super.key});
+  GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return AuthModelPage(
       authContant: Form(
         canPop: false,
-        key: controller.loginFormKey,
+        key: loginFormKey,
         child: Column(
           children: [
             Row(
@@ -61,7 +62,7 @@ class LoginPage extends GetView<LoginController> {
             AuthButton(
               data: "Login",
               onPressed: () {
-                controller.login();
+                controller.login(loginFormKey);
                 FocusScope.of(context).unfocus();
               },
             ),

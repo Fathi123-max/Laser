@@ -28,12 +28,12 @@ library;
 const String defaultApplePay = '''{
   "provider": "apple_pay",
   "data": {
-    "merchantIdentifier": "merchant.com.sams.fish",
-    "displayName": "Sam's Fish",
+    "merchantIdentifier": "merchant.sa.laser",
+    "displayName": "Laser",
     "merchantCapabilities": ["3DS", "debit", "credit"],
     "supportedNetworks": ["amex", "visa", "discover", "masterCard"],
-    "countryCode": "US",
-    "currencyCode": "USD",
+    "countryCode": "SA",
+    "currencyCode": "SAR",
     "requiredBillingContactFields": ["emailAddress", "name", "phoneNumber", "postalAddress"],
     "requiredShippingContactFields": [],
     "shippingMethods": [

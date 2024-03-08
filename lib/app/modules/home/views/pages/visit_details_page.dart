@@ -77,43 +77,43 @@ class VisitDetailsPage extends GetWidget<HomeController> {
               ],
             ),
             const Gap(16),
-            Obx(() {
-              return EasyInfiniteDateTimeLine(
-                showTimelineHeader: false,
-                focusDate: controller.dateTime.value,
+            // Obx(() {
+            //   return
+            EasyDateTimeLine(
+              // showTimelineHeader: false,
+              // focusDate: controller.dateTime.value,
 
-                controller: EasyInfiniteDateTimelineController(),
-                lastDate: DateTime.now().add(const Duration(days: 60)),
-                firstDate: DateTime.now(),
+              // controller: EasyInfiniteDateTimelineController(),
+              // lastDate: DateTime.now().add(const Duration(days: 60)),
+              // firstDate: DateTime.now(),
 
-                timeLineProps: const EasyTimeLineProps(),
-                onDateChange: (selectedDate) =>
-                    controller.controlleDate(selectedDate),
-                // headerProps: const EasyHeaderProps(
-                //   showHeader: false,
-                // ),
-                activeColor: const Color(0xFF1B1D28),
+              // timeLineProps: const EasyTimeLineProps(),
+              onDateChange: (selectedDate) =>
+                  controller.controlleDate(selectedDate),
+              headerProps: const EasyHeaderProps(
+                showHeader: false,
+              ),
+              activeColor: const Color(0xFF1B1D28),
 
-                dayProps: EasyDayProps(
-                  height: 79.h,
-                  inactiveDayStyle: DayStyle(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(10.r)))),
-                  todayHighlightStyle: TodayHighlightStyle.withBorder,
-                  todayHighlightColor: Colors.white,
-                  todayStyle: DayStyle(
-                      splashBorder: BorderRadius.all(Radius.circular(10.r)),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 2, color: const Color(0xFF1B1D28)),
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(10.r)))),
-                ),
-                locale: LocalizationService.isItEnglish() ? "en" : "ar",
-              );
-            }),
+              dayProps: EasyDayProps(
+                height: 79.h,
+                inactiveDayStyle: DayStyle(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(10.r)))),
+                todayHighlightStyle: TodayHighlightStyle.withBorder,
+                todayHighlightColor: Colors.white,
+                todayStyle: DayStyle(
+                    splashBorder: BorderRadius.all(Radius.circular(10.r)),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            width: 2, color: const Color(0xFF1B1D28)),
+                        borderRadius: BorderRadius.all(Radius.circular(10.r)))),
+              ),
+              locale: LocalizationService.isItEnglish() ? "en" : "ar",
+              initialDate: DateTime.now(),
+            ),
+            // }),
             const Gap(14),
             Row(
               children: [

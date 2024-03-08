@@ -66,6 +66,7 @@ Future<void> main() async {
       RestartWidget(
         child:  MyApp(selectedLanguage)
       ), */
+
   runApp(
     // DevicePreview(
     //   // enabled: !kReleaseMode, // Disable it in release builds.

@@ -19,7 +19,6 @@ import 'package:laser/app/modules/home/views/pages/update_order.dart';
 import 'package:laser/app/modules/home/views/widgets/home/home_base_view_model.dart';
 import 'package:laser/app/modules/language/binding/language_binding.dart';
 import 'package:laser/app/modules/language/view/language_screen.dart';
-import 'package:laser/app/modules/onboarding/binding/onboarding_binding.dart';
 import 'package:laser/app/modules/onboarding/view/onboarding_screens.dart';
 import 'package:laser/app/modules/splash/views/splash_Screen.dart';
 
@@ -44,9 +43,9 @@ class AppPages {
         page: () => const SplashScreen(),
         binding: OnStartBinding()),
     GetPage(
-        name: Routes.Onboarding,
-        page: () => const OnboardingScreens(),
-        binding: OnboardingBinding()),
+      name: Routes.Onboarding,
+      page: () => const OnboardingScreens(),
+    ),
     GetPage(
         name: Routes.Language,
         page: () => const LanguagePage(),
@@ -60,11 +59,11 @@ class AppPages {
     ),
     GetPage(
         name: Routes.LoginPage,
-        page: () => const LoginPage(),
+        page: () => LoginPage(),
         binding: LoginBinding()),
     GetPage(
         name: Routes.RegisterPage,
-        page: () => const RegisterPage(),
+        page: () => RegisterPage(),
         binding: RegisterBinding()),
     GetPage(
         name: Routes.ForgotPasswordlPage,
@@ -85,7 +84,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.AFTER_ORDER_PAID_PAGE,
-      page: () => const AfterOrderPaidPage(),
+      page: () => const HomeBaseViewModel(child: AfterOrderPaidPage()),
     ),
     GetPage(
         name: Routes.ORDER_LIST,

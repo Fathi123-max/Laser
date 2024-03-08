@@ -44,14 +44,16 @@ class HomeBaseViewModel extends GetView<HomeController> {
                   const Gap(15),
                   CustomAppbarIcon(
                     onTap: () => controller.toOrderList(context),
-                    fileName: "list_view.png",
+                    fileName: controller.isOrderSelected.value
+                        ? "list_view.png"
+                        : "appicon.png",
                     height: 25.h,
                     width: 25.w,
                   ),
                   const Gap(19)
                 ]),
                 SizedBox(
-                    height: (0.90 * MediaQuery.of(context).size.height)
+                    height: (0.83 * MediaQuery.of(context).size.height)
                         .roundToDouble(),
                     child: child),
                 // Row(

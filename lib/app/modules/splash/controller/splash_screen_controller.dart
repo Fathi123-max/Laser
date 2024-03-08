@@ -11,7 +11,9 @@ class SplashScreenController extends GetxController {
         Constants.tokenValidatorUrl,
         RequestType.post,
 
-        headers: {"Authorization": "Bearer ${MySharedPref.getCurrentToken()}"},
+        headers: {
+          "Authorization": "Bearer ${MySharedPref.getCurrentToken() ?? ""}"
+        },
 
         onLoading: () {
           // *) indicate loading state
@@ -19,7 +21,7 @@ class SplashScreenController extends GetxController {
         onSuccess: (response) {
           // api done successfully
 
-          Get.offAllNamed(Routes.HOME);
+          Get.offNamed(Routes.HOME);
 
           // *) indicate success state
           // update();
@@ -38,9 +40,11 @@ class SplashScreenController extends GetxController {
         },
       );
     } else {
-      MySharedPref.getOnBoarding() == "OnBoardingDone"
-          ? Get.offAllNamed(Routes.LoginPage)
-          : Get.offAllNamed(Routes.Onboarding);
+      MySharedPref.getOnBoarding() == null
+          ? Get.offNamed(Routes.Onboarding)
+          : MySharedPref.getOnBoarding() == "OnBoardingDone"
+              ? Get.offAllNamed(Routes.LoginPage)
+              : Get.offNamed(Routes.Onboarding);
     }
   }
 }

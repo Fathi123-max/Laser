@@ -12,12 +12,16 @@ import 'package:laser/app/data/models/device_type_model.dart'
 import 'package:laser/app/data/models/order_details_model.dart';
 import 'package:laser/app/data/models/order_model.dart';
 import 'package:laser/app/data/models/service_model.dart';
+import 'package:laser/app/modules/home/controllers/controller_helper/controll_order_status.dart';
 import 'package:laser/app/modules/home/controllers/controller_helper/pick_controller.dart';
+import 'package:laser/app/modules/home/views/pages/order_ditails_page.dart';
+import 'package:laser/app/modules/home/views/widgets/home/home_base_view_model.dart';
 import 'package:laser/app/routes/app_pages.dart';
 
 import '../../../core/constants.dart';
 import '../../../services/api_call_status.dart';
 import '../../../services/base_client.dart';
+import 'controller_helper/location_services.dart';
 
 class HomeController extends GetxController with GetxServiceMixin {
   Rx<PageController> pageController = Rx(PageController());
@@ -69,6 +73,8 @@ class HomeController extends GetxController with GetxServiceMixin {
   RxList<dio.MultipartFile> pickedVideos = <dio.MultipartFile>[].obs;
 
   ScrollController scrollOrderController = ScrollController();
+
+  RxBool detailskey = RxBool(true);
 
 // controll tapping of device and visibilty of buttons ***************************************************************
   void controlleDeviceTypeTap(
@@ -204,14 +210,8 @@ class HomeController extends GetxController with GetxServiceMixin {
         deviceModelList[activeModelIndex.value].id.toString());
 
     // hide model and color
-    deviceModelVisibleController.value = true;
-    deviceColorVisibleController.value = true;
-
-    // navgate to Service page
-    pageController.value.nextPage(
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeInOut,
-    );
+    // deviceModelVisibleController.value = true;
+    // deviceColorVisibleController.value = true;
   }
 
 //? http methods for api  ****************************************************************************************
@@ -427,6 +427,8 @@ class HomeController extends GetxController with GetxServiceMixin {
                 }));
         MySharedPref.saveOrderId(
             response.data["payload"]["order_id"].toString());
+        Get.find<PickController>().pickedImages.clear();
+        Get.find<PickController>().pickedVideos.clear();
       },
       onError: (error) {
         BaseClient.handleApiError(error);
@@ -582,16 +584,21 @@ class HomeController extends GetxController with GetxServiceMixin {
       },
       onSuccess: (response) {
         // *) indicate success
-
+        detailskey.value = false;
         orderDetailsModel = OrderDetailsModel.fromJson(
           response.data["payload"]["data"] as Map<String, dynamic>,
         );
         orderindex.value = index!;
+        if (pageController.value.page == 4.0) {
+          pageController.value.nextPage(
+            curve: Curves.easeInOut,
+            duration: const Duration(milliseconds: 500),
+          );
+        } else {
+          Get.put(OrderStatusController());
+          Get.to(() => const HomeBaseViewModel(child: OrderDitailsPage()));
+        }
 
-        pageController.value.nextPage(
-          curve: Curves.easeInOut,
-          duration: const Duration(milliseconds: 500),
-        );
         update();
       },
       onError: (error) {
@@ -722,9 +729,9 @@ class HomeController extends GetxController with GetxServiceMixin {
   }
 
   Future<void> supmitService() async {
-    // addressController.text =
-    //     await Get.put(LocationController()).getCurrentLocationAddress();
-    addressController.text = "hello";
+    addressController.text =
+        await Get.put(LocationController()).getCurrentLocationAddress();
+    // addressController.text = "hello";
     // await Get.put(LocationController()).getCurrentLocationAddress();
 
     MySharedPref.saveService(selectedServiceList.value);

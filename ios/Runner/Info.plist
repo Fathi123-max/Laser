@@ -8,6 +8,10 @@
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
 	<string>ليزر</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to your photo library to upload photos of Issue in your device</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We require your location to provide personalized content</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We need your location so that technician  can come to your locatione</string>
 	<key>NSLocationAlwaysUsageDescription</key>

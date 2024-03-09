@@ -4,10 +4,11 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/components/custom_image_widget.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
+import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
 import 'package:laser/app/modules/home/views/widgets/orders/custom_card_button.dart';
 
-class PaymentPage extends GetView {
+class PaymentPage extends GetView<HomeController> {
   const PaymentPage({super.key});
 
   @override
@@ -16,6 +17,7 @@ class PaymentPage extends GetView {
         key: UniqueKey(),
         body: Column(
           children: [
+            Gap(40.h),
             Padding(
               padding: EdgeInsets.all(25.w),
               child: Container(
@@ -175,6 +177,7 @@ class PaymentPage extends GetView {
                 text: "Download",
                 color: Colors.black,
                 colorText: Colors.white),
+            Gap(20.h),
           ],
         ));
   }

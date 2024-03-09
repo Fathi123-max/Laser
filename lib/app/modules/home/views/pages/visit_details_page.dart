@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -226,8 +228,19 @@ class VisitDetailsPage extends GetWidget<HomeController> {
             ),
             const Gap(36),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                if (Platform.isIOS) ...[
+                  AuthButton(
+                    data: "Back".tr,
+                    width: 60.w,
+                    onPressed: () => controller.pageController.value
+                        .previousPage(
+                            curve: Curves.easeInOut,
+                            duration: const Duration(milliseconds: 500)),
+                  ),
+                  const Gap(20)
+                ],
                 AuthButton(
                   onPressed: () {
                     showLoadingOverLay(asyncFunction: () {

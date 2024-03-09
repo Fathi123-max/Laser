@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:laser/app/modules/Auth/view/widgets/auth_button.dart';
 import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
 import 'package:laser/app/modules/home/views/widgets/device_brand_widget.dart';
@@ -49,6 +53,34 @@ class DeviceBrandPage extends GetWidget<HomeController> {
                   ],
                 ));
           }),
+          Visibility(
+            visible: controller.deviceColorVisibleController.value,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (Platform.isIOS) ...[
+                  AuthButton(
+                    data: "Back".tr,
+                    width: 60.w,
+                    onPressed: () => controller.pageController.value
+                        .previousPage(
+                            curve: Curves.easeInOut,
+                            duration: const Duration(milliseconds: 500)),
+                  ),
+                  const Gap(20)
+                ],
+                AuthButton(
+                    data: "Submit".tr,
+                    onPressed: () {
+                      // navgate to Service page
+                      controller.pageController.value.nextPage(
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.easeInOut,
+                      );
+                    }),
+              ],
+            ),
+          )
         ],
       ),
     );

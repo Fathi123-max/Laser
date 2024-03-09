@@ -39,7 +39,7 @@ class LocationController extends GetxController {
       locationData.latitude!,
       locationData.longitude!,
     );
-
+    print(placemarks);
     return "${placemarks[0].name! + ',' + placemarks[0].street! + ',' + placemarks[0].country!}";
   }
 }

@@ -50,18 +50,25 @@ class CardDetails extends GetWidget<HomeController> {
                     textAlign: TextAlign.center,
                     style: MyStyles().fontSize12Weight700),
                 const Spacer(),
-                CustomCardButton(
-                  text: "Details",
-                  color: const Color(0xFFF1F0F5),
-                  onTap: () {
-                    showLoadingOverLay(
-                        asyncFunction: () => controller.orderDetails(
-                            lang:
-                                LocalizationService.isItEnglish() ? "en" : "ar",
-                            orderId: controller.orderList.value[index].orderId!,
-                            index: index));
-                  },
-                ),
+                Obx(() {
+                  return Visibility(
+                    visible: controller.detailskey.value,
+                    child: CustomCardButton(
+                      text: "Details",
+                      color: const Color(0xFFF1F0F5),
+                      onTap: () {
+                        showLoadingOverLay(
+                            asyncFunction: () => controller.orderDetails(
+                                lang: LocalizationService.isItEnglish()
+                                    ? "en"
+                                    : "ar",
+                                orderId:
+                                    controller.orderList.value[index].orderId!,
+                                index: index));
+                      },
+                    ),
+                  );
+                }),
                 const Gap(12)
               ],
             ),
@@ -115,7 +122,7 @@ class CardDetails extends GetWidget<HomeController> {
                       text:
                           "${controller.orderList.value[index].nextStatusName}",
                       color: const Color(0xFFF1F0F5),
-                      onTap: Get.find<OrderStatusController>()
+                      onTap: Get.put(OrderStatusController())
                           .controlOrderStatusButton(
                               controller.orderList.value[index], context))
                 else

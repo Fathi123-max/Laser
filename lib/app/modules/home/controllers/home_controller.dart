@@ -738,10 +738,24 @@ class HomeController extends GetxController with GetxServiceMixin {
     isOrderSelected.value == true
         ? getAllOrders(lang: LocalizationService.isItEnglish() ? "en" : "ar")
             .then((value) => Get.toNamed(Routes.ORDER_LIST))
-        : Get.back();
+        : backfun();
     isOrderSelected.toggle();
     // Get.to(() => ,
     //     transition: Transition.cupertino));
+  }
+
+  backfun() {
+    if (pageController.value.page == 4.0) {
+      pageController.value.animateToPage(0,
+          duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
+      deviceBrandList.clear();
+      // deviceTypeList.clear();
+      deviceModelList.clear();
+      deviceModelVisibleController.value = false;
+      deviceColorVisibleController.value = false;
+    } else {
+      Get.back();
+    }
   }
 
   onPopInvokedOrders(context) {

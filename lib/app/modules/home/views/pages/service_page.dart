@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -85,11 +87,26 @@ class ServicePage extends GetView<HomeController> {
             isNote: true,
           ),
           const Gap(41),
-          AuthButton(
-            data: "Submit".tr,
-            onPressed: () => showLoadingOverLay(
-                asyncFunction: () => controller.supmitService(),
-                msg: "Loading ...".tr),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (Platform.isIOS) ...[
+                AuthButton(
+                  data: "Back".tr,
+                  width: 60.w,
+                  onPressed: () => controller.pageController.value.previousPage(
+                      curve: Curves.easeInOut,
+                      duration: const Duration(milliseconds: 500)),
+                ),
+                const Gap(20)
+              ],
+              AuthButton(
+                data: "Submit".tr,
+                onPressed: () => showLoadingOverLay(
+                    asyncFunction: () => controller.supmitService(),
+                    msg: "Loading ...".tr),
+              ),
+            ],
           )
         ],
       ),

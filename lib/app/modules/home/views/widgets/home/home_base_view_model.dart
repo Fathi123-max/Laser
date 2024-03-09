@@ -46,7 +46,7 @@ class HomeBaseViewModel extends GetView<HomeController> {
                     onTap: () => controller.toOrderList(context),
                     fileName: controller.isOrderSelected.value
                         ? "list_view.png"
-                        : "appicon.png",
+                        : "home.png",
                     height: 25.h,
                     width: 25.w,
                   ),

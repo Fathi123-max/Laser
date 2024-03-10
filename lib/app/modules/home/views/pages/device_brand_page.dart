@@ -54,7 +54,7 @@ class DeviceBrandPage extends GetWidget<HomeController> {
                 ));
           }),
           Visibility(
-            visible: controller.deviceColorVisibleController.value,
+            visible: controller.deviceColorVisibleController.value ?? true,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

@@ -47,8 +47,8 @@ class HomeBaseViewModel extends GetView<HomeController> {
                     fileName: controller.isOrderSelected.value
                         ? "list_view.png"
                         : "home.png",
-                    height: 25.h,
-                    width: 25.w,
+                    height: 22.h,
+                    width: 22.w,
                   ),
                   const Gap(19)
                 ]),

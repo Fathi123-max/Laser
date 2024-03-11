@@ -107,7 +107,7 @@ class CardDetails extends GetWidget<HomeController> {
               children: [
                 CustomCardButton(
                   width: 74.sp,
-                  heaight: 22.h,
+                  height: 22.h,
                   text:
                       "${controller.orderList.value[index].currentStatusName}",
                   color: controller.hexToColor(
@@ -117,7 +117,7 @@ class CardDetails extends GetWidget<HomeController> {
                 const Gap(12),
                 if (controller.orderList.value[index].nextStatusName != null)
                   CustomCardButton(
-                      heaight: 22.h,
+                      height: 22.h,
                       width: 96.sp,
                       text:
                           "${controller.orderList.value[index].nextStatusName}",

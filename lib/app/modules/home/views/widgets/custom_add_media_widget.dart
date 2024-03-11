@@ -19,7 +19,6 @@ class CustomAddMediaWidget extends GetWidget<PickController> {
                 isvideo ? controller.pickVideos() : controller.pickImages());
       },
       child: Stack(
-        // mainAxisAlignment: MainAxisAlignment.center,
         children: [
           DeviceTypeWidget(
             tapped: false,

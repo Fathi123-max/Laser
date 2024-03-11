@@ -114,7 +114,7 @@ class PaymentPage extends GetView<HomeController> {
                         children: [
                           const Gap(22),
                           CustomCardButton(
-                              heaight: 20.sp,
+                              height: 20.sp,
                               onTap: () => controller.paymentScreenDetailsUrl(
                                   lang: LocalizationService.isItEnglish()
                                       ? "en"
@@ -179,7 +179,7 @@ class PaymentPage extends GetView<HomeController> {
               ),
             ),
             CustomCardButton(
-                heaight: 27.sp,
+                height: 27.sp,
                 width: 131.sp,
                 text: "Download",
                 color: Colors.black,

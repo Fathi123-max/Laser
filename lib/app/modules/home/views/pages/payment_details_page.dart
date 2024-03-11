@@ -69,7 +69,7 @@ class PaymentDetailsPage extends GetView<HomeController> {
                   const Gap(19),
                   CustomCardButton(
                     color: Colors.black,
-                    heaight: 30.h,
+                    height: 30.h,
                     bold: true,
                     text: "Active",
                     colorText: Colors.white,

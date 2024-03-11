@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/components/custom_image_widget.dart';
-import 'package:laser/app/modules/Auth/view/widgets/auth_button.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
 import 'package:laser/app/modules/home/views/widgets/orders/custom_card_button.dart';
 import 'package:laser/app/modules/techome/controller/techomecontroller.dart';
@@ -169,6 +168,7 @@ class OrderBody extends StatelessWidget {
       fontFamily: 'Inter',
       fontWeight: FontWeight.w700,
     );
+
     return Center(
       child: Container(
         margin: EdgeInsets.all(20.h),
@@ -206,14 +206,19 @@ class OrderBody extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemCount: 3,
                   itemBuilder: (context, index) {
+                    const textStyle = TextStyle(
+                      color: Color(0xFF1B1926),
+                      fontSize: 8,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w400,
+                    );
                     return Stack(
                       children: [
-                        SizedBox(
-                          width: 74.sp,
-                          height: 22.h,
+                        Container(
+                          margin: const EdgeInsets.only(right: 5),
                           child: CustomCardButton(
                             width: 74.sp,
-                            heaight: 22.h,
+                            height: 22.h,
                             // text:
                             //     "${controller.orderList.value[index].currentStatusName}",
                             // color: controller.hexToColor(
@@ -223,16 +228,23 @@ class OrderBody extends StatelessWidget {
                           ),
                         ),
                         Positioned(
-                          height: 0,
-                          right: 0,
-                          child: Container(
-                            color: Colors.black,
-                            child: Text(
-                              '${index + 1}',
-                              style: TextStyle(fontSize: 5.sp),
-                            ),
-                          ),
-                        )
+                            right: 0,
+                            top: 0,
+                            child: Container(
+                              width: 11.w,
+                              alignment: Alignment.center,
+                              height: 11.w,
+                              decoration: const ShapeDecoration(
+                                color: Colors.white,
+                                shape:
+                                    OvalBorder(side: BorderSide(width: 0.05)),
+                              ),
+                              child: const Text(
+                                'x',
+                                textAlign: TextAlign.center,
+                                style: textStyle,
+                              ),
+                            ))
                       ],
                     );
                   },
@@ -251,9 +263,48 @@ class OrderBody extends StatelessWidget {
             const CustomDivider(fullWidth: true),
             const Gap(4),
             TotalPrice(textStyle: textStyle),
+            const Gap(19),
+            const ActionButtons()
           ],
         ),
       ),
+    );
+  }
+}
+
+class ActionButtons extends StatelessWidget {
+  const ActionButtons({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          width: 131.w,
+          height: 21.h,
+          alignment: Alignment.center,
+          decoration: ShapeDecoration(
+            color: const Color(0xFF1B1D28),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+          ),
+          child: const Text(
+            'On my way',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+              fontFamily: 'Inter',
+              fontWeight: FontWeight.w400,
+              height: 0.14,
+            ),
+          ),
+        )
+      ],
     );
   }
 }
@@ -446,17 +497,6 @@ class TotalPrice extends StatelessWidget {
             textAlign: TextAlign.center,
           )
         ]),
-        const Gap(10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AuthButton(
-              height: 30.h,
-              width: 131.w,
-              data: "On my way",
-            ),
-          ],
-        )
       ],
     );
   }

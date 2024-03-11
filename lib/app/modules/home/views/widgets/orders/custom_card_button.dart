@@ -9,7 +9,7 @@ class CustomCardButton extends StatelessWidget {
     this.text,
     this.color,
     this.width,
-    this.heaight,
+    this.height,
     this.colorText,
     this.fontsize,
     this.bold,
@@ -21,7 +21,7 @@ class CustomCardButton extends StatelessWidget {
   final Color? colorText;
 
   final double? width;
-  final double? heaight;
+  final double? height;
   final double? fontsize;
   final bool? bold;
 
@@ -31,7 +31,7 @@ class CustomCardButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: width ?? 96.w,
-        height: heaight ?? 22.h,
+        height: height ?? 22.h,
         alignment: Alignment.center,
         child: Text(text ?? "Details",
             style: MyStyles().languageButtonStyle.copyWith(

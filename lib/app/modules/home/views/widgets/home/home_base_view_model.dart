@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:laser/app/modules/home/controllers/home_controller.dart';
+import 'package:laser/app/modules/techome/controller/techomecontroller.dart';
 
 import '../custom_appbar_icon.dart';
 import '../custom_drawer.dart';
 
-class HomeBaseViewModel extends GetView<HomeController> {
+class HomeBaseViewModel extends GetView<TecHomeController> {
   const HomeBaseViewModel({required this.child, super.key});
   final Widget child;
   final GlobalObjectKey<ScaffoldState> scaffoldKey =
@@ -15,7 +15,10 @@ class HomeBaseViewModel extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () => controller.onPopInvokedOrders(context),
+      // onWillPop: () => controller.onPopInvokedOrders(context),
+      onWillPop: () {
+        return Future.value(false);
+      },
       child: SafeArea(
         child: Scaffold(
           drawer: const CustomDrawer(),
@@ -35,18 +38,19 @@ class HomeBaseViewModel extends GetView<HomeController> {
                     );
                   }),
                   const Spacer(),
-                  CustomAppbarIcon(
-                    fileName: "message.png",
-                    onTap: () {},
-                    height: 22.h,
-                    width: 22.w,
-                  ),
+                  // CustomAppbarIcon(
+                  //   fileName: "message.png",
+                  //   onTap: () {},
+                  //   height: 22.h,
+                  //   width: 22.w,
+                  // ),
                   const Gap(15),
                   CustomAppbarIcon(
-                    onTap: () => controller.toOrderList(context),
-                    fileName: controller.isOrderSelected.value
-                        ? "list_view.png"
-                        : "home.png",
+                    // onTap: () => controller.toOrderList(context),
+                    fileName: "list_view.png"
+                    // : "home.png"
+
+                    ,
                     height: 22.h,
                     width: 22.w,
                   ),

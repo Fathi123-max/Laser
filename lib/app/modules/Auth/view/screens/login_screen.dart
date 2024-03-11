@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/modules/Auth/controller/login_controller.dart';
 import 'package:laser/app/modules/Auth/view/widgets/model_layout.dart';
-import 'package:laser/app/routes/app_pages.dart';
 
 import '../../../../components/custom_text_form_field.dart';
 import '../widgets/auth_button.dart';
@@ -67,30 +66,30 @@ class LoginPage extends GetView<LoginController> {
               },
             ),
             const Gap(13),
-            Row(
-              children: [
-                const Gap(65),
-                Text(
-                  'Don’t have an account?  ',
-                  style: TextStyle(
-                    color: const Color(0xFF1B1926),
-                    fontSize: 10.sp,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    // Get.offNamed(Routes.RegisterPage);
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, Routes.RegisterPage, (r) => false);
-                    FocusScope.of(context).unfocus();
-                  },
-                  child:
-                      Text('Sign up', style: MyStyles().fontSize12WeightBold),
-                ),
-              ],
-            )
+            // Row(
+            //   children: [
+            //     const Gap(65),
+            //     Text(
+            //       'Don’t have an account?  ',
+            //       style: TextStyle(
+            //         color: const Color(0xFF1B1926),
+            //         fontSize: 10.sp,
+            //         fontFamily: 'Inter',
+            //         fontWeight: FontWeight.w400,
+            //       ),
+            //     ),
+            //     GestureDetector(
+            //       onTap: () {
+            //         // Get.offNamed(Routes.RegisterPage);
+            //         Navigator.pushNamedAndRemoveUntil(
+            //             context, Routes.RegisterPage, (r) => false);
+            //         FocusScope.of(context).unfocus();
+            //       },
+            //       child:
+            //           Text('Sign up', style: MyStyles().fontSize12WeightBold),
+            //     ),
+            //   ],
+            // )
           ],
         ),
       ),

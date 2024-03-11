@@ -1,4 +1,4 @@
-package sa.laser
+package sa.lasertec
 
 import io.flutter.embedding.android.FlutterActivity
 

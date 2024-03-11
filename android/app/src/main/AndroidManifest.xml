@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="sa.laser">
+    package="sa.lasertec">
    <application
-        android:label="ليزر"
+        android:label="فني ليزر"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

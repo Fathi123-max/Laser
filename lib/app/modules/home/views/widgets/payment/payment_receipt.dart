@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/components/custom_image_widget.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
+import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
 import 'package:laser/app/modules/home/views/widgets/orders/custom_card_button.dart';
@@ -114,6 +115,12 @@ class PaymentPage extends GetView<HomeController> {
                           const Gap(22),
                           CustomCardButton(
                               heaight: 20.sp,
+                              onTap: () => controller.paymentScreenDetailsUrl(
+                                  lang: LocalizationService.isItEnglish()
+                                      ? "en"
+                                      : "ar",
+                                  orderId:
+                                      controller.orderDetailsModel.orderId),
                               width: 50.sp,
                               color: Colors.green,
                               colorText: Colors.white),

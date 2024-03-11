@@ -28,7 +28,7 @@ library;
 const String defaultApplePay = '''{
   "provider": "apple_pay",
   "data": {
-    "merchantIdentifier": "merchant.sa.laser",
+    "merchantIdentifier": "merchant.sa.lasertec",
     "displayName": "Laser",
     "merchantCapabilities": ["3DS", "debit", "credit"],
     "supportedNetworks": ["amex", "visa", "discover", "masterCard"],

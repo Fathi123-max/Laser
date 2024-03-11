@@ -76,6 +76,8 @@ class HomeController extends GetxController with GetxServiceMixin {
 
   RxBool detailskey = RxBool(true);
 
+  RxString numberOfServices = RxString("");
+
 // controll tapping of device and visibilty of buttons ***************************************************************
   void controlleDeviceTypeTap(
     int index,
@@ -600,6 +602,105 @@ class HomeController extends GetxController with GetxServiceMixin {
         }
 
         update();
+      },
+      onError: (error) {
+        // show error message to user
+        BaseClient.handleApiError(error);
+        // *) indicate error status
+        // apiDeviceBrandsCallStatus.value = ApiCallStatus.error;
+        update();
+      },
+    );
+  }
+
+  Future<void> paymentReceipt(
+      {String? lang = "", int? orderId, int? index}) async {
+    print(orderDetailsModel.totalPrice);
+    // *) perform api call
+    await BaseClient.safeApiCall(
+      Constants.paymentreceiptUrl,
+      headers: {
+        "Accept-Language": lang,
+        "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
+      },
+      RequestType.post,
+      // queryParameters: {"order_id": orderId},
+      queryParameters: {"order_id": 16},
+      onLoading: () {
+        update();
+      },
+      onSuccess: (response) {
+        print(response.data);
+      },
+      onError: (error) {
+        // show error message to user
+        BaseClient.handleApiError(error);
+        // *) indicate error status
+        // apiDeviceBrandsCallStatus.value = ApiCallStatus.error;
+        update();
+      },
+    );
+  }
+
+  Future<void> paymentScreenDetailsUrl(
+      {String? lang = "", int? orderId, int? index}) async {
+    print(orderDetailsModel.totalPrice);
+    // *) perform api call
+    await BaseClient.safeApiCall(
+      Constants.paymentScreenDetailsUrl,
+      headers: {
+        "Accept-Language": lang,
+        "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
+      },
+      RequestType.post,
+      queryParameters: {"order_id": 16},
+
+      // queryParameters: {"order_id": orderId},
+      onLoading: () {
+        update();
+      },
+      onSuccess: (response) {
+        numberOfServices.value =
+            response.data["payload"]["data"]["numberOfServices"];
+      },
+      onError: (error) {
+        // show error message to user
+        BaseClient.handleApiError(error);
+        // *) indicate error status
+        // apiDeviceBrandsCallStatus.value = ApiCallStatus.error;
+        update();
+      },
+    );
+  }
+
+  RxInt priceAfetrSucsses = RxInt(0);
+  RxString serviceDetails = RxString("");
+  RxString techComments = RxString("");
+  RxString paymentType = RxString("");
+
+  Future<void> paymentSuccess(
+      {String? lang = "", int? orderId, int? index}) async {
+    print(orderDetailsModel.totalPrice);
+    // *) perform api call
+    await BaseClient.safeApiCall(
+      Constants.paymentSuccessUrl,
+      headers: {
+        "Accept-Language": lang,
+        "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
+      },
+      RequestType.post,
+      queryParameters: {"order_id": 16},
+
+      // queryParameters: {"order_id": orderId},
+      onLoading: () {
+        update();
+      },
+      onSuccess: (response) {
+        techComments.value = response.data["payload"]["data"]["techComments"];
+        paymentType.value = response.data["payload"]["data"]["paymentType"];
+        serviceDetails.value =
+            response.data["payload"]["data"]["serviceDetails"];
+        priceAfetrSucsses.value = response.data["payload"]["data"]["price"];
       },
       onError: (error) {
         // show error message to user

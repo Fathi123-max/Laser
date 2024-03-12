@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:laser/app/components/custom_loading_overlay.dart';
+import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/modules/techome/controller/techomecontroller.dart';
 
 class OrdersTypesPage extends GetView<TecHomeController> {
@@ -16,21 +18,37 @@ class OrdersTypesPage extends GetView<TecHomeController> {
           OrderLabel(
             text: "Accepted Orders",
             ontap: () {
-              controller.pageController.value.nextPage(
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.ease);
+              showLoadingOverLay(
+                asyncFunction: () {
+                  return controller
+                      .getAcceptedOrders(
+                          lang: LocalizationService.isItEnglish() ? "en" : "ar")
+                      .then((value) =>
+                          controller.pageController.value.jumpToPage(1));
+                },
+              );
             },
           ),
           const Gap(21),
           OrderLabel(
             text: "Pending Orders",
-            ontap: () {},
+            ontap: () {
+              showLoadingOverLay(
+                asyncFunction: () {
+                  return controller
+                      .getPendingOrders(
+                          lang: LocalizationService.isItEnglish() ? "en" : "ar")
+                      .then((value) =>
+                          controller.pageController.value.jumpToPage(2));
+                },
+              );
+            },
           ),
-          const Gap(21),
-          OrderLabel(
-            text: "Finished Orders",
-            ontap: () {},
-          ),
+          // const Gap(21),
+          // OrderLabel(
+          //   text: "Finished Orders",
+          //   ontap: () {},
+          // ),
         ],
       ),
     );

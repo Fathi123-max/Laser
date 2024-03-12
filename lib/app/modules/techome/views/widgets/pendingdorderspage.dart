@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:expandable_widgets/expandable_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,11 +12,14 @@ import 'package:laser/app/modules/techome/controller/techomecontroller.dart';
 
 import '../../../../config/theme/my_styles.dart';
 
-class OrdersPage extends GetView<TecHomeController> {
-  const OrdersPage({super.key});
+class PendingOrdersPage extends GetView<TecHomeController> {
+  const PendingOrdersPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Timer? _debounce;
+    int currentPageIndex = 1;
+
     const textStyle = TextStyle(
       color: Color(0xFF1B1926),
       fontSize: 16,
@@ -23,38 +28,63 @@ class OrdersPage extends GetView<TecHomeController> {
       height: 0.08,
     );
 
-    return const SingleChildScrollView(
+    return SingleChildScrollView(
         child: Column(children: [
-      Gap(42),
-      SizedBox(
+      const Gap(42),
+      const SizedBox(
         width: 161,
         child: Text(
-          'Accepted Orders',
+          'Pending Orders',
           textAlign: TextAlign.center,
           style: textStyle,
         ),
       ),
-      Gap(19),
-      Expandable(
-        boxShadow: [],
-        backgroundColor: Color(0xFFF1F0F5),
-        firstChild: OrderHeader(),
-        secondChild: OrderBody(),
-        showArrowWidget: false,
-        centralizeFirstChild: true,
+      const Gap(19),
+      Obx(() {
+        return NotificationListener(
+          onNotification: (ScrollNotification scrollInfo) {
+            if (scrollInfo.metrics.pixels ==
+                scrollInfo.metrics.maxScrollExtent) {
+              if (_debounce?.isActive ?? false) {
+                _debounce!.cancel();
+              }
+              _debounce = Timer(const Duration(milliseconds: 500), () {
+                // Increment the page index and call getAllOrders with the new index.
+                currentPageIndex++;
+                controller.getPendingOrders(index: currentPageIndex);
 
-        // arrowWidget: SizedBox.shrink(),
-        // subChild: Text("Show Details"),
-      ),
+                // You might want to check if there's more data to load before calling this.
+              });
+            }
+            return true;
+          },
+          child: SizedBox(
+            height: Get.height,
+            child: ListView.separated(
+              itemCount: controller.pendingOrders.value.length,
+              separatorBuilder: (context, index) => const Gap(19),
+              itemBuilder: (context, index) => Expandable(
+                boxShadow: const [],
+                backgroundColor: Color(0xFFF1F0F5),
+                firstChild: OrderHeader(index: index),
+                secondChild: OrderBody(index: index),
+                showArrowWidget: false,
+                centralizeFirstChild: true,
+              ),
+            ),
+          ),
+        );
+      }),
     ]));
   }
 }
 
-class OrderHeader extends StatelessWidget {
+class OrderHeader extends GetView<TecHomeController> {
   const OrderHeader({
     super.key,
+    this.index,
   });
-
+  final int? index;
   @override
   Widget build(BuildContext context) {
     var shapeDecoration = ShapeDecoration(
@@ -108,24 +138,25 @@ class OrderHeader extends StatelessWidget {
       child: Row(
         children: [
           const Gap(15),
-          Container(
-            width: 66.w,
-            height: 21.h,
-            alignment: Alignment.center,
-            decoration: shapeDecoration,
-            child: const Text(
-              'Due today',
-              textAlign: TextAlign.center,
-              style: textStyle3,
-            ),
-          ),
-          const Gap(17),
-          const Text(
-            'Order number 226',
+          // Container(
+          //   width: 66.w,
+          //   height: 21.h,
+          //   alignment: Alignment.center,
+          //   decoration: shapeDecoration,
+          //   child: const Text(
+          //     'Due today',
+          //     textAlign: TextAlign.center,
+          //     style: textStyle3,
+          //   ),
+          // ),
+          // const Gap(17),
+          Text(
+            'Order number  ${controller.pendingOrders.value[index!].orderId}',
             textAlign: TextAlign.center,
             style: textStyle,
           ),
-          const Gap(80),
+          // const Gap(80),
+          const Spacer(),
           Container(
             width: 19.w,
             alignment: Alignment.center,
@@ -136,18 +167,23 @@ class OrderHeader extends StatelessWidget {
               textAlign: TextAlign.center,
               style: textStyle2,
             ),
-          )
+          ),
+          const Gap(10),
         ],
       ),
     );
   }
 }
 
-class OrderBody extends StatelessWidget {
-  const OrderBody({super.key});
-
+class OrderBody extends GetView<TecHomeController> {
+  const OrderBody({
+    super.key,
+    this.index,
+  });
+  final int? index;
   @override
   Widget build(BuildContext context) {
+    var order = controller.pendingOrders.value[index!];
     var shapeDecoration = ShapeDecoration(
       color: Colors.white,
       shape: RoundedRectangleBorder(
@@ -173,7 +209,7 @@ class OrderBody extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.all(20.h),
         width: 326.w,
-        height: 300.h,
+        height: 320.h,
         alignment: Alignment.center,
         decoration: shapeDecoration,
         child: Column(
@@ -185,7 +221,7 @@ class OrderBody extends StatelessWidget {
                 AssetImageView(
                     fileName: "phone.png", height: 26.h, width: 20.w),
                 const Gap(31),
-                Text('Mobiles-iphone 8 plus',
+                Text(order.deviceName!,
                     textAlign: TextAlign.center,
                     style: MyStyles().fontSize12Weight400)
               ],
@@ -201,10 +237,11 @@ class OrderBody extends StatelessWidget {
               const Gap(25),
               SizedBox(
                 width: 200.w,
-                height: 22.h,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 3,
+                height: 50.h,
+                child: ListView.separated(
+                  separatorBuilder: (context, index) => const Gap(5),
+                  scrollDirection: Axis.vertical,
+                  itemCount: order.services!.length,
                   itemBuilder: (context, index) {
                     const textStyle = TextStyle(
                       color: Color(0xFF1B1926),
@@ -217,10 +254,10 @@ class OrderBody extends StatelessWidget {
                         Container(
                           margin: const EdgeInsets.only(right: 5),
                           child: CustomCardButton(
-                            width: 74.sp,
-                            height: 22.h,
-                            // text:
-                            //     "${controller.orderList.value[index].currentStatusName}",
+                            width: 200.w,
+                            height: 30.h,
+
+                            text: order.services![index].serviceName.toString(),
                             // color: controller.hexToColor(
                             //     controller.orderList.value[index].currentStatusColor!),
                             onTap: () {},
@@ -251,7 +288,7 @@ class OrderBody extends StatelessWidget {
                 ),
               )
             ]),
-            const Gap(10),
+            // const Gap(10),
             const CustomDivider(fullWidth: true),
             // const Gap(12),
             Delivery(textStyle: textStyle),
@@ -272,7 +309,7 @@ class OrderBody extends StatelessWidget {
   }
 }
 
-class ActionButtons extends StatelessWidget {
+class ActionButtons extends GetView<TecHomeController> {
   const ActionButtons({
     super.key,
   });
@@ -309,7 +346,7 @@ class ActionButtons extends StatelessWidget {
   }
 }
 
-class Delivery extends StatelessWidget {
+class Delivery extends GetView<TecHomeController> {
   const Delivery({
     super.key,
     required this.textStyle,
@@ -381,7 +418,7 @@ class Delivery extends StatelessWidget {
   }
 }
 
-class Address extends StatelessWidget {
+class Address extends GetView<TecHomeController> {
   const Address({
     super.key,
     required this.textStyle,
@@ -433,7 +470,7 @@ class Address extends StatelessWidget {
   }
 }
 
-class TotalPrice extends StatelessWidget {
+class TotalPrice extends GetView<TecHomeController> {
   const TotalPrice({
     super.key,
     required this.textStyle,

@@ -26,41 +26,56 @@ class AssetImageView extends StatelessWidget {
 
   Widget _getView() {
     String mimType = fileName.split(".").last;
-    String path = "assets/images/$fileName";
 
-    if (mimType.isEmpty) {
-      return Icon(
-        Icons.image_not_supported_outlined,
-        size: width,
-        color: color,
-      );
-    }
+    if (fileName.startsWith("http")) {
+      return _networkImage();
+    } else {
+      String path = "assets/images/$fileName";
 
-    switch (mimType) {
-      case "svg":
-        return SvgPicture.asset(
-          path,
-          height: height,
-          width: width,
-          // colorFilter: color == null? null: ColorFilter.mode(color ?? Colors.black, BlendMode.srcIn),
-          fit: fit ?? BoxFit.contain,
-        );
-      case "png":
-      case "jpg":
-      case "jpeg":
-        return Image.asset(
-          path,
-          height: height,
-          width: width,
-          color: color,
-          scale: scale,
-        );
-      default:
+      if (mimType.isEmpty) {
         return Icon(
           Icons.image_not_supported_outlined,
           size: width,
           color: color,
         );
+      }
+
+      switch (mimType) {
+        case "svg":
+          return SvgPicture.asset(
+            path,
+            height: height,
+            width: width,
+            // colorFilter: color == null? null: ColorFilter.mode(color ?? Colors.black, BlendMode.srcIn),
+            fit: fit ?? BoxFit.contain,
+          );
+        case "png":
+        case "jpg":
+        case "jpeg":
+          return Image.asset(
+            path,
+            height: height,
+            width: width,
+            color: color,
+            scale: scale,
+          );
+        default:
+          return Icon(
+            Icons.image_not_supported_outlined,
+            size: width,
+            color: color,
+          );
+      }
     }
+  }
+
+  Widget _networkImage() {
+    return Image.network(
+      fileName,
+      height: height,
+      width: width,
+      color: color,
+      // scale: scale!,
+    );
   }
 }

@@ -23,4 +23,15 @@ class Constants {
   static String getAllMaintenanceOrderUrl(int index) {
     return '$baseUrl/get-all-maintenance-orders?per_page=3&page=$index';
   }
+
+  //! tec endpoints
+
+  static String pendingOrdersrUrl(int index) {
+    //https://admin.lazer-sa.com/api/technician/pending-orders?per_page=5&page=8
+    return '$baseUrl/pending-orders?per_page=50&page=$index';
+  }
+
+  static String acceptedOrdersrUrl(int index) {
+    return '$baseUrl/accepted-orders?per_page=50&page=$index';
+  }
 }

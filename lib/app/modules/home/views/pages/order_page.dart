@@ -62,7 +62,7 @@ class OrderPage extends GetView<HomeController> {
                 child: SizedBox(
                   height: 490.h,
                   child: ListView.builder(
-                    controller: controller.scrollOrderController,
+                    // controller: controller.scrollOrderController,
                     scrollDirection: Axis.vertical,
                     itemCount: controller.orderList.value.length,
                     itemBuilder: (context, index) {

@@ -34,4 +34,8 @@ class Constants {
   static String acceptedOrdersrUrl(int index) {
     return '$baseUrl/accepted-orders?per_page=50&page=$index';
   }
+
+  static const removeServiceUrl = '$baseUrl/remove-service';
+  static const onmywayUrl = '$baseUrl/on-my-way';
+  static const orderacceptUrl = '$baseUrl/order-accept';
 }

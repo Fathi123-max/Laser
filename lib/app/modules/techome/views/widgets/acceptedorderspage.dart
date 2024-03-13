@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/components/custom_image_widget.dart';
+import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
 import 'package:laser/app/modules/home/views/widgets/orders/custom_card_button.dart';
 import 'package:laser/app/modules/techome/controller/techomecontroller.dart';
@@ -82,11 +83,12 @@ class AcceptedOrdersPage extends GetView<TecHomeController> {
 class OrderHeader extends GetView<TecHomeController> {
   const OrderHeader({
     super.key,
-    required int index,
+    this.index,
   });
-
+  final int? index;
   @override
   Widget build(BuildContext context) {
+    var order = controller.acceptedOrders.value[index!];
     var shapeDecoration = ShapeDecoration(
       color: const Color(0xFFF1F0F5),
       shape: RoundedRectangleBorder(
@@ -138,20 +140,20 @@ class OrderHeader extends GetView<TecHomeController> {
       child: Row(
         children: [
           const Gap(15),
-          Container(
-            width: 66.w,
-            height: 21.h,
-            alignment: Alignment.center,
-            decoration: shapeDecoration,
-            child: const Text(
-              'Due today',
-              textAlign: TextAlign.center,
-              style: textStyle3,
-            ),
-          ),
-          const Gap(17),
-          const Text(
-            'Order number 226',
+          // Container(
+          //   width: 66.w,
+          //   height: 21.h,
+          //   alignment: Alignment.center,
+          //   decoration: shapeDecoration,
+          //   child: const Text(
+          //     'Due today',
+          //     textAlign: TextAlign.center,
+          //     style: textStyle3,
+          //   ),
+          // ),
+          // const Gap(17),
+          Text(
+            'Order number  ${order.orderId}',
             textAlign: TextAlign.center,
             style: textStyle,
           ),
@@ -176,10 +178,14 @@ class OrderHeader extends GetView<TecHomeController> {
 }
 
 class OrderBody extends GetView<TecHomeController> {
-  const OrderBody({super.key, required int index});
-
+  const OrderBody({
+    super.key,
+    this.index,
+  });
+  final int? index;
   @override
   Widget build(BuildContext context) {
+    var order = controller.acceptedOrders.value[index!];
     var shapeDecoration = ShapeDecoration(
       color: Colors.white,
       shape: RoundedRectangleBorder(
@@ -205,7 +211,7 @@ class OrderBody extends GetView<TecHomeController> {
       child: Container(
         margin: EdgeInsets.all(20.h),
         width: 326.w,
-        height: 300.h,
+        height: 320.h,
         alignment: Alignment.center,
         decoration: shapeDecoration,
         child: Column(
@@ -217,7 +223,7 @@ class OrderBody extends GetView<TecHomeController> {
                 AssetImageView(
                     fileName: "phone.png", height: 26.h, width: 20.w),
                 const Gap(31),
-                Text('Mobiles-iphone 8 plus',
+                Text(order.deviceName!,
                     textAlign: TextAlign.center,
                     style: MyStyles().fontSize12Weight400)
               ],
@@ -233,10 +239,11 @@ class OrderBody extends GetView<TecHomeController> {
               const Gap(25),
               SizedBox(
                 width: 200.w,
-                height: 22.h,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 3,
+                height: 50.h,
+                child: ListView.separated(
+                  separatorBuilder: (context, index) => const Gap(5),
+                  scrollDirection: Axis.vertical,
+                  itemCount: order.services!.length,
                   itemBuilder: (context, index) {
                     const textStyle = TextStyle(
                       color: Color(0xFF1B1926),
@@ -249,10 +256,10 @@ class OrderBody extends GetView<TecHomeController> {
                         Container(
                           margin: const EdgeInsets.only(right: 5),
                           child: CustomCardButton(
-                            width: 74.sp,
-                            height: 22.h,
-                            // text:
-                            //     "${controller.orderList.value[index].currentStatusName}",
+                            width: 200.w,
+                            height: 30.h,
+
+                            text: order.services![index].serviceName.toString(),
                             // color: controller.hexToColor(
                             //     controller.orderList.value[index].currentStatusColor!),
                             onTap: () {},
@@ -262,19 +269,32 @@ class OrderBody extends GetView<TecHomeController> {
                         Positioned(
                             right: 0,
                             top: 0,
-                            child: Container(
-                              width: 11.w,
-                              alignment: Alignment.center,
-                              height: 11.w,
-                              decoration: const ShapeDecoration(
-                                color: Colors.white,
-                                shape:
-                                    OvalBorder(side: BorderSide(width: 0.05)),
-                              ),
-                              child: const Text(
-                                'x',
-                                textAlign: TextAlign.center,
-                                style: textStyle,
+                            child: GestureDetector(
+                              onTap: () {
+                                controller.removeService(
+                                    orderId: order.orderId,
+                                    services: order.services,
+                                    serviceId:
+                                        order.services![index].serviceId!,
+                                    index: index,
+                                    lang: LocalizationService.isItEnglish()
+                                        ? "en"
+                                        : "ar");
+                              },
+                              child: Container(
+                                width: 11.w,
+                                alignment: Alignment.center,
+                                height: 11.w,
+                                decoration: const ShapeDecoration(
+                                  color: Colors.white,
+                                  shape:
+                                      OvalBorder(side: BorderSide(width: 0.05)),
+                                ),
+                                child: const Text(
+                                  'x',
+                                  textAlign: TextAlign.center,
+                                  style: textStyle,
+                                ),
                               ),
                             ))
                       ],
@@ -283,7 +303,7 @@ class OrderBody extends GetView<TecHomeController> {
                 ),
               )
             ]),
-            const Gap(10),
+            // const Gap(10),
             const CustomDivider(fullWidth: true),
             // const Gap(12),
             Delivery(textStyle: textStyle),

@@ -4,7 +4,7 @@ import 'package:laser/app/config/theme/my_styles.dart';
 
 class CustomCardButton extends StatelessWidget {
   const CustomCardButton({
-    Key? key,
+    super.key,
     this.onTap,
     this.text,
     this.color,
@@ -13,7 +13,7 @@ class CustomCardButton extends StatelessWidget {
     this.colorText,
     this.fontsize,
     this.bold,
-  }) : super(key: key);
+  });
 //ontap
   final Function()? onTap;
   final String? text;

@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/components/custom_image_widget.dart';
+import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
 import 'package:laser/app/modules/home/views/widgets/orders/custom_card_button.dart';
 import 'package:laser/app/modules/techome/controller/techomecontroller.dart';
@@ -87,6 +88,7 @@ class OrderHeader extends GetView<TecHomeController> {
   final int? index;
   @override
   Widget build(BuildContext context) {
+    var order = controller.pendingOrders.value[index!];
     var shapeDecoration = ShapeDecoration(
       color: const Color(0xFFF1F0F5),
       shape: RoundedRectangleBorder(
@@ -151,7 +153,7 @@ class OrderHeader extends GetView<TecHomeController> {
           // ),
           // const Gap(17),
           Text(
-            'Order number  ${controller.pendingOrders.value[index!].orderId}',
+            'Order number  ${order.orderId}',
             textAlign: TextAlign.center,
             style: textStyle,
           ),
@@ -267,19 +269,32 @@ class OrderBody extends GetView<TecHomeController> {
                         Positioned(
                             right: 0,
                             top: 0,
-                            child: Container(
-                              width: 11.w,
-                              alignment: Alignment.center,
-                              height: 11.w,
-                              decoration: const ShapeDecoration(
-                                color: Colors.white,
-                                shape:
-                                    OvalBorder(side: BorderSide(width: 0.05)),
-                              ),
-                              child: const Text(
-                                'x',
-                                textAlign: TextAlign.center,
-                                style: textStyle,
+                            child: GestureDetector(
+                              onTap: () {
+                                controller.removeService(
+                                    orderId: order.orderId,
+                                    services: order,
+                                    serviceId:
+                                        order.services![index].serviceId!,
+                                    index: index,
+                                    lang: LocalizationService.isItEnglish()
+                                        ? "en"
+                                        : "ar");
+                              },
+                              child: Container(
+                                width: 11.w,
+                                alignment: Alignment.center,
+                                height: 11.w,
+                                decoration: const ShapeDecoration(
+                                  color: Colors.white,
+                                  shape:
+                                      OvalBorder(side: BorderSide(width: 0.05)),
+                                ),
+                                child: const Text(
+                                  'x',
+                                  textAlign: TextAlign.center,
+                                  style: textStyle,
+                                ),
                               ),
                             ))
                       ],

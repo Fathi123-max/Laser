@@ -119,4 +119,128 @@ class TecHomeController extends GetxController {
     );
     return Future(() => true);
   }
+
+  void removeService({
+    required int index,
+    required int serviceId,
+    required services,
+    String? lang,
+    int? orderId,
+  }) async {
+    await BaseClient.safeApiCall(
+      Constants.removeServiceUrl,
+      headers: {
+        "Accept-Language": lang,
+        "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
+      },
+      RequestType.post,
+      queryParameters: {
+        "order_id": orderId,
+        "service_id": serviceId,
+        "order_code": "order_Code" // todo need to add
+      },
+      // data: {"order_id", orderId},
+      onLoading: () {
+        // *) indicate loading state
+        // apiDeviceBrandsCallStatus.value = ApiCallStatus.loading;
+        update();
+      },
+      onSuccess: (response) {
+        // *) indicate success
+        services.removeWhere(
+            (element) => element.serviceId == services[index].serviceId);
+        // order.services.refresh();
+
+        update();
+      },
+      onError: (error) {
+        // show error message to user
+        BaseClient.handleApiError(error);
+        // *) indicate error status
+        // apiDeviceBrandsCallStatus.value = ApiCallStatus.error;
+        update();
+      },
+    );
+  }
+
+  void onmyway({
+    required int index,
+    required int serviceId,
+    required services,
+    String? lang,
+  }) async {
+    await BaseClient.safeApiCall(
+      Constants.removeServiceUrl,
+      headers: {
+        "Accept-Language": lang,
+        "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
+      },
+      RequestType.post,
+      queryParameters: {
+        "order_id": services,
+        "service_id": serviceId,
+        "order_code": "order_Code" // todo need to add
+      },
+      // data: {"order_id", orderId},
+      onLoading: () {
+        // *) indicate loading state
+        // apiDeviceBrandsCallStatus.value = ApiCallStatus.loading;
+        update();
+      },
+      onSuccess: (response) {
+        // *) indicate success
+        services.removeWhere(
+            (element) => element.serviceId == services[index].serviceId);
+        // order.services.refresh();
+
+        update();
+      },
+      onError: (error) {
+        // show error message to user
+        BaseClient.handleApiError(error);
+        // *) indicate error status
+        // apiDeviceBrandsCallStatus.value = ApiCallStatus.error;
+        update();
+      },
+    );
+  }
+
+  void acceptOrder({
+    required PendingOrders order,
+    required int? index,
+    String? lang,
+  }) async {
+    await BaseClient.safeApiCall(
+      Constants.orderacceptUrl,
+      headers: {
+        "Accept-Language": lang,
+        "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
+      },
+      RequestType.post,
+      queryParameters: {
+        "order_id": order.orderId,
+      },
+      // data: {"order_id", orderId},
+      onLoading: () {
+        // *) indicate loading state
+        // apiDeviceBrandsCallStatus.value = ApiCallStatus.loading;
+        update();
+      },
+      onSuccess: (response) {
+        // *) indicate success
+        pendingOrders
+            .removeWhere((element) => element.orderId == order.orderId);
+        pendingOrders.refresh();
+
+        update();
+      },
+      onError: (error) {
+        // show error message to user
+        BaseClient.handleApiError(error);
+        // *) indicate error status
+        // apiDeviceBrandsCallStatus.value = ApiCallStatus.error;
+        update();
+      },
+    );
+  }
 }

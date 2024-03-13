@@ -165,8 +165,7 @@ class TecHomeController extends GetxController {
 
   void onmyway({
     required int index,
-    required int serviceId,
-    required services,
+    required int orderid,
     String? lang,
   }) async {
     await BaseClient.safeApiCall(
@@ -177,9 +176,7 @@ class TecHomeController extends GetxController {
       },
       RequestType.post,
       queryParameters: {
-        "order_id": services,
-        "service_id": serviceId,
-        "order_code": "order_Code" // todo need to add
+        "service_id": orderid,
       },
       // data: {"order_id", orderId},
       onLoading: () {
@@ -189,9 +186,9 @@ class TecHomeController extends GetxController {
       },
       onSuccess: (response) {
         // *) indicate success
-        services.removeWhere(
-            (element) => element.serviceId == services[index].serviceId);
-        // order.services.refresh();
+        // services.removeWhere(
+        //     (element) => element.serviceId == services[index].serviceId);
+        acceptedOrders.refresh();
 
         update();
       },
@@ -231,6 +228,44 @@ class TecHomeController extends GetxController {
         pendingOrders
             .removeWhere((element) => element.orderId == order.orderId);
         pendingOrders.refresh();
+
+        update();
+      },
+      onError: (error) {
+        // show error message to user
+        BaseClient.handleApiError(error);
+        // *) indicate error status
+        // apiDeviceBrandsCallStatus.value = ApiCallStatus.error;
+        update();
+      },
+    );
+  }
+
+  void holdOrder({
+    int? orderId,
+    String? techComments,
+    int? index,
+    String? lang,
+  }) async {
+    await BaseClient.safeApiCall(
+      Constants.orderacceptUrl,
+      headers: {
+        "Accept-Language": lang,
+        "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
+      },
+      RequestType.post,
+      data: {"order_id": orderId, "tech_comments": techComments},
+      // data: {"order_id", orderId},
+      onLoading: () {
+        // *) indicate loading state
+        // apiDeviceBrandsCallStatus.value = ApiCallStatus.loading;
+        update();
+      },
+      onSuccess: (response) {
+        // *) indicate success
+        // pendingOrders
+        //     .removeWhere((element) => element.orderId == order.orderId);
+        // pendingOrders.refresh();
 
         update();
       },

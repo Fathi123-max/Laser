@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/components/custom_image_widget.dart';
+import 'package:laser/app/components/custom_loading_overlay.dart';
 import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
 import 'package:laser/app/modules/home/views/widgets/orders/custom_card_button.dart';
@@ -60,7 +61,7 @@ class PendingOrdersPage extends GetView<TecHomeController> {
             return true;
           },
           child: SizedBox(
-            height: Get.height,
+            height: Get.height * .75,
             child: ListView.separated(
               itemCount: controller.pendingOrders.value.length,
               separatorBuilder: (context, index) => const Gap(19),
@@ -316,7 +317,9 @@ class OrderBody extends GetView<TecHomeController> {
             const Gap(4),
             TotalPrice(textStyle: textStyle),
             const Gap(19),
-            const ActionButtons()
+            ActionButtons(
+              index: index,
+            )
           ],
         ),
       ),
@@ -325,8 +328,11 @@ class OrderBody extends GetView<TecHomeController> {
 }
 
 class ActionButtons extends GetView<TecHomeController> {
+  final int? index;
+
   const ActionButtons({
     super.key,
+    this.index,
   });
 
   @override
@@ -334,25 +340,35 @@ class ActionButtons extends GetView<TecHomeController> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-          width: 131.w,
-          height: 21.h,
-          alignment: Alignment.center,
-          decoration: ShapeDecoration(
-            color: const Color(0xFF1B1D28),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
+        GestureDetector(
+          onTap: () {
+            showLoadingOverLay(asyncFunction: () {
+              return controller.acceptOrder(
+                index: index,
+                order: controller.pendingOrders.value[index!],
+              );
+            });
+          },
+          child: Container(
+            width: 131.w,
+            height: 21.h,
+            alignment: Alignment.center,
+            decoration: ShapeDecoration(
+              color: const Color(0xFF1B1D28),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
             ),
-          ),
-          child: const Text(
-            'On my way',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 12,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w400,
-              height: 0.14,
+            child: const Text(
+              'Accept Order',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w400,
+                height: 0.14,
+              ),
             ),
           ),
         )

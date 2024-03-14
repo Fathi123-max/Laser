@@ -57,7 +57,7 @@ class HomeBaseViewModel extends GetView<TecHomeController> {
                   const Gap(19)
                 ]),
                 SizedBox(
-                    height: (0.83 * MediaQuery.of(context).size.height)
+                    height: (0.9 * MediaQuery.of(context).size.height)
                         .roundToDouble(),
                     child: child),
                 // Row(

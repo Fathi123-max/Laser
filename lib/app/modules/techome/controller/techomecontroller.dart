@@ -163,7 +163,11 @@ class TecHomeController extends GetxController {
     );
   }
 
-  void onmyway({
+  RxBool isMyWay = RxBool(false);
+  RxBool finishOrder = RxBool(false);
+  RxBool updateOrder = RxBool(false);
+
+  void onMyWay({
     required int index,
     required int orderid,
     String? lang,
@@ -177,6 +181,8 @@ class TecHomeController extends GetxController {
       RequestType.post,
       queryParameters: {
         "service_id": orderid,
+        "order_id": orderid,
+        "order_code": "order_Code" // todo need to add
       },
       // data: {"order_id", orderId},
       onLoading: () {
@@ -202,7 +208,7 @@ class TecHomeController extends GetxController {
     );
   }
 
-  void acceptOrder({
+  Future<void> acceptOrder({
     required PendingOrders order,
     required int? index,
     String? lang,
@@ -277,5 +283,36 @@ class TecHomeController extends GetxController {
         update();
       },
     );
+  }
+
+  void visibiltyFunction({AcceptedOrder? order}) {
+    switch (order!.nextStatus) {
+      case "On my way":
+        isMyWay.value = true;
+        finishOrder.value = false;
+        updateOrder.value = false;
+        break;
+
+      case "Update Order":
+        isMyWay.value = false;
+        finishOrder.value = false;
+        updateOrder.value = true;
+
+        break;
+      default:
+    }
+  }
+
+  void visibiltyFinishFunction({AcceptedOrder? order}) {
+    switch (order!.finishRoute) {
+      case "order-finish":
+        // isMyWay.value = true;
+        finishOrder.value = true;
+        // updateOrder.value = false;
+        break;
+
+      default:
+        finishOrder.value = false;
+    }
   }
 }

@@ -8,10 +8,8 @@ import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/data/models/order_model.dart';
 import 'package:laser/app/modules/home/controllers/home_controller.dart';
-import 'package:laser/app/modules/home/views/pages/after_order_paid_page.dart';
 import 'package:laser/app/modules/home/views/widgets/big_text_filed.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
-import 'package:laser/app/modules/home/views/widgets/home/home_base_view_model.dart';
 import 'package:laser/app/modules/home/views/widgets/orders/custom_card_button.dart';
 import 'package:laser/app/modules/home/views/widgets/page_banner.dart';
 import 'package:laser/app/modules/home/views/widgets/payment/number_of_service_needed.dart';
@@ -125,6 +123,7 @@ class PaymentDetailsPage extends GetView<HomeController> {
                         // print(response.responseCode);
                         // print(response.success);
                         // print(response.transactionID);
+                        controller.paywithCard.value = true;
                         CustomSnackBar.showCustomSnackBar(
                           title: "Success",
                           message: "Payment Success",
@@ -144,10 +143,7 @@ class PaymentDetailsPage extends GetView<HomeController> {
                           message: "Payment Success",
                         );
                       } else if (response.success == "false") {
-                        print("paymrnt failed");
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => HomeBaseViewModel(
-                                child: AfterOrderPaidPage())));
+                        Get.back();
                         CustomSnackBar.showCustomSnackBar(
                           title: "Error",
                           message: "Payment Failed",
@@ -189,6 +185,7 @@ class PaymentDetailsPage extends GetView<HomeController> {
   }
 
   void onApplePayResult(Map<String, dynamic> result) {
+    controller.paywithCard.value = false;
     controller
         .orderDetails(
             lang: LocalizationService.isItEnglish() ? "en" : "ar",

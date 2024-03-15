@@ -33,7 +33,7 @@ class OrderPrice extends GetView<HomeController> {
           "|",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        const Gap(52),
+        const Gap(40),
         AssetImageView(
           height: 17.h,
           width: 27.w,
@@ -41,8 +41,12 @@ class OrderPrice extends GetView<HomeController> {
           // color: Colors.transparent,
         ),
         const Gap(7),
-        Text('Paid in Credit',
-            textAlign: TextAlign.center, style: MyStyles().fontSize12Weight400)
+        Text(
+            controller.paywithCard.value
+                ? 'Paid with Card'
+                : 'Paid with Apple Pay',
+            textAlign: TextAlign.center,
+            style: MyStyles().fontSize12Weight400)
       ],
     );
   }

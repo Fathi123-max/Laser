@@ -76,6 +76,8 @@ class HomeController extends GetxController with GetxServiceMixin {
 
   RxBool detailskey = RxBool(true);
 
+  RxBool paywithCard = RxBool(false);
+
 // controll tapping of device and visibilty of buttons ***************************************************************
   void controlleDeviceTypeTap(
     int index,

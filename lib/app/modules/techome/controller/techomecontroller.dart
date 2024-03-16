@@ -264,7 +264,7 @@ class TecHomeController extends GetxController {
       RequestType.post,
       data: {
         "order_id": orderId,
-        "tech_comments": techMessageEditingController.value.text
+        "tech_comments": techMessageEditingController.value.text,
       },
       // data: {"order_id", orderId},
       onLoading: () {

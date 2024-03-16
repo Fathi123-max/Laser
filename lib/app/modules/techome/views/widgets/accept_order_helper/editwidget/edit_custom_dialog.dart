@@ -28,9 +28,9 @@ class EditCustomDialogFiled extends GetWidget<CustomTextFormFieldController> {
           child: Obx(() {
             return TextField(
               maxLines: 1000,
-              keyboardType: keyboardType,
+              keyboardType: TextInputType.number,
               controller: Get.find<TecHomeController>()
-                  .techMessageEditingController
+                  .orderCodeEditingController
                   .value,
               obscureText: controller.isPasswordVisible.value && isPassword
                   ? true

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/modules/techome/controller/techomecontroller.dart';
+import 'package:laser/app/modules/techome/views/widgets/accept_order_helper/editwidget/edit_custom_dialog.dart';
 
 class EditCheckboxWidget extends GetView<TecHomeController> {
   final bool? ishold;
@@ -18,10 +19,10 @@ class EditCheckboxWidget extends GetView<TecHomeController> {
   Widget build(BuildContext context) {
     return Obx(() {
       return CheckboxListTile.adaptive(
-        value: controller.holdOrderType.value,
+        value: controller.editOrder.value,
         onChanged: (value) {
-          controller.holdOrderType.value = value!;
-          controller.editOrder.value = !value;
+          controller.editOrder.value = value!;
+          controller.holdOrderType.value = !value;
         },
         activeColor: const Color(0xFF1B1926),
         // Change the inactive color here
@@ -32,34 +33,20 @@ class EditCheckboxWidget extends GetView<TecHomeController> {
           children: [
             SizedBox(
               width: 250.w,
-              height: 40.h,
-              child: Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Hold the order?\n',
-                      style: TextStyle(
-                        color: const Color(0xFF1B1926),
-                        fontSize: 14.sp,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    TextSpan(
-                      text: 'Please mention the reason',
-                      style: TextStyle(
-                        color: const Color(0xFF1B1926),
-                        fontSize: 12.sp,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
+              child: Text(
+                'Please enter customer’s\ncode to edit',
+                style: TextStyle(
+                  color: Color(0xFF1B1926),
+                  fontSize: 14.sp,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ),
-            EditCheckboxWidget(
-              textStyle: textStyle,
+            EditCustomDialogFiled(
+              isRigter: ishold ?? false,
+              keyboardType: TextInputType.number,
+              hint: "1234",
             )
           ],
         ),

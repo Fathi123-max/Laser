@@ -9,7 +9,10 @@ import 'package:laser/app/services/base_client.dart';
 
 class TecHomeController extends GetxController {
   var pageController = PageController().obs;
-
+  var orderCodeEditingController = TextEditingController().obs;
+  var techMessageEditingController = TextEditingController().obs;
+  RxBool holdOrderType = false.obs;
+  RxBool editOrder = true.obs;
   RxList<PendingOrders> pendingOrders = RxList<PendingOrders>([]);
 
   Future<void> getPendingOrders({String? lang, int? index}) async {
@@ -137,7 +140,7 @@ class TecHomeController extends GetxController {
       queryParameters: {
         "order_id": orderId,
         "service_id": serviceId,
-        "order_code": "order_Code" // todo need to add
+        "order_code": orderCodeEditingController.value.text,
       },
       // data: {"order_id", orderId},
       onLoading: () {
@@ -249,7 +252,6 @@ class TecHomeController extends GetxController {
 
   void holdOrder({
     int? orderId,
-    String? techComments,
     int? index,
     String? lang,
   }) async {
@@ -260,7 +262,10 @@ class TecHomeController extends GetxController {
         "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
       },
       RequestType.post,
-      data: {"order_id": orderId, "tech_comments": techComments},
+      data: {
+        "order_id": orderId,
+        "tech_comments": techMessageEditingController.value.text
+      },
       // data: {"order_id", orderId},
       onLoading: () {
         // *) indicate loading state

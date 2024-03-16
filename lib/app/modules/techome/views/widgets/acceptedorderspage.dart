@@ -5,13 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:laser/app/components/custom_image_widget.dart';
 import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/data/models/techmodels/acceptedorders.dart';
-import 'package:laser/app/modules/Auth/controller/text_form_fied_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
 import 'package:laser/app/modules/home/views/widgets/orders/custom_card_button.dart';
 import 'package:laser/app/modules/techome/controller/techomecontroller.dart';
+import 'package:laser/app/modules/techome/views/widgets/accept_order_helper/dialog_screen.dart';
+import 'package:laser/app/modules/techome/views/widgets/accept_order_helper/remove_dialog_screen.dart';
 
 import '../../../../config/theme/my_styles.dart';
 
@@ -55,7 +57,7 @@ class AcceptedOrdersPage extends GetView<TecHomeController> {
                   _debounce = Timer(const Duration(milliseconds: 500), () {
                     // Increment the page index and call getAllOrders with the new index.
                     currentPageIndex++;
-                    controller.getPendingOrders(index: currentPageIndex);
+                    controller.getAcceptedOrders(index: currentPageIndex);
 
                     // You might want to check if there's more data to load before calling this.
                   });
@@ -103,7 +105,7 @@ class OrderHeader extends GetView<TecHomeController> {
       fontSize: 12,
       fontFamily: 'Inter',
       fontWeight: FontWeight.w700,
-      height: 0.14,
+      // height: 0.14,
     );
     const shapeDecoration2 = ShapeDecoration(
       color: Color(0xFFF1F0F5),
@@ -309,15 +311,15 @@ class OrderBody extends GetView<TecHomeController> {
             // const Gap(10),
             const CustomDivider(fullWidth: true),
             // const Gap(12),
-            Delivery(textStyle: textStyle),
+            Delivery(textStyle: textStyle, order: order),
             const Gap(10),
             const CustomDivider(fullWidth: true),
             // const Gap(2),
-            Address(textStyle: textStyle),
+            Address(textStyle: textStyle, order: order),
             const Gap(10),
             const CustomDivider(fullWidth: true),
             const Gap(4),
-            TotalPrice(textStyle: textStyle),
+            TotalPrice(textStyle: textStyle, order: order),
             const Gap(19),
             ActionButtons(
               index: index,
@@ -346,25 +348,22 @@ class ActionButtons extends GetView<TecHomeController> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Obx(() {
-          return Visibility(
-            visible: controller.isMyWay.value,
-            child: ActionButton(
-              controller: controller,
-              index: index,
-              order: order,
-              text: 'On My Way',
-              ontap: () {
-                Get.to(DialogScreen());
-
-                // controller.onMyWay(
-                //     index: index!,
-                //     orderid: order!.orderId!,
-                //     lang: LocalizationService.isItEnglish() ? "en" : "ar");
-              },
-            ),
-          );
-        }),
+        Visibility(
+          visible: controller.isMyWay.value,
+          child: ActionButton(
+            controller: controller,
+            index: index,
+            order: order,
+            text: 'On My Way',
+            ontap: () {
+              // controller.onMyWay(
+              //     index: index!,
+              //     orderid: order!.orderId!,
+              //     lang: LocalizationService.isItEnglish() ? "en" : "ar");
+              Get.to(() => const RemoveDialogScreen());
+            },
+          ),
+        ),
         Visibility(
           visible: controller.updateOrder.value,
           child: Padding(
@@ -376,7 +375,11 @@ class ActionButtons extends GetView<TecHomeController> {
                   index: index,
                   order: order,
                   text: 'Update Order',
-                  ontap: () {},
+                  ontap: () {
+                    Get.dialog(UpdateHoldDialogScreen(
+                      acceptedOrder: order,
+                    ));
+                  },
                 ),
                 Gap(Get.width * .2),
               ],
@@ -448,7 +451,7 @@ class ActionButton extends StatelessWidget {
             fontSize: 12,
             fontFamily: 'Inter',
             fontWeight: FontWeight.w400,
-            height: 0.14,
+            // height: 0.14,
           ),
         ),
       ),
@@ -457,9 +460,12 @@ class ActionButton extends StatelessWidget {
 }
 
 class Delivery extends GetView<TecHomeController> {
+  final AcceptedOrder? order;
   const Delivery({
     super.key,
+    this.order,
     required this.textStyle,
+    r,
   });
 
   final TextStyle textStyle;
@@ -482,40 +488,30 @@ class Delivery extends GetView<TecHomeController> {
         const Gap(8),
         Row(children: [
           const Gap(19),
-          Container(
-            width: 14,
-            height: 11,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage("https://via.placeholder.com/14x11"),
-                fit: BoxFit.cover,
-              ),
-            ),
+          SizedBox(
+            width: 14.w,
+            height: 11.h,
+            child: const AssetImageView(fileName: "time.png"),
           ),
           const Gap(7),
-          const Text(
-            '11:00 - 12:00         ',
-            style: TextStyle(
+          Text(
+            '${order!.time}         ',
+            style: const TextStyle(
               color: Color(0xFF1B1926),
               fontSize: 12,
               fontFamily: 'Inter',
               fontWeight: FontWeight.w400,
             ),
           ),
-          Container(
-            width: 14,
-            height: 11,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage("https://via.placeholder.com/14x11"),
-                fit: BoxFit.cover,
-              ),
-            ),
+          SizedBox(
+            width: 14.w,
+            height: 11.h,
+            child: const AssetImageView(fileName: "date.png"),
           ),
           const Gap(7),
-          const Text(
-            '8-1-2024',
-            style: TextStyle(
+          Text(
+            DateFormat('yyyy-MM-dd').format(order!.date!),
+            style: const TextStyle(
               color: Color(0xFF1B1926),
               fontSize: 12,
               fontFamily: 'Inter',
@@ -531,8 +527,11 @@ class Delivery extends GetView<TecHomeController> {
 class Address extends GetView<TecHomeController> {
   const Address({
     super.key,
+    this.order,
     required this.textStyle,
   });
+
+  final AcceptedOrder? order;
 
   final TextStyle textStyle;
 
@@ -554,20 +553,15 @@ class Address extends GetView<TecHomeController> {
         const Gap(8),
         Row(children: [
           const Gap(19),
-          Container(
-            width: 14,
-            height: 11,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage("https://via.placeholder.com/14x11"),
-                fit: BoxFit.cover,
-              ),
-            ),
+          SizedBox(
+            width: 14.w,
+            height: 11.h,
+            child: const AssetImageView(fileName: "location.png"),
           ),
           const Gap(7),
-          const Text(
-            'Alrehab District, Jeddah, Saudi Arabia',
-            style: TextStyle(
+          Text(
+            '${order!.address}',
+            style: const TextStyle(
               color: Color(0xFF1B1926),
               fontSize: 12,
               fontFamily: 'Inter',
@@ -583,9 +577,11 @@ class Address extends GetView<TecHomeController> {
 class TotalPrice extends GetView<TecHomeController> {
   const TotalPrice({
     super.key,
+    this.order,
     required this.textStyle,
   });
 
+  final AcceptedOrder? order;
   final TextStyle textStyle;
 
   @override
@@ -601,20 +597,17 @@ class TotalPrice extends GetView<TecHomeController> {
       children: [
         Row(children: [
           const Gap(19),
-          Container(
-            width: 14,
-            height: 11,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage("https://via.placeholder.com/14x11"),
-                fit: BoxFit.cover,
-              ),
-            ),
+          SizedBox(
+            width: 14.w,
+            height: 11.h,
+            child: const AssetImageView(fileName: "cash.png"),
           ),
           const Gap(7),
-          const Text(
-            'Paid in Credit Card',
-            style: TextStyle(
+          Text(
+            order!.paymentType == 'Card'
+                ? 'Paid in Credit Card'
+                : "Paid in Apple Pay",
+            style: const TextStyle(
               color: Color(0xFF1B1926),
               fontSize: 12,
               fontFamily: 'Inter',
@@ -622,21 +615,20 @@ class TotalPrice extends GetView<TecHomeController> {
             ),
           ),
           const Gap(57),
-          const Text.rich(
+          Text.rich(
             TextSpan(
               children: [
                 TextSpan(
                   text: 'Total ',
                   style: TextStyle(
-                    color: Color(0xFF261919),
-                    fontSize: 12,
+                    color: const Color(0xFF261919),
+                    fontSize: 12.sp,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w400,
-                    height: 0.14,
                   ),
                 ),
                 TextSpan(
-                  text: '50 SAR',
+                  text: '${order!.totalPrice} SAR',
                   style: textStyle,
                 ),
               ],
@@ -644,203 +636,6 @@ class TotalPrice extends GetView<TecHomeController> {
             textAlign: TextAlign.center,
           )
         ]),
-      ],
-    );
-  }
-}
-
-class DialogScreen extends GetView<DialogScreen> {
-  @override
-  Widget build(BuildContext context) {
-    var textStyle = TextStyle(
-      color: const Color(0xFF1B1926),
-      fontSize: 14.sp,
-      fontFamily: 'Inter',
-      fontWeight: FontWeight.w700,
-    );
-    return Scaffold(
-        body: SafeArea(
-            child: Dialog(
-      child: Container(
-        width: 319.w,
-        height: 419.h,
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(30.r)),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 15.h,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(right: 16.w),
-                  child: GestureDetector(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: const Icon(Icons.close)),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 16.h,
-            ),
-            CheckboxWidget(
-              textStyle: textStyle,
-              ishold: false,
-            ),
-            SizedBox(
-              height: 47.h,
-            ),
-            CheckboxWidget(
-              textStyle: textStyle,
-              ishold: true,
-            )
-          ],
-        ),
-      ),
-    )));
-  }
-}
-
-class CheckboxWidget extends StatelessWidget {
-  final bool? ishold;
-
-  const CheckboxWidget({
-    super.key,
-    required this.textStyle,
-    this.ishold,
-  });
-
-  final TextStyle textStyle;
-
-  @override
-  Widget build(BuildContext context) {
-    return CheckboxListTile.adaptive(
-      value: true,
-      checkboxShape: const CircleBorder(),
-      controlAffinity: ListTileControlAffinity.leading,
-      title: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 250.w,
-            height: 40.h,
-            child: ishold ?? false
-                ? Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'Hold the order?\n',
-                          style: TextStyle(
-                            color: const Color(0xFF1B1926),
-                            fontSize: 14.sp,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        TextSpan(
-                          text: 'Please mention the reason',
-                          style: TextStyle(
-                            color: const Color(0xFF1B1926),
-                            fontSize: 12.sp,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                : Text(
-                    'Please enter customer’s\ncode to edit',
-                    style: textStyle,
-                  ),
-          ),
-          CustomDialogFiled(
-            isRigter: ishold ?? false,
-            keyboardType: TextInputType.number,
-            hint: !ishold! ? "1234" : "Costumer didn’t respond",
-          )
-        ],
-      ),
-      onChanged: (value) {},
-    );
-  }
-}
-
-class CustomDialogFiled extends GetWidget<CustomTextFormFieldController> {
-  const CustomDialogFiled({
-    this.isRigter,
-    super.key,
-    this.textEditingController,
-    this.keyboardType,
-    this.hint,
-    this.isPassword = false,
-  });
-
-  final TextEditingController? textEditingController;
-  final String? hint;
-  final bool isPassword;
-  final bool? isRigter;
-
-  final TextInputType? keyboardType;
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SizedBox(
-          width: 180.w,
-          height: isRigter! ? 91.h : 35.h,
-          child: Obx(() {
-            return TextField(
-              maxLines: 1000,
-              keyboardType: keyboardType,
-              controller: textEditingController,
-              obscureText: controller.isPasswordVisible.value && isPassword
-                  ? true
-                  : false,
-              decoration: InputDecoration(
-                hintText: hint,
-                fillColor: const Color(0xFFF1F0F5),
-                filled: true,
-                hintStyle: TextStyle(
-                  color: const Color(0xFF1B1926),
-                  fontSize: isRigter! ? 13.sp : 15.sp,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w400,
-                  // height: 0.08,
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(30.r)),
-                  borderSide: const BorderSide(color: Colors.black),
-                ),
-                errorMaxLines: 1,
-                hintMaxLines: 3,
-                focusedErrorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(30.r)),
-                  borderSide: const BorderSide(color: Colors.black),
-                ),
-                errorStyle: const TextStyle(
-                  height: 0,
-                  color: Color.fromRGBO(27, 25, 38, 1),
-                  fontFamily: 'Inter',
-                  letterSpacing: 0,
-                  fontWeight: FontWeight.normal,
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(30.r)),
-                  borderSide: const BorderSide(color: Colors.red, width: 2),
-                ),
-                contentPadding: EdgeInsets.fromLTRB(24.w, 10.h, 24.w, 12.h),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(30.r)),
-                ),
-              ),
-            );
-          }),
-        ),
       ],
     );
   }

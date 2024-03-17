@@ -7,6 +7,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:laser/app/components/custom_image_widget.dart';
+import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/data/models/techmodels/acceptedorders.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
 import 'package:laser/app/modules/home/views/widgets/orders/custom_card_button.dart';
@@ -271,7 +272,7 @@ class OrderBody extends GetView<TecHomeController> {
                             // color: controller.hexToColor(
                             //     controller.orderList.value[index].currentStatusColor!),
                             onTap: () {},
-                            color: Colors.amber.shade300,
+                            color: Colors.black12,
                           ),
                         ),
                         Positioned(
@@ -280,6 +281,19 @@ class OrderBody extends GetView<TecHomeController> {
                             child: GestureDetector(
                               onTap: () {
                                 Get.dialog(RemoveDialogScreen(
+                                  ontap: () {
+                                    controller.removeService(
+                                        orderCode: controller
+                                            .removeEditingController.value.text,
+                                        services: order.services!,
+                                        index: index,
+                                        serviceId:
+                                            order.services![index].serviceId!,
+                                        orderId: order.orderId,
+                                        lang: LocalizationService.isItEnglish()
+                                            ? 'en'
+                                            : 'ar');
+                                  },
                                   index: index,
                                   acceptedOrder: order,
                                 ));
@@ -354,11 +368,17 @@ class ActionButtons extends GetView<TecHomeController> {
             order: order,
             text: 'On My Way',
             ontap: () {
-              // controller.onMyWay(
-              //     index: index!,
-              //     orderid: order!.orderId!,
-              //     lang: LocalizationService.isItEnglish() ? "en" : "ar");
-              // Get.to(() => const RemoveDialogScreen());
+              Get.dialog(RemoveDialogScreen(
+                acceptedOrder: order,
+                index: index,
+                ontap: () {
+                  controller.onMyWay(
+                      index: index!,
+                      orderid: order!.orderId!,
+                      lang: LocalizationService.isItEnglish() ? "en" : "ar");
+                },
+              ));
+              // Get.to(() => const );
             },
           ),
         ),

@@ -191,7 +191,8 @@ class TecHomeController extends GetxController {
       queryParameters: {
         "service_id": orderid,
         "order_id": orderid,
-        "order_code": "order_Code" // todo need to add
+        "order_code": removeEditingController.value.text,
+        // todo need to add
       },
       // data: {"order_id", orderId},
       onLoading: () {

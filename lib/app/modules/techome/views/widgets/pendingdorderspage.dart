@@ -403,16 +403,7 @@ class Delivery extends GetView<TecHomeController> {
         const Gap(8),
         Row(children: [
           const Gap(19),
-          Container(
-            width: 14,
-            height: 11,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage("https://via.placeholder.com/14x11"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          AssetImageView(fileName: "time.png", height: 11.h, width: 14.w),
           const Gap(7),
           const Text(
             '11:00 - 12:00         ',
@@ -423,16 +414,7 @@ class Delivery extends GetView<TecHomeController> {
               fontWeight: FontWeight.w400,
             ),
           ),
-          Container(
-            width: 14,
-            height: 11,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage("https://via.placeholder.com/14x11"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          AssetImageView(fileName: "date.png", height: 11.h, width: 14.w),
           const Gap(7),
           const Text(
             '8-1-2024',
@@ -475,16 +457,7 @@ class Address extends GetView<TecHomeController> {
         const Gap(8),
         Row(children: [
           const Gap(19),
-          Container(
-            width: 14,
-            height: 11,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage("https://via.placeholder.com/14x11"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          AssetImageView(fileName: "location.png", height: 11.h, width: 14.w),
           const Gap(7),
           const Text(
             'Alrehab District, Jeddah, Saudi Arabia',
@@ -522,16 +495,7 @@ class TotalPrice extends GetView<TecHomeController> {
       children: [
         Row(children: [
           const Gap(19),
-          Container(
-            width: 14,
-            height: 11,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage("https://via.placeholder.com/14x11"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          AssetImageView(fileName: "cash.png", height: 11.h, width: 14.w),
           const Gap(7),
           const Text(
             'Paid in Credit Card',

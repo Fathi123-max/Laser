@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:laser/app/components/custom_snackbar.dart';
+import 'package:laser/app/components/custom_image_widget.dart';
 import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/data/models/techmodels/acceptedorders.dart';
-import 'package:laser/app/modules/techome/views/widgets/accept_order_helper/editwidget/edit_checkbox.dart';
+import 'package:laser/app/modules/techome/views/widgets/accept_order_helper/edit_remove_widget/editcheckout.dart';
 
 import '../../../controller/techomecontroller.dart';
 
 class RemoveDialogScreen extends GetView<TecHomeController> {
-  const RemoveDialogScreen({super.key, this.acceptedOrder});
+  const RemoveDialogScreen({super.key, this.acceptedOrder, this.index});
   final AcceptedOrder? acceptedOrder;
+  final int? index;
   @override
   Widget build(BuildContext context) {
     var textStyle = TextStyle(
@@ -43,7 +44,7 @@ class RemoveDialogScreen extends GetView<TecHomeController> {
             child: Dialog(
           child: Container(
             width: 319.w,
-            height: 419.h,
+            height: 370.h,
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(30.r)),
             child: Column(
@@ -65,11 +66,15 @@ class RemoveDialogScreen extends GetView<TecHomeController> {
                     )
                   ],
                 ),
+                AssetImageView(
+                  fileName: "lock.png",
+                  height: 77.h,
+                  width: 77.w,
+                ),
                 SizedBox(
                   height: 16.h,
                 ),
-                EditCheckboxWidget(
-                  textStyle: textStyle,
+                const EditRemoveCheckboxWidget(
                   ishold: false,
                 ),
                 SizedBox(
@@ -86,19 +91,19 @@ class RemoveDialogScreen extends GetView<TecHomeController> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        if (controller.editOrder.value) {
-                          //Todo Update Order
-                        } else if (controller.holdOrderType.value) {
-                          controller.holdOrder(
+                        if (acceptedOrder!.services![index!].serviceId !=
+                            null) {
+                          controller.removeService(
+                              orderCode:
+                                  controller.removeEditingController.value.text,
+                              services: acceptedOrder!.services!,
+                              index: index!,
+                              serviceId:
+                                  acceptedOrder!.services![index!].serviceId!,
                               orderId: acceptedOrder!.orderId,
                               lang: LocalizationService.isItEnglish()
                                   ? 'en'
                                   : 'ar');
-                        } else {
-                          CustomSnackBar.showCustomErrorSnackBar(
-                            title: 'Error',
-                            message: 'Please select at least one option',
-                          );
                         }
                       },
                       child: Container(

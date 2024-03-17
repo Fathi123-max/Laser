@@ -67,7 +67,7 @@ class HoldCustomDialogFiled extends GetWidget<CustomTextFormFieldController> {
                   borderRadius: BorderRadius.all(Radius.circular(30.r)),
                   borderSide: const BorderSide(color: Colors.red, width: 2),
                 ),
-                contentPadding: EdgeInsets.fromLTRB(24.w, 10.h, 24.w, 0.h),
+                contentPadding: EdgeInsets.fromLTRB(24.w, 15.h, 24.w, 0.h),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(30.r)),
                 ),

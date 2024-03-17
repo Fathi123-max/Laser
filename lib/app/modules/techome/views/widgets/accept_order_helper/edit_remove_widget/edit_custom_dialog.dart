@@ -4,8 +4,9 @@ import 'package:get/get.dart';
 import 'package:laser/app/modules/Auth/controller/text_form_fied_controller.dart';
 import 'package:laser/app/modules/techome/controller/techomecontroller.dart';
 
-class EditCustomDialogFiled extends GetWidget<CustomTextFormFieldController> {
-  const EditCustomDialogFiled({
+class RemoveEditCustomDialogFiled
+    extends GetWidget<CustomTextFormFieldController> {
+  const RemoveEditCustomDialogFiled({
     this.isRigter,
     super.key,
     this.keyboardType,
@@ -30,9 +31,8 @@ class EditCustomDialogFiled extends GetWidget<CustomTextFormFieldController> {
             return TextField(
               maxLines: 1000,
               keyboardType: TextInputType.number,
-              controller: Get.find<TecHomeController>()
-                  .orderCodeEditingController
-                  .value,
+              controller:
+                  Get.find<TecHomeController>().removeEditingController.value,
               obscureText: controller.isPasswordVisible.value && isPassword
                   ? true
                   : false,

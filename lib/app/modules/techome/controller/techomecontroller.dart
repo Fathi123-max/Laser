@@ -9,8 +9,12 @@ import 'package:laser/app/services/base_client.dart';
 
 class TecHomeController extends GetxController {
   var pageController = PageController().obs;
-  var orderCodeEditingController = TextEditingController().obs;
-  var techMessageEditingController = TextEditingController().obs;
+  Rx<TextEditingController> orderCodeEditingController =
+      TextEditingController().obs;
+  Rx<TextEditingController> removeEditingController =
+      TextEditingController().obs;
+  Rx<TextEditingController> techMessageEditingController =
+      TextEditingController().obs;
   RxBool holdOrderType = false.obs;
   RxBool editOrder = true.obs;
   RxList<PendingOrders> pendingOrders = RxList<PendingOrders>([]);
@@ -127,6 +131,7 @@ class TecHomeController extends GetxController {
     required int index,
     required int serviceId,
     required services,
+    String? orderCode,
     String? lang,
     int? orderId,
   }) async {
@@ -140,7 +145,7 @@ class TecHomeController extends GetxController {
       queryParameters: {
         "order_id": orderId,
         "service_id": serviceId,
-        "order_code": orderCodeEditingController.value.text,
+        "order_code": orderCode,
       },
       // data: {"order_id", orderId},
       onLoading: () {
@@ -152,6 +157,7 @@ class TecHomeController extends GetxController {
         // *) indicate success
         services.removeWhere(
             (element) => element.serviceId == services[index].serviceId);
+        Get.back();
         // order.services.refresh();
 
         update();

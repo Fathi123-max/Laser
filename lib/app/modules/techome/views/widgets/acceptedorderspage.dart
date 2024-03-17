@@ -7,7 +7,6 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:laser/app/components/custom_image_widget.dart';
-import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/data/models/techmodels/acceptedorders.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
 import 'package:laser/app/modules/home/views/widgets/orders/custom_card_button.dart';
@@ -73,7 +72,9 @@ class AcceptedOrdersPage extends GetView<TecHomeController> {
                     boxShadow: const [],
                     backgroundColor: const Color(0xFFF1F0F5),
                     firstChild: OrderHeader(index: index),
-                    secondChild: OrderBody(index: index),
+                    secondChild: OrderBody(
+                        index: index,
+                        order: controller.acceptedOrders.value[index]),
                     showArrowWidget: false,
                     centralizeFirstChild: true,
                   ),
@@ -186,8 +187,10 @@ class OrderBody extends GetView<TecHomeController> {
   const OrderBody({
     super.key,
     this.index,
+    this.order,
   });
   final int? index;
+  final AcceptedOrder? order;
   @override
   Widget build(BuildContext context) {
     var order = controller.acceptedOrders.value[index!];
@@ -276,15 +279,10 @@ class OrderBody extends GetView<TecHomeController> {
                             top: 0,
                             child: GestureDetector(
                               onTap: () {
-                                controller.removeService(
-                                    orderId: order.orderId,
-                                    services: order.services,
-                                    serviceId:
-                                        order.services![index].serviceId!,
-                                    index: index,
-                                    lang: LocalizationService.isItEnglish()
-                                        ? "en"
-                                        : "ar");
+                                Get.dialog(RemoveDialogScreen(
+                                  index: index,
+                                  acceptedOrder: order,
+                                ));
                               },
                               child: Container(
                                 width: 11.w,
@@ -360,7 +358,7 @@ class ActionButtons extends GetView<TecHomeController> {
               //     index: index!,
               //     orderid: order!.orderId!,
               //     lang: LocalizationService.isItEnglish() ? "en" : "ar");
-              Get.to(() => const RemoveDialogScreen());
+              // Get.to(() => const RemoveDialogScreen());
             },
           ),
         ),

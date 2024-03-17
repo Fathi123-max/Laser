@@ -44,11 +44,19 @@ class OrdersTypesPage extends GetView<TecHomeController> {
               );
             },
           ),
-          // const Gap(21),
-          // OrderLabel(
-          //   text: "Finished Orders",
-          //   ontap: () {},
-          // ),
+          const Gap(21),
+          OrderLabel(
+            text: "Finished Orders",
+            ontap: () {
+              showLoadingOverLay(asyncFunction: () {
+                return controller
+                    .getFinishedOrders(
+                        lang: LocalizationService.isItEnglish() ? "en" : "ar")
+                    .then((value) =>
+                        controller.pageController.value.jumpToPage(3));
+              });
+            },
+          ),
         ],
       ),
     );

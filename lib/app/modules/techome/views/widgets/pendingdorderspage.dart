@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:laser/app/components/custom_image_widget.dart';
 import 'package:laser/app/components/custom_loading_overlay.dart';
 import 'package:laser/app/config/translations/localization_service.dart';
+import 'package:laser/app/data/models/techmodels/pendingorders.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
 import 'package:laser/app/modules/home/views/widgets/orders/custom_card_button.dart';
 import 'package:laser/app/modules/techome/controller/techomecontroller.dart';
@@ -307,15 +309,15 @@ class OrderBody extends GetView<TecHomeController> {
             // const Gap(10),
             const CustomDivider(fullWidth: true),
             // const Gap(12),
-            Delivery(textStyle: textStyle),
+            Delivery(textStyle: textStyle, order: order),
             const Gap(10),
             const CustomDivider(fullWidth: true),
             // const Gap(2),
-            Address(textStyle: textStyle),
+            Address(textStyle: textStyle, order: order),
             const Gap(10),
             const CustomDivider(fullWidth: true),
             const Gap(4),
-            TotalPrice(textStyle: textStyle),
+            TotalPrice(textStyle: textStyle, order: order),
             const Gap(19),
             ActionButtons(
               index: index,
@@ -381,8 +383,9 @@ class Delivery extends GetView<TecHomeController> {
   const Delivery({
     super.key,
     required this.textStyle,
+    this.order,
   });
-
+  final PendingOrders? order;
   final TextStyle textStyle;
 
   @override
@@ -405,22 +408,22 @@ class Delivery extends GetView<TecHomeController> {
           const Gap(19),
           AssetImageView(fileName: "time.png", height: 11.h, width: 14.w),
           const Gap(7),
-          const Text(
-            '11:00 - 12:00         ',
+          Text(
+            '${order!.time}         ',
             style: TextStyle(
               color: Color(0xFF1B1926),
-              fontSize: 12,
+              fontSize: 12.sp,
               fontFamily: 'Inter',
               fontWeight: FontWeight.w400,
             ),
           ),
           AssetImageView(fileName: "date.png", height: 11.h, width: 14.w),
           const Gap(7),
-          const Text(
-            '8-1-2024',
+          Text(
+            DateFormat('yyyy-MM-dd').format(order!.date!),
             style: TextStyle(
               color: Color(0xFF1B1926),
-              fontSize: 12,
+              fontSize: 12.sp,
               fontFamily: 'Inter',
               fontWeight: FontWeight.w400,
             ),
@@ -435,7 +438,9 @@ class Address extends GetView<TecHomeController> {
   const Address({
     super.key,
     required this.textStyle,
+    this.order,
   });
+  final PendingOrders? order;
 
   final TextStyle textStyle;
 
@@ -459,8 +464,8 @@ class Address extends GetView<TecHomeController> {
           const Gap(19),
           AssetImageView(fileName: "location.png", height: 11.h, width: 14.w),
           const Gap(7),
-          const Text(
-            'Alrehab District, Jeddah, Saudi Arabia',
+          Text(
+            '${order!.address}         ',
             style: TextStyle(
               color: Color(0xFF1B1926),
               fontSize: 12,
@@ -478,7 +483,9 @@ class TotalPrice extends GetView<TecHomeController> {
   const TotalPrice({
     super.key,
     required this.textStyle,
+    this.order,
   });
+  final PendingOrders? order;
 
   final TextStyle textStyle;
 
@@ -507,7 +514,7 @@ class TotalPrice extends GetView<TecHomeController> {
             ),
           ),
           const Gap(57),
-          const Text.rich(
+          Text.rich(
             TextSpan(
               children: [
                 TextSpan(
@@ -521,7 +528,7 @@ class TotalPrice extends GetView<TecHomeController> {
                   ),
                 ),
                 TextSpan(
-                  text: '50 SAR',
+                  text: '${order!.totalPrice} SAR',
                   style: textStyle,
                 ),
               ],

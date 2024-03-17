@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:laser/app/modules/home/views/widgets/home/home_base_view_model.dart';
 import 'package:laser/app/modules/techome/controller/techomecontroller.dart';
 import 'package:laser/app/modules/techome/views/widgets/acceptedorderspage.dart';
+import 'package:laser/app/modules/techome/views/widgets/finishedorderpage.dart';
 import 'package:laser/app/modules/techome/views/widgets/orderstypespage.dart';
 import 'package:laser/app/modules/techome/views/widgets/pendingdorderspage.dart';
 
@@ -30,7 +31,8 @@ class TecHomeView extends GetView<TecHomeController> {
             children: const [
               OrdersTypesPage(),
               AcceptedOrdersPage(),
-              PendingOrdersPage()
+              PendingOrdersPage(),
+              FinishedOrdersPage()
             ],
           ),
         ),

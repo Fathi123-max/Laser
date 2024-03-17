@@ -127,6 +127,61 @@ class TecHomeController extends GetxController {
     return Future(() => true);
   }
 
+  RxList<PendingOrders> finishedOrders = RxList<PendingOrders>([]);
+
+  Future<void> getFinishedOrders({String? lang, int? index}) async {
+    await BaseClient.safeApiCall(
+      Constants.finishedOrdersrUrl(index ?? 0),
+      headers: {
+        "Accept-Language": lang,
+        "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
+      },
+      RequestType.get,
+      onLoading: () {
+        // apiDeviceTypesCallStatus.value = ApiCallStatus.loading;
+        update();
+      },
+      onSuccess: (response) {
+        // apiDeviceTypesCallStatus.value = ApiCallStatus.success;
+
+        // If this is not the first page, append the new orders to the existing list.
+        if (index != null && index > 1) {
+          var newOrders = RxList<PendingOrders>.from(response.data["payload"]
+                  ["data"]
+              .map((e) => PendingOrders.fromJson(e as Map<String, dynamic>))
+              .toList());
+
+          // Add the new orders to the existing list.
+          finishedOrders.addAll(newOrders);
+        } else {
+          // If this is the first page, replace the existing list with the new orders.
+          finishedOrders = RxList<PendingOrders>.from(response.data["payload"]
+                  ["data"]
+              .map((e) => PendingOrders.fromJson(e as Map<String, dynamic>))
+              .toList());
+        }
+
+        finishedOrders.refresh();
+        print(finishedOrders.value.first.orderId);
+      },
+      onError: (error) {
+        if (error.response!.data["error"] == true) {
+          CustomSnackBar.showCustomSnackBar(
+            title: "End Of Orders",
+            message: "No More Orders",
+          );
+        } else {
+          BaseClient.handleApiError(error);
+        }
+
+        // *) indicate error status
+        // apiDeviceTypesCallStatus.value = ApiCallStatus.error;
+        update();
+      },
+    );
+    return Future(() => true);
+  }
+
   void removeService({
     required int index,
     required int serviceId,
@@ -175,6 +230,13 @@ class TecHomeController extends GetxController {
   RxBool isMyWay = RxBool(false);
   RxBool finishOrder = RxBool(false);
   RxBool updateOrder = RxBool(false);
+
+  Color hexToColor(String hexString) {
+    final buffer = StringBuffer();
+    if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
+    buffer.write(hexString.replaceFirst('#', ''));
+    return Color(int.parse(buffer.toString(), radix: 16));
+  }
 
   void onMyWay({
     required int index,

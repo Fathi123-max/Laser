@@ -13,6 +13,7 @@ import 'package:laser/app/data/models/techmodels/pendingorders.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
 import 'package:laser/app/modules/home/views/widgets/orders/custom_card_button.dart';
 import 'package:laser/app/modules/techome/controller/techomecontroller.dart';
+import 'package:laser/app/modules/techome/views/widgets/accept_order_helper/remove_dialog_screen.dart';
 
 import '../../../../config/theme/my_styles.dart';
 
@@ -266,7 +267,7 @@ class OrderBody extends GetView<TecHomeController> {
                             // color: controller.hexToColor(
                             //     controller.orderList.value[index].currentStatusColor!),
                             onTap: () {},
-                            color: Colors.amber.shade300,
+                            color: Colors.black12,
                           ),
                         ),
                         Positioned(
@@ -274,15 +275,20 @@ class OrderBody extends GetView<TecHomeController> {
                             top: 0,
                             child: GestureDetector(
                               onTap: () {
-                                controller.removeService(
-                                    orderId: order.orderId,
-                                    services: order,
-                                    serviceId:
-                                        order.services![index].serviceId!,
+                                Get.dialog(RemoveDialogScreen(
                                     index: index,
-                                    lang: LocalizationService.isItEnglish()
-                                        ? "en"
-                                        : "ar");
+                                    ontap: () {
+                                      controller.removeService(
+                                          orderId: order.orderId,
+                                          services: order,
+                                          serviceId:
+                                              order.services![index].serviceId!,
+                                          index: index,
+                                          lang:
+                                              LocalizationService.isItEnglish()
+                                                  ? "en"
+                                                  : "ar");
+                                    }));
                               },
                               child: Container(
                                 width: 11.w,

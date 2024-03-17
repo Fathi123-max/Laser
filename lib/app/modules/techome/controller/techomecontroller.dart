@@ -359,6 +359,46 @@ class TecHomeController extends GetxController {
     );
   }
 
+  void finishTheOrder({
+    int? orderId,
+    int? index,
+    String? lang,
+  }) async {
+    await BaseClient.safeApiCall(
+      Constants.orderfinishUrl,
+      headers: {
+        "Accept-Language": lang,
+        "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
+      },
+      RequestType.post,
+      data: {
+        "order_id": orderId,
+        "order_code": removeEditingController.value.text,
+      },
+      // data: {"order_id", orderId},
+      onLoading: () {
+        // *) indicate loading state
+        // apiDeviceBrandsCallStatus.value = ApiCallStatus.loading;
+        update();
+      },
+      onSuccess: (response) {
+        // *) indicate success
+        // pendingOrders
+        //     .removeWhere((element) => element.orderId == order.orderId);
+        // pendingOrders.refresh();
+
+        update();
+      },
+      onError: (error) {
+        // show error message to user
+        BaseClient.handleApiError(error);
+        // *) indicate error status
+        // apiDeviceBrandsCallStatus.value = ApiCallStatus.error;
+        update();
+      },
+    );
+  }
+
   void visibiltyFunction({AcceptedOrder? order}) {
     switch (order!.nextStatus) {
       case "On my way":

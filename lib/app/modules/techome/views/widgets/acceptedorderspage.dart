@@ -419,7 +419,18 @@ class ActionButtons extends GetView<TecHomeController> {
               order: order,
               width: 70.w,
               text: 'Finish',
-              ontap: () {},
+              ontap: () {
+                Get.dialog(RemoveDialogScreen(
+                    acceptedOrder: order,
+                    index: index,
+                    ontap: () {
+                      controller.finishTheOrder(
+                          index: index!,
+                          orderId: order!.orderId!,
+                          lang:
+                              LocalizationService.isItEnglish() ? "en" : "ar");
+                    }));
+              },
             ),
           ),
         )

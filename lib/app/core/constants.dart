@@ -42,4 +42,5 @@ class Constants {
   static const removeServiceUrl = '$baseUrl/remove-service';
   static const onmywayUrl = '$baseUrl/on-my-way';
   static const orderacceptUrl = '$baseUrl/order-accept';
+  static const orderfinishUrl = '$baseUrl/order-finish';
 }

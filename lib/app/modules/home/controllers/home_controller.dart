@@ -80,6 +80,8 @@ class HomeController extends GetxController with GetxServiceMixin {
 
   TextEditingController discountController = TextEditingController();
 
+  RxBool paywithCard = RxBool(false);
+
 // controll tapping of device and visibilty of buttons ***************************************************************
   void controlleDeviceTypeTap(
     int index,

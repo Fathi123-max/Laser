@@ -9,8 +9,8 @@ import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
 import 'package:laser/app/modules/home/views/widgets/orders/custom_card_button.dart';
 
-class PaymentPage extends GetView<HomeController> {
-  const PaymentPage({super.key});
+class ReceptPage extends GetView<HomeController> {
+  const ReceptPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,8 @@ class PaymentPage extends GetView<HomeController> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Order number 226',
+                                Text(
+                                    'Order number ${controller.orderDetailsModel.orderId}',
                                     textAlign: TextAlign.center,
                                     style: MyStyles().fontSize12Weight700),
                                 Row(

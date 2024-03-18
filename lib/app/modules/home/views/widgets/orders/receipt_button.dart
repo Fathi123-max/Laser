@@ -14,7 +14,7 @@ class ReceiptButton extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.off(() => const PaymentPage());
+        Get.off(() => const ReceptPage());
       },
       child: Container(
         width: 131.w,

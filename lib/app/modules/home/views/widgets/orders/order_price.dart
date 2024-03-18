@@ -44,15 +44,12 @@ class OrderPrice extends GetView<HomeController> {
         ),
         const Gap(7),
         Text(
-<<<<<<< HEAD
-            controller.paymentType.value == "Card"
-                ? 'Paid in Credit'
-                : "paid with Apple",
-=======
+            // controller.paymentType.value == "Card"
+            //     ? 'Paid in Credit'
+            //     : "paid with Apple",
             controller.paywithCard.value
                 ? 'Paid with Card'
                 : 'Paid with Apple Pay',
->>>>>>> 349801ed5522193fa4ad04a9ea562ca9e0c81fff
             textAlign: TextAlign.center,
             style: MyStyles().fontSize12Weight400)
       ],

@@ -143,7 +143,6 @@ class PaymentDetailsPage extends GetView<HomeController> {
                           message: "Payment Success",
                         );
                       } else if (response.success == "false") {
-<<<<<<< HEAD
                         print("paymrnt failed");
                         Future.delayed(const Duration(milliseconds: 500), () {
                           controller
@@ -164,9 +163,7 @@ class PaymentDetailsPage extends GetView<HomeController> {
                                         Routes.AFTER_ORDER_PAID_PAGE,
                                       )));
                         });
-=======
                         Get.back();
->>>>>>> 349801ed5522193fa4ad04a9ea562ca9e0c81fff
                         CustomSnackBar.showCustomSnackBar(
                           title: "Error",
                           message: "Payment Failed",

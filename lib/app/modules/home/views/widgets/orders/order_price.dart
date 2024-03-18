@@ -22,7 +22,7 @@ class OrderPrice extends GetView<HomeController> {
             children: [
               TextSpan(text: 'Total ', style: MyStyles().fontSize12Weight400),
               TextSpan(
-                  text: '${controller.orderDetailsModel.totalPrice!} SAR',
+                  text: '${controller.priceAfetrSucsses.value.toString()} SAR',
                   style: MyStyles().fontSize14Weight700),
             ],
           ),
@@ -37,12 +37,18 @@ class OrderPrice extends GetView<HomeController> {
         AssetImageView(
           height: 17.h,
           width: 27.w,
-          fileName: "cash.png",
+          fileName: controller.paymentType.value == "Card"
+              ? "cash.png"
+              : "apple-logo.png",
           // color: Colors.transparent,
         ),
         const Gap(7),
-        Text('Paid in Credit',
-            textAlign: TextAlign.center, style: MyStyles().fontSize12Weight400)
+        Text(
+            controller.paymentType.value == "Card"
+                ? 'Paid in Credit'
+                : "paid with Apple",
+            textAlign: TextAlign.center,
+            style: MyStyles().fontSize12Weight400)
       ],
     );
   }

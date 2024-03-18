@@ -53,34 +53,36 @@ class DeviceBrandPage extends GetWidget<HomeController> {
                   ],
                 ));
           }),
-          Visibility(
-            visible: controller.deviceColorVisibleController.value ?? true,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (Platform.isIOS) ...[
+          Obx(() {
+            return Visibility(
+              visible: controller.deviceColorVisibleController.value ?? true,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (Platform.isIOS) ...[
+                    AuthButton(
+                      data: "Back".tr,
+                      width: 60.w,
+                      onPressed: () => controller.pageController.value
+                          .previousPage(
+                              curve: Curves.easeInOut,
+                              duration: const Duration(milliseconds: 500)),
+                    ),
+                    const Gap(20)
+                  ],
                   AuthButton(
-                    data: "Back".tr,
-                    width: 60.w,
-                    onPressed: () => controller.pageController.value
-                        .previousPage(
-                            curve: Curves.easeInOut,
-                            duration: const Duration(milliseconds: 500)),
-                  ),
-                  const Gap(20)
+                      data: "Submit".tr,
+                      onPressed: () {
+                        // navgate to Service page
+                        controller.pageController.value.nextPage(
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeInOut,
+                        );
+                      }),
                 ],
-                AuthButton(
-                    data: "Submit".tr,
-                    onPressed: () {
-                      // navgate to Service page
-                      controller.pageController.value.nextPage(
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.easeInOut,
-                      );
-                    }),
-              ],
-            ),
-          )
+              ),
+            );
+          })
         ],
       ),
     );

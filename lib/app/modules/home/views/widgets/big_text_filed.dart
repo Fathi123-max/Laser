@@ -21,9 +21,11 @@ class BigTextFiled extends GetView<HomeController> {
       height: height ?? 97.h, // Your custom height
       decoration: MyStyles().shapeDecoration,
       child: TextField(
-        controller: isNote == false
-            ? controller.addressController
-            : controller.noteController,
+        controller: !isNote.isNull
+            ? isNote == false
+                ? controller.addressController
+                : controller.noteController
+            : controller.discountController,
         maxLines: 50,
         decoration: InputDecoration(
           hintText: "Add your address here".tr,

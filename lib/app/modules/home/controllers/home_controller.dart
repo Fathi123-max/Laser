@@ -13,6 +13,7 @@ import 'package:laser/app/data/models/order_details_model.dart';
 import 'package:laser/app/data/models/order_model.dart';
 import 'package:laser/app/data/models/service_model.dart';
 import 'package:laser/app/modules/home/controllers/controller_helper/controll_order_status.dart';
+import 'package:laser/app/modules/home/controllers/controller_helper/location_services.dart';
 import 'package:laser/app/modules/home/controllers/controller_helper/pick_controller.dart';
 import 'package:laser/app/modules/home/views/pages/order_ditails_page.dart';
 import 'package:laser/app/modules/home/views/widgets/home/home_base_view_model.dart';
@@ -21,7 +22,6 @@ import 'package:laser/app/routes/app_pages.dart';
 import '../../../core/constants.dart';
 import '../../../services/api_call_status.dart';
 import '../../../services/base_client.dart';
-import 'controller_helper/location_services.dart';
 
 class HomeController extends GetxController with GetxServiceMixin {
   Rx<PageController> pageController = Rx(PageController());
@@ -76,6 +76,10 @@ class HomeController extends GetxController with GetxServiceMixin {
 
   RxBool detailskey = RxBool(true);
 
+  RxString numberOfServices = RxString("");
+
+  TextEditingController discountController = TextEditingController();
+
 // controll tapping of device and visibilty of buttons ***************************************************************
   void controlleDeviceTypeTap(
     int index,
@@ -119,10 +123,10 @@ class HomeController extends GetxController with GetxServiceMixin {
     }
 
 // get device Models
-    getModels((deviceBrandList![index]).id!,
+    getModels((deviceBrandList.value![index]).id!,
         lang: LocalizationService.isItEnglish() ? "en" : "ar");
-    MySharedPref.savedeviceBrand("${(deviceBrandList![index]).id!}");
-
+    MySharedPref.savedeviceBrand("${(deviceBrandList.value![index]).id!}");
+    deviceColorVisibleController.value = false;
 // navgate to Brand page
   }
 
@@ -331,7 +335,7 @@ class HomeController extends GetxController with GetxServiceMixin {
       onLoading: () {
         // *) indicate loading state
 
-        apiDeviceModelCallStatus.value = ApiCallStatus.loading;
+        // apiDeviceModelCallStatus.value = ApiCallStatus.loading;
         update();
       },
       onSuccess: (response) {
@@ -348,7 +352,7 @@ class HomeController extends GetxController with GetxServiceMixin {
         // show error message to user
         BaseClient.handleApiError(error);
         // *) indicate error status
-        apiDeviceModelCallStatus.value = ApiCallStatus.error;
+        // apiDeviceModelCallStatus.value = ApiCallStatus.error;
         update();
       },
     );
@@ -372,7 +376,7 @@ class HomeController extends GetxController with GetxServiceMixin {
         hoursList.value = RxList<dynamic>.from(
             response.data["payload"]["working_times"].map((e) => e));
 
-        apiDeviceModelCallStatus.value = ApiCallStatus.success;
+        apiWorkingHoursCallStatus.value = ApiCallStatus.success;
         // deviceModelVisibleController.value = true;
         update();
       },
@@ -611,6 +615,105 @@ class HomeController extends GetxController with GetxServiceMixin {
     );
   }
 
+  Future<void> paymentReceipt(
+      {String? lang = "", int? orderId, int? index}) async {
+    print(orderDetailsModel.totalPrice);
+    // *) perform api call
+    await BaseClient.safeApiCall(
+      Constants.paymentreceiptUrl,
+      headers: {
+        "Accept-Language": lang,
+        "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
+      },
+      RequestType.post,
+      // queryParameters: {"order_id": orderId},
+      queryParameters: {"order_id": 16},
+      onLoading: () {
+        update();
+      },
+      onSuccess: (response) {
+        print(response.data);
+      },
+      onError: (error) {
+        // show error message to user
+        BaseClient.handleApiError(error);
+        // *) indicate error status
+        // apiDeviceBrandsCallStatus.value = ApiCallStatus.error;
+        update();
+      },
+    );
+  }
+
+  Future<void> paymentScreenDetailsUrl(
+      {String? lang = "", int? orderId, int? index}) async {
+    print(orderDetailsModel.totalPrice);
+    // *) perform api call
+    await BaseClient.safeApiCall(
+      Constants.paymentScreenDetailsUrl,
+      headers: {
+        "Accept-Language": lang,
+        "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
+      },
+      RequestType.post,
+      queryParameters: {"order_id": 16},
+
+      // queryParameters: {"order_id": orderId},
+      onLoading: () {
+        update();
+      },
+      onSuccess: (response) {
+        numberOfServices.value =
+            response.data["payload"]["data"]["numberOfServices"];
+      },
+      onError: (error) {
+        // show error message to user
+        BaseClient.handleApiError(error);
+        // *) indicate error status
+        // apiDeviceBrandsCallStatus.value = ApiCallStatus.error;
+        update();
+      },
+    );
+  }
+
+  RxInt priceAfetrSucsses = RxInt(0);
+  RxString serviceDetails = RxString("");
+  RxString techComments = RxString("");
+  RxString paymentType = RxString("");
+
+  Future<void> paymentSuccess(
+      {String? lang = "", int? orderId, int? index}) async {
+    print(orderDetailsModel.totalPrice);
+    // *) perform api call
+    await BaseClient.safeApiCall(
+      Constants.paymentSuccessUrl,
+      headers: {
+        "Accept-Language": lang,
+        "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
+      },
+      RequestType.post,
+      queryParameters: {"order_id": 16},
+
+      // queryParameters: {"order_id": orderId},
+      onLoading: () {
+        update();
+      },
+      onSuccess: (response) {
+        techComments.value = response.data["payload"]["data"]["techComments"];
+        paymentType.value = response.data["payload"]["data"]["paymentType"];
+        serviceDetails.value =
+            response.data["payload"]["data"]["serviceDetails"];
+        priceAfetrSucsses.value = response.data["payload"]["data"]["price"];
+      },
+      onError: (error) {
+        // show error message to user
+        BaseClient.handleApiError(error);
+        // *) indicate error status
+        // apiDeviceBrandsCallStatus.value = ApiCallStatus.error;
+        update();
+      },
+    );
+  }
+
 //? initialization block ******************************************************************************************
   @override
   void onInit() {
@@ -630,10 +733,14 @@ class HomeController extends GetxController with GetxServiceMixin {
 
   onPopInvoked() {
     if (pageController.value.page == 4.0) {
+      pageController.value.jumpToPage(0);
+      detailskey.value = true;
       return false;
     }
+
     pageController.value.previousPage(
         duration: const Duration(milliseconds: 300), curve: Curves.ease);
+    detailskey.value = true;
   }
 
   void backButtonLogic() {

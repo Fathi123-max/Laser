@@ -22,7 +22,7 @@ class DeviceBrandWidget extends GetWidget<HomeController> {
             height: 100.h,
             width: 122 + 110 + 80.w,
             child: GridView.builder(
-                itemCount: controller.deviceBrandList!.length,
+                itemCount: controller.deviceBrandList!.value.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisSpacing: 10.w,
                     mainAxisSpacing: 10.h,

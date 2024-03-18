@@ -20,17 +20,17 @@ class ReceiptButton extends GetView<HomeController> {
         width: 131.w,
         height: 27.h,
         alignment: Alignment.center,
-        child: Text('View receipt',
-            textAlign: TextAlign.center,
-            style: MyStyles().fontSize12Weight400.copyWith(
-                  color: Colors.white,
-                )),
         decoration: ShapeDecoration(
           color: const Color(0xFF1B1D28),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
         ),
+        child: Text('View receipt',
+            textAlign: TextAlign.center,
+            style: MyStyles().fontSize12Weight400.copyWith(
+                  color: Colors.white,
+                )),
       ),
     );
   }

@@ -7,6 +7,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:laser/app/components/custom_loading_overlay.dart';
+import 'package:laser/app/components/my_widgets_animator.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/modules/Auth/view/widgets/auth_button.dart';
@@ -158,64 +159,76 @@ class VisitDetailsPage extends GetWidget<HomeController> {
                                   color: Colors.black, fontSize: 23.sp),
                             ),
                           )
-                        : ListView.separated(
-                            shrinkWrap: true,
-                            separatorBuilder: (context, index) {
-                              return const CustomDivider(
-                                fullWidth: true,
-                              );
-                            },
-                            itemCount: controller.hoursList.value.length,
-                            padding: EdgeInsets.all(10.h),
-                            primary: true,
-                            itemBuilder: (context, index) {
-                              return Obx(() {
-                                bool isActive =
-                                    controller.activeHoureIndex.value == index;
-                                return GestureDetector(
-                                  behavior: HitTestBehavior.opaque,
-                                  onTap: () {
-                                    controller.setHoursIndex(index);
-                                  },
-                                  child: Container(
-                                    height: 38.h,
-                                    alignment: Alignment.center,
-                                    child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          const Spacer(),
-                                          Text(
-                                            controller.hoursList.value[index]
-                                                .toString()
-                                                .toString(),
-                                            style: MyStyles()
-                                                .languageButtonStyle
-                                                .copyWith(
-                                                  fontSize: 20.sp,
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                          ),
-                                          const Gap(56),
-                                          Transform.scale(
-                                            scale: 1,
-                                            child: Checkbox(
-                                              value: isActive,
-                                              activeColor: Colors.black,
-                                              checkColor: Colors.white,
-                                              // Add this line to set the disabled color to grey
+                        : MyWidgetsAnimator(
+                            apiCallStatus:
+                                controller.apiWorkingHoursCallStatus.value,
+                            errorWidget: () => const SizedBox.shrink(),
+                            loadingWidget: () => const Center(
+                              child: CircularProgressIndicator.adaptive(),
+                            ),
+                            successWidget: () => ListView.separated(
+                                shrinkWrap: true,
+                                separatorBuilder: (context, index) {
+                                  return const CustomDivider(
+                                    fullWidth: true,
+                                  );
+                                },
+                                itemCount: controller.hoursList.value.length,
+                                padding: EdgeInsets.all(10.h),
+                                primary: true,
+                                itemBuilder: (context, index) {
+                                  return Obx(() {
+                                    bool isActive =
+                                        controller.activeHoureIndex.value ==
+                                            index;
+                                    return GestureDetector(
+                                      behavior: HitTestBehavior.opaque,
+                                      onTap: () {
+                                        controller.setHoursIndex(index);
+                                      },
+                                      child: Container(
+                                        height: 38.h,
+                                        alignment: Alignment.center,
+                                        child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              const Spacer(),
+                                              Text(
+                                                controller
+                                                    .hoursList.value[index]
+                                                    .toString()
+                                                    .toString(),
+                                                style: MyStyles()
+                                                    .languageButtonStyle
+                                                    .copyWith(
+                                                      fontSize: 20.sp,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                    ),
+                                              ),
+                                              const Gap(56),
+                                              Transform.scale(
+                                                scale: 1,
+                                                child: Checkbox(
+                                                  value: isActive,
+                                                  activeColor: Colors.black,
+                                                  checkColor: Colors.white,
+                                                  // Add this line to set the disabled color to grey
 
-                                              shape: const CircleBorder(),
-                                              onChanged: (value) {
-                                                controller.setHoursIndex(index);
-                                              },
-                                            ),
-                                          ),
-                                        ]),
-                                  ),
-                                );
-                              });
-                            });
+                                                  shape: const CircleBorder(),
+                                                  onChanged: (value) {
+                                                    controller
+                                                        .setHoursIndex(index);
+                                                  },
+                                                ),
+                                              ),
+                                            ]),
+                                      ),
+                                    );
+                                  });
+                                }),
+                          );
                   }),
                   Align(
                       alignment: Alignment.bottomCenter,
@@ -228,7 +241,7 @@ class VisitDetailsPage extends GetWidget<HomeController> {
             ),
             const Gap(36),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (Platform.isIOS) ...[
                   AuthButton(
@@ -239,7 +252,7 @@ class VisitDetailsPage extends GetWidget<HomeController> {
                             curve: Curves.easeInOut,
                             duration: const Duration(milliseconds: 500)),
                   ),
-                  const Gap(20)
+                  const Gap(120)
                 ],
                 AuthButton(
                   onPressed: () {

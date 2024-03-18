@@ -1,8 +1,11 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
+import 'package:laser/app/modules/home/controllers/home_controller.dart';
 
-class DeviceIssues extends StatelessWidget {
+class DeviceIssues extends GetView<HomeController> {
   const DeviceIssues({
     super.key,
   });
@@ -12,8 +15,7 @@ class DeviceIssues extends StatelessWidget {
     return Row(
       children: [
         const Gap(18),
-        Text(
-            'Phoen screen replaced - Original - 50 SAR \nBattery replaced - 150 SAR',
+        AutoSizeText(controller.serviceDetails.value,
             style: MyStyles().fontSize12Weight400)
       ],
     );

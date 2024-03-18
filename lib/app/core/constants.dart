@@ -15,6 +15,9 @@ class Constants {
   static const createMaintenanceOrderUrl = '$baseUrl/create-maintenance-order';
   static const cancelOrderUrl = '$baseUrl/cancel-order';
   static const rescheduleOrderUrl = '$baseUrl/reschedule-order';
+  static const paymentreceiptUrl = '$baseUrl/payment-receipt';
+  static const paymentScreenDetailsUrl = '$baseUrl/payment-screen-details';
+  static const paymentSuccessUrl = '$baseUrl/payment-success';
 
   static const orderDetailsUrl = '$baseUrl/maintenance-order-detail';
   static String getAllMaintenanceOrderUrl(int index) {

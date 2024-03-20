@@ -746,6 +746,7 @@ class HomeController extends GetxController with GetxServiceMixin {
     if (pageController.value.page == 1.0) {
       pageController.value.jumpToPage(0);
       deviceModelVisibleController.value = false;
+      deviceColorVisibleController.value = false;
       return false;
     }
 

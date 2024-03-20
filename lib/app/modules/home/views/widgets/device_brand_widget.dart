@@ -44,7 +44,7 @@ class DeviceBrandWidget extends GetWidget<HomeController> {
                           tapped:
                               controller.dviceBrandWidgetTapped[index].value,
                           fileName: "apple-logo.png",
-                          text: controller.deviceBrandList![index].name,
+                          text: controller.deviceBrandList.value[index].name,
                           height: 70.h,
                           width: 80.w);
                     }),

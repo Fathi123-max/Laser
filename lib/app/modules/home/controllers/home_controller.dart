@@ -13,7 +13,6 @@ import 'package:laser/app/data/models/order_details_model.dart';
 import 'package:laser/app/data/models/order_model.dart';
 import 'package:laser/app/data/models/service_model.dart';
 import 'package:laser/app/modules/home/controllers/controller_helper/controll_order_status.dart';
-import 'package:laser/app/modules/home/controllers/controller_helper/location_services.dart';
 import 'package:laser/app/modules/home/controllers/controller_helper/pick_controller.dart';
 import 'package:laser/app/modules/home/views/pages/order_ditails_page.dart';
 import 'package:laser/app/modules/home/views/widgets/home/home_base_view_model.dart';
@@ -294,12 +293,16 @@ class HomeController extends GetxController with GetxServiceMixin {
   getModels(int brandId, {String? lang = ""}) async {
     // *) perform api call
     await BaseClient.safeApiCall(
-      "${Constants.modelsUrl}/$brandId",
+      Constants.modelsUrl,
       headers: {
         "Accept-Language": lang,
         "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
       },
-      RequestType.get,
+      queryParameters: {
+        "device_brand": brandId,
+        "device_type": dviceTypeIndex! + 1
+      },
+      RequestType.post,
       onLoading: () {
         // *) indicate loading state
         apiDeviceModelCallStatus.value = ApiCallStatus.loading;
@@ -740,6 +743,11 @@ class HomeController extends GetxController with GetxServiceMixin {
       detailskey.value = true;
       return false;
     }
+    if (pageController.value.page == 1.0) {
+      pageController.value.jumpToPage(0);
+      deviceModelVisibleController.value = false;
+      return false;
+    }
 
     pageController.value.previousPage(
         duration: const Duration(milliseconds: 300), curve: Curves.ease);
@@ -839,9 +847,9 @@ class HomeController extends GetxController with GetxServiceMixin {
   }
 
   Future<void> supmitService() async {
-    addressController.text =
-        await Get.put(LocationController()).getCurrentLocationAddress();
-    // addressController.text = "hello";
+    // addressController.text =
+    //     await Get.put(LocationController()).getCurrentLocationAddress();
+    addressController.text = "hello";
     // await Get.put(LocationController()).getCurrentLocationAddress();
 
     MySharedPref.saveService(selectedServiceList.value);
@@ -871,12 +879,14 @@ class HomeController extends GetxController with GetxServiceMixin {
       deviceModelVisibleController.value = false;
       deviceColorVisibleController.value = false;
     } else {
-      Navigator.pushNamedAndRemoveUntil(context, Routes.HOME, (r) => false);
+      // Navigator.pushNamedAndRemoveUntil(context, Routes.HOME, (r) => false);
+      Get.offAllNamed(Routes.HOME);
     }
   }
 
   onPopInvokedOrders(context) {
-    Navigator.pushNamedAndRemoveUntil(context, Routes.HOME, (r) => false);
+    // Navigator.pushNamedAndRemoveUntil(context, Routes.HOME, (r) => false);
+    Get.offNamed(Routes.HOME);
     // Get.to(() => const HomeView());
   }
 }

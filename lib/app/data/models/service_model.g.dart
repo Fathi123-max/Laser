@@ -18,8 +18,8 @@ class ServiceModelAdapter extends TypeAdapter<ServiceModel> {
     };
     return ServiceModel(
       categoryName: fields[1] as String?,
-      minPrice: fields[2] as int?,
-      maxPrice: fields[3] as int?,
+      minPrice: fields[2] as double?,
+      maxPrice: fields[3] as double?,
       serviceId: fields[4] as int?,
     );
   }

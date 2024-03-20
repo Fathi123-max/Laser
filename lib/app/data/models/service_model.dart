@@ -7,9 +7,9 @@ class ServiceModel extends HiveObject {
   @HiveField(1)
   final String? categoryName;
   @HiveField(2)
-  final int? minPrice;
+  final double? minPrice;
   @HiveField(3)
-  final int? maxPrice;
+  final double? maxPrice;
   @HiveField(4)
   final int? serviceId;
 
@@ -22,8 +22,8 @@ class ServiceModel extends HiveObject {
 
   ServiceModel copyWith({
     String? categoryName,
-    int? minPrice,
-    int? maxPrice,
+    double? minPrice,
+    double? maxPrice,
     int? serviceId,
   }) =>
       ServiceModel(

@@ -13,6 +13,10 @@ class TechnicianVisitStatus extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    print("/---------------------------------------------------/");
+    print(controller.orderDetailsModel.techVisitStatus);
+    print("/---------------------------------------------------/");
+
     return Container(
         width: 300.w,
         height: 365.h,
@@ -78,7 +82,13 @@ class TechnicianVisitStatus extends GetView<HomeController> {
                         Step(
                             state:
                                 controller.orderDetailsModel.techVisitStatus ==
-                                        "Requested"
+                                            "Requested" ||
+                                        controller.orderDetailsModel
+                                                .techVisitStatus ==
+                                            "Completed" ||
+                                        controller.orderDetailsModel
+                                                .techVisitStatus ==
+                                            "Driver on the way"
                                     ? StepState.complete
                                     : StepState.indexed,
                             title: Text('Requested',
@@ -88,20 +98,23 @@ class TechnicianVisitStatus extends GetView<HomeController> {
                         Step(
                             state:
                                 controller.orderDetailsModel.techVisitStatus ==
-                                        "Accepted"
+                                            "Driver on the way" ||
+                                        controller.orderDetailsModel
+                                                .techVisitStatus ==
+                                            "Completed"
                                     ? StepState.complete
                                     : StepState.indexed,
-                            title: Text('Accepted',
+                            title: Text('Driver on the way',
                                 style: MyStyles().fontSize12Weight400),
                             content: const Text(""),
                             isActive: true),
                         Step(
                             state:
                                 controller.orderDetailsModel.techVisitStatus ==
-                                        "Done"
+                                        "Completed"
                                     ? StepState.complete
                                     : StepState.indexed,
-                            title: Text('Done',
+                            title: Text('Completed',
                                 style: MyStyles().fontSize12Weight400),
                             content: const Text(""),
                             isActive: false),

@@ -3,17 +3,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/components/custom_image_widget.dart';
-import 'package:laser/app/components/custom_loading_overlay.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
-import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/modules/home/controllers/controller_helper/controll_order_status.dart';
 import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
 
 import 'custom_card_button.dart';
 
-class CardDetails extends GetWidget<HomeController> {
-  const CardDetails({
+class CardDetailsInner extends GetWidget<HomeController> {
+  const CardDetailsInner({
     required this.index,
     super.key,
   });
@@ -50,18 +48,6 @@ class CardDetails extends GetWidget<HomeController> {
                     textAlign: TextAlign.center,
                     style: MyStyles().fontSize12Weight700),
                 const Spacer(),
-                CustomCardButton(
-                  text: "Details",
-                  color: const Color(0xFFF1F0F5),
-                  onTap: () {
-                    showLoadingOverLay(
-                        asyncFunction: () => controller.orderDetails(
-                            lang:
-                                LocalizationService.isItEnglish() ? "en" : "ar",
-                            orderId: controller.orderList.value[index].orderId!,
-                            index: index));
-                  },
-                ),
                 const Gap(12)
               ],
             ),

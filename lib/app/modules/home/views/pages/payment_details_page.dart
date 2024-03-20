@@ -63,6 +63,7 @@ class PaymentDetailsPage extends GetView<HomeController> {
                 children: [
                   const Gap(32),
                   BigTextFiled(
+                    hintText: "Enter your coupon code",
                     width: 200.w,
                     height: 34.h,
                   ),

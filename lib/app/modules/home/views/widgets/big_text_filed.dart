@@ -10,10 +10,12 @@ class BigTextFiled extends GetView<HomeController> {
     super.key,
     this.width,
     this.height,
+    this.hintText,
   });
   final double? width;
   final double? height;
   final bool? isNote;
+  final String? hintText;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,7 +30,7 @@ class BigTextFiled extends GetView<HomeController> {
             : controller.discountController,
         maxLines: 50,
         decoration: InputDecoration(
-          hintText: "Add your address here".tr,
+          hintText: hintText ?? "Add your address here".tr,
           filled: true,
           hintStyle: const TextStyle(
             color: Color(0xFF1B1926),

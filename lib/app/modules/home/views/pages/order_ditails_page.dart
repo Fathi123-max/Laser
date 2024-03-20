@@ -4,10 +4,10 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/modules/home/controllers/home_controller.dart';
+import 'package:laser/app/modules/home/views/widgets/orders/card_detials_inner.dart';
 
 import '../widgets/orders/address.dart';
 import '../widgets/orders/back_but.dart';
-import '../widgets/orders/card_details.dart';
 import '../widgets/orders/contact_email.dart';
 import '../widgets/orders/dlivery_time_and_date.dart';
 import '../widgets/orders/technician_visit_status.dart';
@@ -22,7 +22,9 @@ class OrderDitailsPage extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
+        Get.back();
         controller.detailskey.value = true;
+        controller.isOrderSelected.value = false;
         return true;
       },
       child: SingleChildScrollView(
@@ -39,7 +41,7 @@ class OrderDitailsPage extends GetView<HomeController> {
                         )),
               ),
               const Gap(28),
-              CardDetails(
+              CardDetailsInner(
                 index: controller.orderindex!.value,
               ),
               const DliveryTimeAndDate(),

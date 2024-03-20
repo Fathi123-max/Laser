@@ -33,18 +33,18 @@ class CustomCardButton extends StatelessWidget {
         width: width ?? 96.w,
         height: heaight ?? 22.h,
         alignment: Alignment.center,
-        child: Text(text ?? "Details",
-            style: MyStyles().languageButtonStyle.copyWith(
-                  color: colorText,
-                  fontSize: fontsize ?? 10.sp,
-                  fontWeight: bold != null ? FontWeight.bold : FontWeight.w400,
-                )),
         decoration: ShapeDecoration(
           color: color,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
         ),
+        child: Text(text ?? "Details",
+            style: MyStyles().languageButtonStyle.copyWith(
+                  color: colorText,
+                  fontSize: fontsize ?? 10.sp,
+                  fontWeight: bold != null ? FontWeight.bold : FontWeight.w400,
+                )),
       ),
     );
   }

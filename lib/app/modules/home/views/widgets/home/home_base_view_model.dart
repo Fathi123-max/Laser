@@ -15,7 +15,8 @@ class HomeBaseViewModel extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () => controller.onPopInvokedOrders(context),
+      onWillPop: () => Future.value(true),
+      // onWillPop: () => controller.onPopInvokedOrders(context),
       child: SafeArea(
         child: Scaffold(
           drawer: const CustomDrawer(),
@@ -42,14 +43,16 @@ class HomeBaseViewModel extends GetView<HomeController> {
                     width: 22.w,
                   ),
                   const Gap(15),
-                  CustomAppbarIcon(
-                    onTap: () => controller.toOrderList(context),
-                    fileName: controller.isOrderSelected.value
-                        ? "list_view.png"
-                        : "home.png",
-                    height: 22.h,
-                    width: 22.w,
-                  ),
+                  Obx(() {
+                    return CustomAppbarIcon(
+                      onTap: () => controller.toOrderList(context),
+                      fileName: controller.isOrderSelected.value
+                          ? "list_view.png"
+                          : "home.png",
+                      height: 22.h,
+                      width: 22.w,
+                    );
+                  }),
                   const Gap(19)
                 ]),
                 SizedBox(

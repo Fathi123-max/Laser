@@ -59,7 +59,6 @@ class OrderStatusController extends GetxController {
               context,
               MaterialPageRoute(
                   builder: (context) => HomeBaseViewModel(
-                      key: GlobalObjectKey("paymrnt details page "),
                       child: PaymentDetailsPage(order: order))));
         };
       case "Paid":

@@ -591,6 +591,7 @@ class HomeController extends GetxController with GetxServiceMixin {
       onSuccess: (response) {
         // *) indicate success
         detailskey.value = false;
+        isOrderSelected.value = true;
         orderDetailsModel = OrderDetailsModel.fromJson(
           response.data["payload"]["data"] as Map<String, dynamic>,
         );
@@ -854,13 +855,13 @@ class HomeController extends GetxController with GetxServiceMixin {
     isOrderSelected.value == true
         ? getAllOrders(lang: LocalizationService.isItEnglish() ? "en" : "ar")
             .then((value) => Get.toNamed(Routes.ORDER_LIST))
-        : backfun();
+        : backfun(context);
     isOrderSelected.toggle();
     // Get.to(() => ,
     //     transition: Transition.cupertino));
   }
 
-  backfun() {
+  backfun(context) {
     if (pageController.value.page == 4.0) {
       pageController.value.animateToPage(0,
           duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
@@ -870,7 +871,7 @@ class HomeController extends GetxController with GetxServiceMixin {
       deviceModelVisibleController.value = false;
       deviceColorVisibleController.value = false;
     } else {
-      Get.back();
+      Navigator.pushNamedAndRemoveUntil(context, Routes.HOME, (r) => false);
     }
   }
 

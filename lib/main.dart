@@ -55,8 +55,8 @@ Future<void> main() async {
           walletIntegrationId: 12,
           apiKey:
               "ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2ljSEp2Wm1sc1pWOXdheUk2TnpjNUxDSnVZVzFsSWpvaWFXNXBkR2xoYkNKOS40UTVRb0lpa3BoVFN1T0lBVktfTnJIMll3QXBoRmd4cjJBc0NMNVQ3V2RGNlFPNW9Jc1F1TFVON2dQTmFQWTlyT0R1S04zUzhWWUpuLTdqMzBPdUY5UQ==",
-          iFrameID: 904,
-          integrationID: 2038)
+          iFrameID: 1032,
+          integrationID: 1984)
       .then((value) async {});
   // initialize local notifications service
   await AwesomeNotificationsHelper.init();

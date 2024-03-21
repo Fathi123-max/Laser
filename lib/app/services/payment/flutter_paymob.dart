@@ -85,7 +85,7 @@ class FlutterPaymob {
     await BaseClient.safeApiCall(constants.authorization, RequestType.post,
         data: {
           "api_key":
-              "ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2ljSEp2Wm1sc1pWOXdheUk2TnpjNUxDSnVZVzFsSWpvaWFXNXBkR2xoYkNKOS40UTVRb0lpa3BoVFN1T0lBVktfTnJIMll3QXBoRmd4cjJBc0NMNVQ3V2RGNlFPNW9Jc1F1TFVON2dQTmFQWTlyT0R1S04zUzhWWUpuLTdqMzBPdUY5UQ=="
+              "ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2ljSEp2Wm1sc1pWOXdheUk2T0RrMExDSnVZVzFsSWpvaU1UY3dOVGcxTURjeE9DNHpOakkzTXpnaWZRLl9JclY4XzhfSUd0MEtfT1d0dFV3U3RTallEN21sS2tacGxydS1wbVNiWENxS2tvbTJqSGxEM1c2bjEwUThrZHRWU1ppUndxdGZLR1ZHYWpJd0NoZmNR"
         }, onSuccess: (response) {
       _authToken = response!.data["token"];
     });

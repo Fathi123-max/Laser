@@ -99,7 +99,7 @@ class ServisesExpandtileWidget extends GetWidget<HomeController> {
                             ),
                           ),
                           Text(
-                            "-",
+                            " - ",
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 14.sp,

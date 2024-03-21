@@ -114,7 +114,8 @@ class PaymentDetailsPage extends GetView<HomeController> {
                         context, // Passes the BuildContext required for UI interactions
                     currency:
                         "SAR", // Specifies the currency for the transaction (Egyptian Pound)
-                    amount: 1, // Sets the amount of money to be paid (100 EGP)
+                    amount: order!.totalPrice!
+                        .toDouble(), // Sets the amount of money to be paid (100 EGP)
                     // Optional callback function invoked when the payment process is completed
                     onPayment: (response) {
                       // Checks if the payment was successful
@@ -145,25 +146,25 @@ class PaymentDetailsPage extends GetView<HomeController> {
                         );
                       } else if (response.success == "false") {
                         print("paymrnt failed");
-                        Future.delayed(const Duration(milliseconds: 500), () {
-                          controller
-                              .orderDetails(
-                                  lang: LocalizationService.isItEnglish()
-                                      ? "en"
-                                      : "ar",
-                                  orderId: order!.orderId!,
-                                  index: 0)
-                              .then((value) => controller
-                                  .paymentSuccess(
-                                      lang: LocalizationService.isItEnglish()
-                                          ? "en"
-                                          : "ar",
-                                      orderId: order!.orderId!,
-                                      index: 0)
-                                  .then((value) => Get.offNamed(
-                                        Routes.AFTER_ORDER_PAID_PAGE,
-                                      )));
-                        });
+                        // Future.delayed(const Duration(milliseconds: 500), () {
+                        //   controller
+                        //       .orderDetails(
+                        //           lang: LocalizationService.isItEnglish()
+                        //               ? "en"
+                        //               : "ar",
+                        //           orderId: order!.orderId!,
+                        //           index: 0)
+                        //       .then((value) => controller
+                        //           .paymentSuccess(
+                        //               lang: LocalizationService.isItEnglish()
+                        //                   ? "en"
+                        //                   : "ar",
+                        //               orderId: order!.orderId!,
+                        //               index: 0)
+                        //           .then((value) => Get.offNamed(
+                        //                 Routes.AFTER_ORDER_PAID_PAGE,
+                        //               )));
+                        // });
                         Get.back();
                         CustomSnackBar.showCustomSnackBar(
                           title: "Error",

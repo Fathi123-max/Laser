@@ -21,7 +21,7 @@ class OrderModelAdapter extends TypeAdapter<OrderModel> {
       deviceTypeImage: fields[2] as String?,
       deviceName: fields[3] as String?,
       services: fields[4] as String?,
-      totalPrice: fields[5] as int?,
+      totalPrice: fields[5] as String?,
       currentStatusId: fields[6] as int?,
       currentStatusName: fields[7] as String?,
       currentStatusColor: fields[8] as String?,

@@ -11,7 +11,6 @@ import '../widgets/orders/back_but.dart';
 import '../widgets/orders/contact_email.dart';
 import '../widgets/orders/dlivery_time_and_date.dart';
 import '../widgets/orders/technician_visit_status.dart';
-import '../widgets/orders/warrenty_claimed.dart';
 
 class OrderDitailsPage extends GetView<HomeController> {
   const OrderDitailsPage({
@@ -50,7 +49,7 @@ class OrderDitailsPage extends GetView<HomeController> {
               const Gap(14),
               const TechnicianVisitStatus(),
               const Gap(17),
-              const WarrentyClaimed(),
+              // const WarrentyClaimed(),
               const Gap(17),
               const ContactEmail(),
               const Gap(65),

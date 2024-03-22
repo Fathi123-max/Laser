@@ -9,7 +9,7 @@ class TotalPrice extends StatelessWidget {
     super.key,
     this.counter,
   });
-  final int? counter;
+  final String? counter;
   @override
   Widget build(BuildContext context) {
     return Column(

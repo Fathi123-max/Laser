@@ -55,11 +55,12 @@ class OrderStatusController extends GetxController {
         };
       case "Accepted":
         return () async {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => HomeBaseViewModel(
-                      child: PaymentDetailsPage(order: order))));
+          Get.find<HomeController>().paymentScreenDetailsUrl().then((value) =>
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HomeBaseViewModel(
+                          child: PaymentDetailsPage(order: order)))));
         };
       case "Paid":
         return () {};
@@ -97,13 +98,13 @@ class OrderStatusController extends GetxController {
       case "Updated":
         return () async {
           // Initiates a payment with a card using the FlutterPaymob instance
-
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => HomeBaseViewModel(
-                      key: GlobalObjectKey("payment details"),
-                      child: PaymentDetailsPage(order: order))));
+          Get.find<HomeController>().paymentScreenDetailsUrl().then((value) =>
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HomeBaseViewModel(
+                          key: GlobalObjectKey("payment details"),
+                          child: PaymentDetailsPage(order: order)))));
         };
       case "Finished":
         return () {};

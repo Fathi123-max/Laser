@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/modules/home/controllers/home_controller.dart';
+import 'package:laser/app/modules/wallet/controller/walletController.dart';
+import 'package:laser/app/routes/app_pages.dart';
 
 import '../../../../../config/translations/localization_service.dart';
 import 'custom_list_tile.dart';
@@ -35,11 +37,16 @@ class DrawerTiles extends GetWidget<HomeController> {
           iconPath: "language.png",
           text: !LocalizationService.isItEnglish() ? "English" : "العربية",
         ),
-        // CustomListTile(
-        //   onTap: () {},
-        //   iconPath: "chat.png",
-        //   text: "Chat with us",
-        // ),
+        CustomListTile(
+          onTap: () {
+            Get.put(WalletController())
+                .getBalance(
+                    lang: LocalizationService.isItEnglish() ? "en" : "ar")
+                .then((value) => Get.toNamed(Routes.Wallet_Detils));
+          },
+          iconPath: "chat.png",
+          text: "Wallet",
+        ),
         // CustomListTile(
         //   onTap: () {},
         //   iconPath: "terms-and-conditions.png",

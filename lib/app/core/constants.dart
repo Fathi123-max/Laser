@@ -20,6 +20,8 @@ class Constants {
   static const paymentSuccessUrl = '$baseUrl/payment-success';
 
   static const orderDetailsUrl = '$baseUrl/maintenance-order-detail';
+  static String getwalletdetailsurl = "$baseUrl/get-wallet-details";
+
   static String getAllMaintenanceOrderUrl(int index) {
     return '$baseUrl/get-all-maintenance-orders?per_page=3&page=$index';
   }

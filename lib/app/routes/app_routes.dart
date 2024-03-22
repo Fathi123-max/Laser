@@ -16,6 +16,7 @@ abstract class Routes {
   static const NewPassword = _Paths.NewPassword;
   static const AFTER_ORDER_PAID_PAGE = _Paths.AFTER_ORDER_PAID_PAGE;
   static const ORDER_LIST = _Paths.ORDER_LIST;
+  static const Wallet_Detils = _Paths.Wallet_Detils;
 }
 
 abstract class _Paths {
@@ -33,4 +34,5 @@ abstract class _Paths {
   static const NewPassword = '/newpassword';
   static const AFTER_ORDER_PAID_PAGE = '/afterorderpaidpage';
   static const ORDER_LIST = "/orderlist";
+  static const Wallet_Detils = "/details";
 }

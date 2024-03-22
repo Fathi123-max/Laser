@@ -13,7 +13,7 @@ class OrderModel extends HiveObject {
   @HiveField(4)
   final String? services;
   @HiveField(5)
-  final int? totalPrice;
+  final String? totalPrice;
   @HiveField(6)
   final int? currentStatusId;
   @HiveField(7)
@@ -43,7 +43,7 @@ class OrderModel extends HiveObject {
     String? deviceTypeImage,
     String? deviceName,
     String? services,
-    int? totalPrice,
+    String? totalPrice,
     int? currentStatusId,
     String? currentStatusName,
     String? currentStatusColor,
@@ -84,7 +84,7 @@ class OrderModel extends HiveObject {
       deviceTypeImage: json['deviceTypeImage'] as String?,
       deviceName: json['deviceName'] as String?,
       services: json['services'] as String?,
-      totalPrice: json['totalPrice'] as int?,
+      totalPrice: json['totalPrice'] as String?,
       currentStatusId: json['currentStatusId'] as int?,
       currentStatusName: json['currentStatusName'] as String?,
       currentStatusColor: json['currentStatusColor'] as String?,

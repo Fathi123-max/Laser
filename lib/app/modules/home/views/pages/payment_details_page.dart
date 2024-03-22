@@ -30,9 +30,9 @@ class PaymentDetailsPage extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     var paymentItems = [
-      const PaymentItem(
-        label: 'Test',
-        amount: "1",
+      PaymentItem(
+        label: 'Payment Services',
+        amount: controller.paymentDetailsModel!.priceAfterWallet!,
         status: PaymentItemStatus.final_price,
       )
     ];
@@ -91,90 +91,114 @@ class PaymentDetailsPage extends GetView<HomeController> {
                           )),
                 ],
               ),
+
+              //todo hider logic
               Gap(13.h),
+              if (double.parse(
+                      controller.paymentDetailsModel!.priceAfterWallet!) >
+                  0)
+                PaymentMethodListTile(
+                  ontap: () async {
+                    await FlutterPaymob.instance.payWithCard(
+                      billingData: BillingData(
+                        email: "claudette09@exa.com",
+                        firstName: "Clifford",
+                        lastName: "Nicolas",
+                        phoneNumber: "+86(8)9135210487",
+                        postalCode: "01898",
+                        city: "Jaskolskiburgh",
+                        country: "SAU",
+                        state: "Saudi Arabia",
+                        building: "8028",
+                        floor: "42",
+                        apartment: "803",
+                        street: "Ethan Land",
+                        shippingMethod: "PKG",
+                      ),
+                      context:
+                          context, // Passes the BuildContext required for UI interactions
+                      currency:
+                          "SAR", // Specifies the currency for the transaction (Egyptian Pound)
+                      amount: double.parse(order!
+                          .totalPrice!), // Sets the amount of money to be paid (100 EGP)
+                      // Optional callback function invoked when the payment process is completed
+                      onPayment: (response) {
+                        // Checks if the payment was successful
+
+                        if (response.success == "true") {
+                          // print(response.message);
+                          // print(response.responseCode);
+                          // print(response.success);
+                          // print(response.transactionID);
+                          controller.paywithCard.value = true;
+                          CustomSnackBar.showCustomSnackBar(
+                            title: "Success",
+                            message: "Payment Success",
+                          );
+                          controller
+                              .paymentSuccess(
+                                  lang: LocalizationService.isItEnglish()
+                                      ? "en"
+                                      : "ar",
+                                  orderId: order!.orderId!,
+                                  index: 0)
+                              .then((value) => Get.offNamed(
+                                    Routes.AFTER_ORDER_PAID_PAGE,
+                                  ));
+                          CustomSnackBar.showCustomSnackBar(
+                            title: "Success",
+                            message: "Payment Success",
+                          );
+                        } else if (response.success == "false") {
+                          print("paymrnt failed");
+                          // Future.delayed(const Duration(milliseconds: 500), () {
+                          //   controller
+                          //       .orderDetails(
+                          //           lang: LocalizationService.isItEnglish()
+                          //               ? "en"
+                          //               : "ar",
+                          //           orderId: order!.orderId!,
+                          //           index: 0)
+                          //       .then((value) => controller
+                          //           .paymentSuccess(
+                          //               lang: LocalizationService.isItEnglish()
+                          //                   ? "en"
+                          //                   : "ar",
+                          //               orderId: order!.orderId!,
+                          //               index: 0)
+                          //           .then((value) => Get.offNamed(
+                          //                 Routes.AFTER_ORDER_PAID_PAGE,
+                          //               )));
+                          // });
+                          Get.back();
+                          CustomSnackBar.showCustomSnackBar(
+                            title: "Error",
+                            message: "Payment Failed",
+                          );
+                        }
+                      },
+                    );
+                  },
+                  fileName: "credit.png",
+                  done: true,
+                ),
+              const Gap(5),
               PaymentMethodListTile(
                 ontap: () async {
-                  await FlutterPaymob.instance.payWithCard(
-                    billingData: BillingData(
-                      email: "claudette09@exa.com",
-                      firstName: "Clifford",
-                      lastName: "Nicolas",
-                      phoneNumber: "+86(8)9135210487",
-                      postalCode: "01898",
-                      city: "Jaskolskiburgh",
-                      country: "SAU",
-                      state: "Saudi Arabia",
-                      building: "8028",
-                      floor: "42",
-                      apartment: "803",
-                      street: "Ethan Land",
-                      shippingMethod: "PKG",
-                    ),
-                    context:
-                        context, // Passes the BuildContext required for UI interactions
-                    currency:
-                        "SAR", // Specifies the currency for the transaction (Egyptian Pound)
-                    amount: order!.totalPrice!
-                        .toDouble(), // Sets the amount of money to be paid (100 EGP)
-                    // Optional callback function invoked when the payment process is completed
-                    onPayment: (response) {
-                      // Checks if the payment was successful
-
-                      if (response.success == "true") {
-                        // print(response.message);
-                        // print(response.responseCode);
-                        // print(response.success);
-                        // print(response.transactionID);
-                        controller.paywithCard.value = true;
-                        CustomSnackBar.showCustomSnackBar(
-                          title: "Success",
-                          message: "Payment Success",
-                        );
-                        controller
-                            .paymentSuccess(
-                                lang: LocalizationService.isItEnglish()
-                                    ? "en"
-                                    : "ar",
-                                orderId: order!.orderId!,
-                                index: 0)
-                            .then((value) => Get.offNamed(
-                                  Routes.AFTER_ORDER_PAID_PAGE,
-                                ));
-                        CustomSnackBar.showCustomSnackBar(
-                          title: "Success",
-                          message: "Payment Success",
-                        );
-                      } else if (response.success == "false") {
-                        print("paymrnt failed");
-                        // Future.delayed(const Duration(milliseconds: 500), () {
-                        //   controller
-                        //       .orderDetails(
-                        //           lang: LocalizationService.isItEnglish()
-                        //               ? "en"
-                        //               : "ar",
-                        //           orderId: order!.orderId!,
-                        //           index: 0)
-                        //       .then((value) => controller
-                        //           .paymentSuccess(
-                        //               lang: LocalizationService.isItEnglish()
-                        //                   ? "en"
-                        //                   : "ar",
-                        //               orderId: order!.orderId!,
-                        //               index: 0)
-                        //           .then((value) => Get.offNamed(
-                        //                 Routes.AFTER_ORDER_PAID_PAGE,
-                        //               )));
-                        // });
-                        Get.back();
-                        CustomSnackBar.showCustomSnackBar(
-                          title: "Error",
-                          message: "Payment Failed",
-                        );
-                      }
-                    },
+                  controller
+                      .paymentSuccess(
+                          lang: LocalizationService.isItEnglish() ? "en" : "ar",
+                          orderId: order!.orderId!,
+                          index: 0)
+                      .then((value) => Get.offNamed(
+                            Routes.AFTER_ORDER_PAID_PAGE,
+                          ));
+                  CustomSnackBar.showCustomSnackBar(
+                    title: "Success",
+                    message: "Payment Success",
                   );
                 },
-                fileName: "credit.png",
+                fileName: "cash.png",
                 done: true,
               ),
               const Gap(5),

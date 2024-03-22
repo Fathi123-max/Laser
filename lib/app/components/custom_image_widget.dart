@@ -4,7 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 class AssetImageView extends StatelessWidget {
   const AssetImageView({
     Key? key,
-    required this.fileName,
+    this.networkImageUrl,
+    this.fileName,
     this.height,
     this.width,
     this.color,
@@ -12,7 +13,8 @@ class AssetImageView extends StatelessWidget {
     this.fit,
   }) : super(key: key);
 
-  final String fileName;
+  final String? networkImageUrl;
+  final String? fileName;
   final double? height;
   final double? width;
   final Color? color;
@@ -25,7 +27,18 @@ class AssetImageView extends StatelessWidget {
   }
 
   Widget _getView() {
-    String mimType = fileName.split(".").last;
+    if (networkImageUrl != null) {
+      return Image.network(
+        networkImageUrl!,
+        height: height,
+        width: width,
+        color: color,
+        // scale: scale!,
+        fit: fit ?? BoxFit.contain,
+      );
+    }
+
+    String mimType = fileName!.split(".").last;
     String path = "assets/images/$fileName";
 
     if (mimType.isEmpty) {

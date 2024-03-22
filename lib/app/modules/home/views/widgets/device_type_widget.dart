@@ -13,8 +13,10 @@ class DeviceTypeWidget extends StatelessWidget {
     this.onTap,
     this.enableMargin,
     required this.tapped,
+    this.networkImage,
     // this.tapped,
   });
+  final String? networkImage;
   final double? height;
   final double? width;
   final String? fileName;
@@ -50,6 +52,7 @@ class DeviceTypeWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AssetImageView(
+              networkImageUrl: networkImage ?? null,
               fileName: fileName ?? "logo.png",
               height: 65.h,
               width: 85.w,

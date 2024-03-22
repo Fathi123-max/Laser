@@ -56,13 +56,11 @@ class OrderPage extends GetView<HomeController> {
                         _debounce!.cancel();
                       }
                       _debounce = Timer(const Duration(milliseconds: 500), () {
-                        // Increment the page index and call getAllOrders with the new index.
                         currentPageIndex++;
                         controller.getAllOrders(index: currentPageIndex);
-
-                        // You might want to check if there's more data to load before calling this.
                       });
                     }
+
                     return true;
                   },
                   child: SizedBox(

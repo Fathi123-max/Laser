@@ -23,8 +23,6 @@ import 'app/routes/app_pages.dart';
 import 'app/utils/fcm_helper.dart';
 
 Future<void> main() async {
-  // wait for bindings
-
   WidgetsFlutterBinding.ensureInitialized();
   // initialize local db (hive) and register our custom adapters
   await MyHive.init(registerAdapters: (hive) {

@@ -11,8 +11,10 @@ import 'package:laser/app/data/models/device_type_model.dart'
     as device_type_model;
 import 'package:laser/app/data/models/order_details_model.dart';
 import 'package:laser/app/data/models/order_model.dart';
+import 'package:laser/app/data/models/payment_details_model.dart';
 import 'package:laser/app/data/models/service_model.dart';
 import 'package:laser/app/modules/home/controllers/controller_helper/controll_order_status.dart';
+import 'package:laser/app/modules/home/controllers/controller_helper/location_services.dart';
 import 'package:laser/app/modules/home/controllers/controller_helper/pick_controller.dart';
 import 'package:laser/app/modules/home/views/pages/order_ditails_page.dart';
 import 'package:laser/app/modules/home/views/widgets/home/home_base_view_model.dart';
@@ -633,7 +635,7 @@ class HomeController extends GetxController with GetxServiceMixin {
       },
       RequestType.post,
       // queryParameters: {"order_id": orderId},
-      queryParameters: {"order_id": 16},
+      queryParameters: {"order_id": orderId},
       onLoading: () {
         update();
       },
@@ -650,6 +652,7 @@ class HomeController extends GetxController with GetxServiceMixin {
     );
   }
 
+  PaymentDetails? paymentDetailsModel = PaymentDetails();
   Future<void> paymentScreenDetailsUrl(
       {String? lang = "", int? orderId, int? index}) async {
     print(orderDetailsModel.totalPrice);
@@ -661,7 +664,7 @@ class HomeController extends GetxController with GetxServiceMixin {
         "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
       },
       RequestType.post,
-      queryParameters: {"order_id": 16},
+      queryParameters: {"order_id": orderId},
 
       // queryParameters: {"order_id": orderId},
       onLoading: () {
@@ -670,6 +673,10 @@ class HomeController extends GetxController with GetxServiceMixin {
       onSuccess: (response) {
         numberOfServices.value =
             response.data["payload"]["data"]["numberOfServices"];
+        paymentDetailsModel = PaymentDetails.fromJson(
+          response.data["payload"]["data"] as Map<String, dynamic>,
+        );
+        update();
       },
       onError: (error) {
         // show error message to user
@@ -848,9 +855,9 @@ class HomeController extends GetxController with GetxServiceMixin {
   }
 
   Future<void> supmitService() async {
-    // addressController.text =
-    //     await Get.put(LocationController()).getCurrentLocationAddress();
-    addressController.text = "hello";
+    addressController.text =
+        await Get.put(LocationController()).getCurrentLocationAddress();
+    // addressController.text = "hello";
     // await Get.put(LocationController()).getCurrentLocationAddress();
 
     MySharedPref.saveService(selectedServiceList.value);

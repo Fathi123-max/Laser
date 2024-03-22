@@ -21,6 +21,8 @@ import 'package:laser/app/modules/language/binding/language_binding.dart';
 import 'package:laser/app/modules/language/view/language_screen.dart';
 import 'package:laser/app/modules/onboarding/view/onboarding_screens.dart';
 import 'package:laser/app/modules/splash/views/splash_Screen.dart';
+import 'package:laser/app/modules/wallet/binding/wallet_binding.dart';
+import 'package:laser/app/modules/wallet/view/page/wallet_page.dart';
 
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/screens/home_screen.dart';
@@ -90,5 +92,10 @@ class AppPages {
         name: Routes.ORDER_LIST,
         binding: OrderStatusBinding(),
         page: () => const HomeBaseViewModel(child: OrderPage())),
+    GetPage(
+      name: Routes.Wallet_Detils,
+      binding: WalletBinding(),
+      page: () => WalletPage(),
+    )
   ];
 }

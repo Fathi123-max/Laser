@@ -24,7 +24,7 @@ class TechnicianCommet extends GetView<HomeController> {
         Row(
           children: [
             const Gap(18),
-            Text(controller.techComments.value,
+            Text(controller.techComments.value ?? "No Comment",
                 textAlign: TextAlign.center,
                 style: MyStyles().fontSize12Weight400),
           ],

@@ -33,10 +33,14 @@ class OrderDetailsModel extends HiveObject {
   @HiveField(14)
   final String? techVisitStatus;
   @HiveField(15)
-  final int? warrantyClaimed;
+  final int? isPaid;
   @HiveField(16)
-  final List<String>? images;
+  final int? warrantyClaimed;
   @HiveField(17)
+  final int? orderCode;
+  @HiveField(18)
+  final List<dynamic>? images;
+  @HiveField(19)
   final List<dynamic>? video;
 
   OrderDetailsModel({
@@ -54,7 +58,9 @@ class OrderDetailsModel extends HiveObject {
     this.time,
     this.address,
     this.techVisitStatus,
+    this.isPaid,
     this.warrantyClaimed,
+    this.orderCode,
     this.images,
     this.video,
   });
@@ -74,8 +80,10 @@ class OrderDetailsModel extends HiveObject {
     String? time,
     String? address,
     String? techVisitStatus,
+    int? isPaid,
     int? warrantyClaimed,
-    List<String>? images,
+    int? orderCode,
+    List<dynamic>? images,
     List<dynamic>? video,
   }) =>
       OrderDetailsModel(
@@ -93,12 +101,13 @@ class OrderDetailsModel extends HiveObject {
         time: time ?? this.time,
         address: address ?? this.address,
         techVisitStatus: techVisitStatus ?? this.techVisitStatus,
+        isPaid: isPaid ?? this.isPaid,
         warrantyClaimed: warrantyClaimed ?? this.warrantyClaimed,
+        orderCode: orderCode ?? this.orderCode,
         images: images ?? this.images,
         video: video ?? this.video,
       );
 
-  //to json
   Map<String, dynamic> toJson() => {
         'orderId': orderId,
         'deviceTypeImage': deviceTypeImage,
@@ -114,31 +123,31 @@ class OrderDetailsModel extends HiveObject {
         'time': time,
         'address': address,
         'techVisitStatus': techVisitStatus,
+        'isPaid': isPaid,
         'warrantyClaimed': warrantyClaimed,
+        'orderCode': orderCode,
         'images': images,
         'video': video,
       };
 
-  //from json
-  factory OrderDetailsModel.fromJson(Map<String, dynamic> json) {
-    return OrderDetailsModel(
-      orderId: json['orderId'] as int?,
-      deviceTypeImage: json['deviceTypeImage'] as String?,
-      deviceName: json['deviceName'] as String?,
-      services: json['services'] as String?,
-      totalPrice: json['totalPrice'] as int?,
-      currentStatusId: json['currentStatusId'] as int?,
-      currentStatusName: json['currentStatusName'] as String?,
-      currentStatusColor: json['currentStatusColor'] as String?,
-      nextStatusName: json['nextStatusName'] as String?,
-      paymentType: json['paymentType'] as String?,
-      date: DateTime.parse(json['date']),
-      time: json['time'] as String?,
-      address: json['address'] as String?,
-      techVisitStatus: json['techVisitStatus'] as String?,
-      warrantyClaimed: json['warrantyClaimed'] as int?,
-      images: json['images']?.cast<String>(),
-      video: json['video'] as List<dynamic>?,
-    );
-  }
+  OrderDetailsModel.fromJson(Map<String, dynamic> json)
+      : orderId = json['orderId'],
+        deviceTypeImage = json['deviceTypeImage'],
+        deviceName = json['deviceName'],
+        services = json['services'],
+        totalPrice = json['totalPrice'],
+        currentStatusId = json['currentStatusId'],
+        currentStatusName = json['currentStatusName'],
+        currentStatusColor = json['currentStatusColor'],
+        nextStatusName = json['nextStatusName'],
+        paymentType = json['paymentType'],
+        date = DateTime.parse(json['date']),
+        time = json['time'],
+        address = json['address'],
+        techVisitStatus = json['techVisitStatus'],
+        isPaid = json['isPaid'],
+        warrantyClaimed = json['warrantyClaimed'],
+        orderCode = json['orderCode'],
+        images = json['images'],
+        video = json['video'];
 }

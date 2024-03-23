@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
@@ -600,16 +602,18 @@ class HomeController extends GetxController with GetxServiceMixin {
         orderDetailsModel = OrderDetailsModel.fromJson(
           response.data["payload"]["data"] as Map<String, dynamic>,
         );
-        orderindex.value = index!;
-        if (pageController.value.page == 4.0) {
-          pageController.value.nextPage(
-            curve: Curves.easeInOut,
-            duration: const Duration(milliseconds: 500),
-          );
-        } else {
-          Get.put(OrderStatusController());
-          Get.to(() => const HomeBaseViewModel(child: OrderDitailsPage()));
-        }
+        Timer.periodic(const Duration(seconds: 1), (timer) {
+          orderindex.value = index!;
+          if (pageController.value.page == 4.0) {
+            pageController.value.nextPage(
+              curve: Curves.easeInOut,
+              duration: const Duration(milliseconds: 500),
+            );
+          } else {
+            Get.put(OrderStatusController());
+            Get.to(() => const HomeBaseViewModel(child: OrderDitailsPage()));
+          }
+        });
 
         update();
       },
@@ -654,7 +658,7 @@ class HomeController extends GetxController with GetxServiceMixin {
 
   PaymentDetails? paymentDetailsModel = PaymentDetails();
   Future<void> paymentScreenDetailsUrl(
-      {String? lang = "", int? orderId, int? index}) async {
+      {String? lang = "", int? orderId}) async {
     print(orderDetailsModel.totalPrice);
     // *) perform api call
     await BaseClient.safeApiCall(
@@ -671,8 +675,8 @@ class HomeController extends GetxController with GetxServiceMixin {
         update();
       },
       onSuccess: (response) {
-        numberOfServices.value =
-            response.data["payload"]["data"]["numberOfServices"];
+        // numberOfServices.value =
+        //     response.data["payload"]["data"]["numberOfServices"];
         paymentDetailsModel = PaymentDetails.fromJson(
           response.data["payload"]["data"] as Map<String, dynamic>,
         );
@@ -692,6 +696,7 @@ class HomeController extends GetxController with GetxServiceMixin {
   RxString serviceDetails = RxString("");
   RxString techComments = RxString("");
   RxString paymentType = RxString("");
+  RxString address = RxString("");
 
   Future<void> paymentSuccess(
       {String? lang = "", int? orderId, int? index}) async {
@@ -704,15 +709,23 @@ class HomeController extends GetxController with GetxServiceMixin {
         "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
       },
       RequestType.post,
-      queryParameters: {"order_id": 16},
+      queryParameters: {"order_id": orderId},
 
       // queryParameters: {"order_id": orderId},
       onLoading: () {
         update();
       },
       onSuccess: (response) {
+        /**  "orderId": 16,
+            "serviceDetails": "IPHONE BATTERY - IP 6S (ADC - EONE - 5130/06) - 52 SAR \n LCD IPHONE 11 2 - 81 SAR",
+            "paymentType": "Card",
+            "price": 133,
+            "address": "65HG+22J,65HG+22J - The World Islands - Dubai - United Arab Emirates,United Arab Emirates",
+            "techComments": null */
+
         techComments.value = response.data["payload"]["data"]["techComments"];
         paymentType.value = response.data["payload"]["data"]["paymentType"];
+        address.value = response.data["payload"]["data"]["address"];
         serviceDetails.value =
             response.data["payload"]["data"]["serviceDetails"];
         priceAfetrSucsses.value = response.data["payload"]["data"]["price"];

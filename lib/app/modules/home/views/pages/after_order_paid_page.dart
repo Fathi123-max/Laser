@@ -8,7 +8,6 @@ import 'package:laser/app/modules/home/views/widgets/orders/back_but.dart';
 
 import '../widgets/orders/order_number.dart';
 import '../widgets/orders/order_price.dart';
-import '../widgets/orders/receipt_button.dart';
 import '../widgets/orders/service_detailes.dart';
 import '../widgets/orders/time_date_order.dart';
 
@@ -35,7 +34,7 @@ class AfterOrderPaidPage extends GetView<HomeController> {
           const Gap(16),
           const ServiceDetailes(),
           const Gap(18),
-          const ReceiptButton(),
+          // const ReceiptButton(),
           const Gap(59),
           BackBut(
             OnTap: () => controller.backButtonLogic(),

@@ -31,16 +31,18 @@ class OrderDetailsModelAdapter extends TypeAdapter<OrderDetailsModel> {
       time: fields[12] as String?,
       address: fields[13] as String?,
       techVisitStatus: fields[14] as String?,
-      warrantyClaimed: fields[15] as int?,
-      images: (fields[16] as List?)?.cast<String>(),
-      video: (fields[17] as List?)?.cast<dynamic>(),
+      isPaid: fields[15] as int?,
+      warrantyClaimed: fields[16] as int?,
+      orderCode: fields[17] as int?,
+      images: (fields[18] as List?)?.cast<dynamic>(),
+      video: (fields[19] as List?)?.cast<dynamic>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, OrderDetailsModel obj) {
     writer
-      ..writeByte(17)
+      ..writeByte(19)
       ..writeByte(1)
       ..write(obj.orderId)
       ..writeByte(2)
@@ -70,10 +72,14 @@ class OrderDetailsModelAdapter extends TypeAdapter<OrderDetailsModel> {
       ..writeByte(14)
       ..write(obj.techVisitStatus)
       ..writeByte(15)
-      ..write(obj.warrantyClaimed)
+      ..write(obj.isPaid)
       ..writeByte(16)
-      ..write(obj.images)
+      ..write(obj.warrantyClaimed)
       ..writeByte(17)
+      ..write(obj.orderCode)
+      ..writeByte(18)
+      ..write(obj.images)
+      ..writeByte(19)
       ..write(obj.video);
   }
 

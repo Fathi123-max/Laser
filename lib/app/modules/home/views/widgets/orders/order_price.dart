@@ -34,22 +34,16 @@ class OrderPrice extends GetView<HomeController> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         const Gap(40),
-        AssetImageView(
-          height: 17.h,
-          width: 27.w,
-          fileName: controller.paymentType.value == "Card"
-              ? "cash.png"
-              : "apple-logo.png",
-          // color: Colors.transparent,
-        ),
+        AssetImageView(height: 17.h, width: 27.w, fileName: "cash.png"
+
+            // color: Colors.transparent,
+            ),
         const Gap(7),
         Text(
             // controller.paymentType.value == "Card"
             //     ? 'Paid in Credit'
             //     : "paid with Apple",
-            controller.paywithCard.value
-                ? 'Paid with Card'
-                : 'Paid with Apple Pay',
+            'Paid with Card',
             textAlign: TextAlign.center,
             style: MyStyles().fontSize12Weight400)
       ],

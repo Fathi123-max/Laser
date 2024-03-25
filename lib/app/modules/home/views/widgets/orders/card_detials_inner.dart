@@ -56,7 +56,10 @@ class CardDetailsInner extends GetWidget<HomeController> {
               children: [
                 const Gap(28),
                 AssetImageView(
-                    fileName: "phone.png", height: 26.h, width: 20.w),
+                    networkImageUrl:
+                        controller.orderList.value[index].deviceTypeImage,
+                    height: 26.h,
+                    width: 20.w),
                 const Gap(31),
                 Text('${controller.orderList.value[index].deviceName}',
                     textAlign: TextAlign.center,

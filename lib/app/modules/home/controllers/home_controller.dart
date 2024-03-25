@@ -15,11 +15,8 @@ import 'package:laser/app/data/models/order_details_model.dart';
 import 'package:laser/app/data/models/order_model.dart';
 import 'package:laser/app/data/models/payment_details_model.dart';
 import 'package:laser/app/data/models/service_model.dart';
-import 'package:laser/app/modules/home/controllers/controller_helper/controll_order_status.dart';
 import 'package:laser/app/modules/home/controllers/controller_helper/location_services.dart';
 import 'package:laser/app/modules/home/controllers/controller_helper/pick_controller.dart';
-import 'package:laser/app/modules/home/views/pages/order_ditails_page.dart';
-import 'package:laser/app/modules/home/views/widgets/home/home_base_view_model.dart';
 import 'package:laser/app/routes/app_pages.dart';
 
 import '../../../core/constants.dart';
@@ -428,7 +425,8 @@ class HomeController extends GetxController with GetxServiceMixin {
       RequestType.post,
       data: orderFormData,
       onSuccess: (response) {
-        getAllOrders(lang: LocalizationService.isItEnglish() ? "en" : "ar")
+        getAllOrders(
+                lang: LocalizationService.isItEnglish() ? "en" : "ar", index: 0)
             .then((value) => isOrderSelected.value = false)
             .then((value) => pageController.value
                     .nextPage(
@@ -602,18 +600,6 @@ class HomeController extends GetxController with GetxServiceMixin {
         orderDetailsModel = OrderDetailsModel.fromJson(
           response.data["payload"]["data"] as Map<String, dynamic>,
         );
-        Timer.periodic(const Duration(seconds: 1), (timer) {
-          orderindex.value = index!;
-          if (pageController.value.page == 4.0) {
-            pageController.value.nextPage(
-              curve: Curves.easeInOut,
-              duration: const Duration(milliseconds: 500),
-            );
-          } else {
-            Get.put(OrderStatusController());
-            Get.to(() => const HomeBaseViewModel(child: OrderDitailsPage()));
-          }
-        });
 
         update();
       },

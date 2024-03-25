@@ -38,39 +38,40 @@ class DeviceTypePage extends GetView<HomeController> {
                     fileName: "phone.png",
                     text: controller.deviceTypeList.value[0].name)),
                 const Spacer(),
-                Obx(() => DeviceTypeWidget(
-                    fileName: "laptop.png",
-                    tapped: controller.dviceTypeWidgetTapped[1],
-                    onTap: () {
-                      controller.controlleDeviceTypeTap(1);
-                    },
-                    text: controller.deviceTypeList.value[1].name)),
+                // Obx(() => DeviceTypeWidget(
+                //     fileName: "laptop.png",
+                //     tapped: controller.dviceTypeWidgetTapped[1],
+                //     onTap: () {
+                //       controller.controlleDeviceTypeTap(1);
+                //     },
+                //     text: controller.deviceTypeList.value[1].name)),
                 const Gap(43),
               ],
             ),
             const Gap(19),
-            Row(
-              children: [
-                const Gap(43),
-                Obx(() => DeviceTypeWidget(
-                      tapped: controller.dviceTypeWidgetTapped[2],
-                      fileName: "watch.png",
-                      text: controller.deviceTypeList.value[2].name,
-                      onTap: () {
-                        controller.controlleDeviceTypeTap(2);
-                      },
-                    )),
-                const Spacer(),
-                Obx(() => DeviceTypeWidget(
-                    tapped: controller.dviceTypeWidgetTapped[3],
-                    fileName: "ipad.png",
-                    onTap: () {
-                      controller.controlleDeviceTypeTap(3);
-                    },
-                    text: controller.deviceTypeList.value[3].name)),
-                const Gap(43),
-              ],
-            ),
+            // Row(
+            //   children: [
+            //     const Gap(43),
+            //     Obx(() => DeviceTypeWidget(
+            //           tapped: controller.dviceTypeWidgetTapped[2],
+            //           fileName: "watch.png",
+            //           text: controller.deviceTypeList.value[2].name,
+            //           onTap: () {
+            //             controller.controlleDeviceTypeTap(2);
+            //           },
+            //         )),
+            //     const Spacer(),
+            //     Obx(() => DeviceTypeWidget(
+            //         tapped: controller.dviceTypeWidgetTapped[3],
+            //         fileName: "ipad.png",
+            //         onTap: () {
+            //           controller.controlleDeviceTypeTap(3);
+            //         },
+            //         text: controller.deviceTypeList.value[3].name)),
+            //     const Gap(43),
+            //   ],
+            // ),
+
             const Gap(24),
             SizedBox(
               width: 273.w,

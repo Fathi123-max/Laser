@@ -8,7 +8,9 @@ import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/modules/home/controllers/controller_helper/controll_order_status.dart';
 import 'package:laser/app/modules/home/controllers/home_controller.dart';
+import 'package:laser/app/modules/home/views/pages/order_ditails_page.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
+import 'package:laser/app/modules/home/views/widgets/home/home_base_view_model.dart';
 
 import 'custom_card_button.dart';
 
@@ -55,11 +57,27 @@ class CardDetails extends GetWidget<HomeController> {
                   color: const Color(0xFFF1F0F5),
                   onTap: () {
                     showLoadingOverLay(
-                        asyncFunction: () => controller.orderDetails(
-                            lang:
-                                LocalizationService.isItEnglish() ? "en" : "ar",
-                            orderId: controller.orderList.value[index].orderId!,
-                            index: index));
+                        asyncFunction: () => controller
+                                .orderDetails(
+                                    lang: LocalizationService.isItEnglish()
+                                        ? "en"
+                                        : "ar",
+                                    orderId: controller
+                                        .orderList.value[index].orderId!,
+                                    index: index)
+                                .then((value) {
+                              controller.orderindex.value = index!;
+                              if (controller.pageController.value.page == 4.0) {
+                                controller.pageController.value.nextPage(
+                                  curve: Curves.easeInOut,
+                                  duration: const Duration(milliseconds: 500),
+                                );
+                              } else {
+                                Get.put(OrderStatusController());
+                                Get.to(() => const HomeBaseViewModel(
+                                    child: OrderDitailsPage()));
+                              }
+                            }));
                   },
                 ),
                 const Gap(12)
@@ -70,7 +88,11 @@ class CardDetails extends GetWidget<HomeController> {
               children: [
                 const Gap(28),
                 AssetImageView(
-                    fileName: "phone.png", height: 26.h, width: 20.w),
+                    networkImageUrl:
+                        controller.orderList.value[index].deviceTypeImage,
+                    // fileName: "phone.png",
+                    height: 26.h,
+                    width: 20.w),
                 const Gap(31),
                 Text('${controller.orderList.value[index].deviceName}',
                     textAlign: TextAlign.center,

@@ -189,17 +189,36 @@ class OrderHeader extends GetView<TecHomeController> {
   }
 }
 
-class OrderBody extends GetView<TecHomeController> {
+class OrderBody extends StatefulWidget {
   const OrderBody({
     super.key,
     this.index,
     this.order,
   });
+
   final int? index;
   final AcceptedOrder? order;
+
+  @override
+  State<OrderBody> createState() => _OrderBodyState();
+}
+
+class _OrderBodyState extends State<OrderBody> {
+  TecHomeController controller = Get.find<TecHomeController>();
+
+  @override
+  void initState() {
+    controller.visibiltyFunction(
+        order: controller.acceptedOrders.value[widget.index!]);
+    controller.visibiltyFinishFunction(
+        order: controller.acceptedOrders.value[widget.index!]);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    var order = controller.acceptedOrders.value[index!];
+    var order = controller.acceptedOrders.value[widget.index!];
+
     var shapeDecoration = ShapeDecoration(
       color: Colors.white,
       shape: RoundedRectangleBorder(
@@ -339,7 +358,7 @@ class OrderBody extends GetView<TecHomeController> {
             TotalPrice(textStyle: textStyle, order: order),
             const Gap(19),
             ActionButtons(
-              index: index,
+              index: widget.index,
               order: order,
             )
           ],
@@ -360,33 +379,33 @@ class ActionButtons extends GetView<TecHomeController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.visibiltyFunction(order: order);
-    controller.visibiltyFinishFunction(order: order);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Visibility(
-          visible: controller.isMyWay.value,
-          child: ActionButton(
-            controller: controller,
-            index: index,
-            order: order,
-            text: 'On My Way',
-            ontap: () {
-              Get.dialog(RemoveDialogScreen(
-                acceptedOrder: order,
-                index: index,
-                ontap: () {
-                  controller.onMyWay(
-                      index: index!,
-                      orderid: order!.orderId!,
-                      lang: LocalizationService.isItEnglish() ? "en" : "ar");
-                },
-              ));
-              // Get.to(() => const );
-            },
-          ),
-        ),
+        Obx(() {
+          return Visibility(
+            visible: controller.isMyWay.value,
+            child: ActionButton(
+              controller: controller,
+              index: index,
+              order: order,
+              text: 'On My Way',
+              ontap: () {
+                Get.dialog(RemoveDialogScreen(
+                  acceptedOrder: order,
+                  index: index,
+                  ontap: () {
+                    controller.onMyWay(
+                        index: index!,
+                        orderid: order!.orderId!,
+                        lang: LocalizationService.isItEnglish() ? "en" : "ar");
+                  },
+                ));
+                // Get.to(() => const );
+              },
+            ),
+          );
+        }),
         Visibility(
           visible: controller.updateOrder.value,
           child: Padding(

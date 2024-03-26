@@ -244,14 +244,13 @@ class TecHomeController extends GetxController {
     String? lang,
   }) async {
     await BaseClient.safeApiCall(
-      Constants.removeServiceUrl,
+      Constants.onmywayUrl,
       headers: {
         "Accept-Language": lang,
         "Authorization": "Bearer ${MySharedPref.getCurrentToken()}",
       },
       RequestType.post,
       queryParameters: {
-        "service_id": orderid,
         "order_id": orderid,
         "order_code": removeEditingController.value.text,
         // todo need to add
@@ -264,8 +263,8 @@ class TecHomeController extends GetxController {
       },
       onSuccess: (response) {
         // *) indicate success
-        // services.removeWhere(
-        //     (element) => element.serviceId == services[index].serviceId);
+        Get.back();
+
         acceptedOrders.refresh();
 
         update();
@@ -405,13 +404,14 @@ class TecHomeController extends GetxController {
         isMyWay.value = true;
         finishOrder.value = false;
         updateOrder.value = false;
+        update();
         break;
 
       case "Update Order":
         isMyWay.value = false;
         finishOrder.value = false;
         updateOrder.value = true;
-
+        update();
         break;
       default:
     }

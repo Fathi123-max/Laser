@@ -96,7 +96,7 @@ class PaymentDetailsPage extends GetView<HomeController> {
               Gap(13.h),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 if (double.parse(
-                        controller.paymentDetailsModel!.priceAfterWallet!) ==
+                        controller.paymentDetailsModel!.priceAfterWallet!) !=
                     0)
                   PaymentMethodListTile(
                     ontap: () async {
@@ -184,32 +184,36 @@ class PaymentDetailsPage extends GetView<HomeController> {
                     done: true,
                   ),
                 const Gap(5),
-                PaymentMethodListTile(
-                  title: "Pay with Wallet",
-                  ontap: () async {
-                    controller
-                        .orderDetails(
-                          lang: LocalizationService.isItEnglish() ? "en" : "ar",
-                          orderId: order!.orderId!,
-                        )
-                        .then((value) => controller
-                            .paymentSuccess(
-                                lang: LocalizationService.isItEnglish()
-                                    ? "en"
-                                    : "ar",
-                                orderId: order!.orderId!,
-                                index: 0)
-                            .then((value) => Get.offNamed(
-                                  Routes.AFTER_ORDER_PAID_PAGE,
-                                )));
-                    CustomSnackBar.showCustomSnackBar(
-                      title: "Success",
-                      message: "Payment Success",
-                    );
-                  },
-                  fileName: "cash.png",
-                  done: true,
-                ),
+                if (double.parse(
+                        controller.paymentDetailsModel!.priceAfterWallet!) ==
+                    0)
+                  PaymentMethodListTile(
+                    title: "Pay with Wallet",
+                    ontap: () async {
+                      controller
+                          .orderDetails(
+                            lang:
+                                LocalizationService.isItEnglish() ? "en" : "ar",
+                            orderId: order!.orderId!,
+                          )
+                          .then((value) => controller
+                              .paymentSuccess(
+                                  lang: LocalizationService.isItEnglish()
+                                      ? "en"
+                                      : "ar",
+                                  orderId: order!.orderId!,
+                                  index: 0)
+                              .then((value) => Get.offNamed(
+                                    Routes.AFTER_ORDER_PAID_PAGE,
+                                  )));
+                      CustomSnackBar.showCustomSnackBar(
+                        title: "Success",
+                        message: "Payment Success",
+                      );
+                    },
+                    fileName: "cash.png",
+                    done: true,
+                  ),
               ]),
               const Gap(5),
               Row(

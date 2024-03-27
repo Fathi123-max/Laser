@@ -95,7 +95,7 @@ class AppPages {
     GetPage(
       name: Routes.Wallet_Detils,
       binding: WalletBinding(),
-      page: () => WalletPage(),
+      page: () => const WalletPage(),
     )
   ];
 }

@@ -42,7 +42,21 @@ class HomeBaseViewModel extends GetView<HomeController> {
                 const Gap(15),
                 Obx(() {
                   return CustomAppbarIcon(
-                    onTap: () => controller.toOrderList(context),
+                    onTap: () {
+                      if (!controller.goodToGo) {
+                        return;
+                      }
+                      if (controller.goodToGo) {
+                        debugPrint("Going to the moon!");
+                      } // do your thing
+                      controller.goodToGo = false;
+                      Future.delayed(const Duration(milliseconds: 3000), () {
+                        controller.toOrderList(context);
+                        controller.goodToGo = true;
+                      });
+
+                      // controller.toOrderList(context);
+                    },
                     fileName: controller.isOrderSelected.value
                         ? "list_view.png"
                         : "home.png",

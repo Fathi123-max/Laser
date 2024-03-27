@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
+import 'package:flutter_to_pdf/export_delegate.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/components/custom_snackbar.dart';
 import 'package:laser/app/config/translations/localization_service.dart';
@@ -89,6 +90,8 @@ class HomeController extends GetxController with GetxServiceMixin {
   TextEditingController discountController = TextEditingController();
 
   RxBool paywithCard = RxBool(false);
+
+  final ExportDelegate exportDelegate = ExportDelegate();
 
 // controll tapping of device and visibilty of buttons ***************************************************************
   void controlleDeviceTypeTap(
@@ -482,6 +485,13 @@ class HomeController extends GetxController with GetxServiceMixin {
           orderList.addAll(newOrders);
         } else {
           // If this is the first page, replace the existing list with the new orders.
+          if (response.data["payload"]["data"].isEmpty) {
+            isOrderSelected.toggle();
+            CustomSnackBar.showCustomSnackBar(
+              title: "NO Orders",
+              message: "Please Place Order first",
+            );
+          }
           orderList = RxList<OrderModel>.from(response.data["payload"]["data"]
               .map((e) => OrderModel.fromJson(e as Map<String, dynamic>))
               .toList());
@@ -870,16 +880,31 @@ I/flutter ( 4077): ║            }
     );
   }
 
-  Future<void> downloadPDF() async {
+  Future<void> downloadPDF({required int orderId}) async {
+    final directory = await getDownloadsDirectory();
+    final pdfPath = File('${directory!.path}/order-$orderId.png');
+    // final document = pw.Document();
+
+    // final pdf = await exportDelegate.exportToPdfDocument('someFrameId');
+    // final bytes = await pdf.save();
+
+    // print(bytes);
     final image = await screenshotController.capture();
-    if (image != null) {
-      final directory = await getApplicationDocumentsDirectory();
-      final imagePath = File('${directory.path}/image.png');
-      await imagePath.writeAsBytes(image);
-      await OpenFile.open(imagePath.path);
-    }
+    // // document.addPage(pw.Page(
+    // //   build: (pw.Context context) {
+    // //     return pw.Center(
+    // //       child: pw.Image(
+    // //         pw.MemoryImage(image!),
+    // //       ),
+    // //     );
+    // //   },
+    // // ));
+    // // final bytes = await document.save();
+    await pdfPath.writeAsBytes(image!);
+    await OpenFile.open(pdfPath.path);
   }
 
+  bool goodToGo = true;
   Future<void> supmitService() async {
     addressController.text =
         await Get.put(LocationController()).getCurrentLocationAddress();

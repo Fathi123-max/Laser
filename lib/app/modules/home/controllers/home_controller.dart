@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
@@ -19,6 +20,10 @@ import 'package:laser/app/data/models/service_model.dart';
 import 'package:laser/app/modules/home/controllers/controller_helper/location_services.dart';
 import 'package:laser/app/modules/home/controllers/controller_helper/pick_controller.dart';
 import 'package:laser/app/routes/app_pages.dart';
+import 'package:open_file/open_file.dart';
+//path provider
+import 'package:path_provider/path_provider.dart';
+import 'package:screenshot/screenshot.dart';
 
 import '../../../core/constants.dart';
 import '../../../services/api_call_status.dart';
@@ -29,6 +34,7 @@ class HomeController extends GetxController with GetxServiceMixin {
   RxBool visibilityOfBanner = true.obs;
   RxBool visibilityOfNextButton = false.obs;
   RxBool visibilityOfBackButton = false.obs;
+  ScreenshotController screenshotController = ScreenshotController();
 
   RxList<device_type_model.DeviceType> deviceTypeList = RxList([]);
   RxList<OrderModel> orderList = RxList([]);
@@ -862,6 +868,16 @@ I/flutter ( 4077): ║            }
         // BaseClient.handleApiError(error);
       },
     );
+  }
+
+  Future<void> downloadPDF() async {
+    final image = await screenshotController.capture();
+    if (image != null) {
+      final directory = await getApplicationDocumentsDirectory();
+      final imagePath = File('${directory.path}/image.png');
+      await imagePath.writeAsBytes(image);
+      await OpenFile.open(imagePath.path);
+    }
   }
 
   Future<void> supmitService() async {

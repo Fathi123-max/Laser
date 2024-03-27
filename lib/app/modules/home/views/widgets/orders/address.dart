@@ -43,8 +43,8 @@ class Address extends GetView<HomeController> {
                 height: 17.h,
               ),
               const Gap(4),
-              Container(
-                width: customWidth ?? 350.w - 100.w,
+              SizedBox(
+                width: 250.w,
                 child: AutoSizeText(controller.orderDetailsModel.address!,
                     style: MyStyles().fontSize12Weight400),
               )

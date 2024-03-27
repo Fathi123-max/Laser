@@ -4,7 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/orders/address.dart';
-import 'package:laser/app/modules/home/views/widgets/orders/back_but.dart';
+import 'package:laser/app/modules/home/views/widgets/orders/receipt_button.dart';
 
 import '../widgets/orders/order_number.dart';
 import '../widgets/orders/order_price.dart';
@@ -29,16 +29,16 @@ class AfterOrderPaidPage extends GetView<HomeController> {
           const OrderPrice(),
           const Gap(22),
           Address(
-            customWidth: 300.w,
+            customWidth: 320.w,
           ),
           const Gap(16),
           const ServiceDetailes(),
           const Gap(18),
-          // const ReceiptButton(),
-          const Gap(59),
-          BackBut(
-            OnTap: () => controller.backButtonLogic(),
-          )
+          const ReceiptButton(),
+          // const Gap(59),
+          // BackBut(
+          //   OnTap: () => Get.back(),
+          // )
         ],
       ),
     );

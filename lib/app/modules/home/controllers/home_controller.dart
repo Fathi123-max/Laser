@@ -14,6 +14,7 @@ import 'package:laser/app/data/models/device_type_model.dart'
 import 'package:laser/app/data/models/order_details_model.dart';
 import 'package:laser/app/data/models/order_model.dart';
 import 'package:laser/app/data/models/payment_details_model.dart';
+import 'package:laser/app/data/models/resepmodel.dart';
 import 'package:laser/app/data/models/service_model.dart';
 import 'package:laser/app/modules/home/controllers/controller_helper/location_services.dart';
 import 'package:laser/app/modules/home/controllers/controller_helper/pick_controller.dart';
@@ -32,6 +33,7 @@ class HomeController extends GetxController with GetxServiceMixin {
   RxList<device_type_model.DeviceType> deviceTypeList = RxList([]);
   RxList<OrderModel> orderList = RxList([]);
   OrderDetailsModel orderDetailsModel = OrderDetailsModel();
+  Respmodel reModel = Respmodel();
   RxList<DeviceBrandModel> deviceBrandList = RxList([]);
   RxList<DeviceModel> deviceModelList = RxList([]);
   RxList<ServiceModel> serviceList = RxList([]);
@@ -630,7 +632,17 @@ class HomeController extends GetxController with GetxServiceMixin {
         update();
       },
       onSuccess: (response) {
-        print(response.data);
+        reModel = Respmodel.fromJson(
+            response.data["payload"]["data"] as Map<String, dynamic>);
+/**{
+I/flutter ( 4077): ║                 orderId: 175,
+I/flutter ( 4077): ║                 date: "2024-03-26",
+I/flutter ( 4077): ║                 time: "11:00 : 12:00",
+I/flutter ( 4077): ║                 serviceDetails: [{name: IPHONE METAL BACK COVER - 11 PRO -Green, price: 50}, {name: Checking, price: 50}]
+I/flutter ( 4077): ║                 discount: 0,
+I/flutter ( 4077): ║                 finalPrice: 100
+I/flutter ( 4077): ║            }
+ */
       },
       onError: (error) {
         // show error message to user
@@ -766,7 +778,6 @@ class HomeController extends GetxController with GetxServiceMixin {
       duration: const Duration(milliseconds: 500),
       curve: Curves.easeInOut,
     );
-
     if (pageController.value.page == 1) {
       deviceModelVisibleController.value = false;
       deviceColorVisibleController.value = false;

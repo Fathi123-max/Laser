@@ -17,7 +17,7 @@ class ServiceDetailes extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Container(
         width: 326.w,
-        height: 220.h,
+        height: 251.h,
         decoration: MyStyles().shapeDecoration,
         child: Column(
           children: [

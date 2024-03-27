@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
@@ -15,8 +16,11 @@ class DeviceIssues extends GetView<HomeController> {
     return Row(
       children: [
         const Gap(18),
-        AutoSizeText(controller.serviceDetails.value,
-            style: MyStyles().fontSize12Weight400)
+        Container(
+          width: 250.w,
+          child: AutoSizeText(controller.serviceDetails.value,
+              style: MyStyles().fontSize12Weight400),
+        )
       ],
     );
   }

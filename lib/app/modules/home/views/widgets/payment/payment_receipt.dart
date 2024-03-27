@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:laser/app/components/custom_image_widget.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
 import 'package:laser/app/config/translations/localization_service.dart';
@@ -40,14 +41,16 @@ class ReceptPage extends GetView<HomeController> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Order date: 2-1-2024',
+                            Text(
+                                DateFormat('dd MMMM yyyy')
+                                    .format(controller.reModel.date!),
                                 textAlign: TextAlign.center,
                                 style: MyStyles().fontSize12Weight400.copyWith(
                                       fontSize: 10.sp,
                                     )),
                             const Gap(8),
                             Text(
-                              ' ( 11:00 - 12:00)',
+                              "(${controller.reModel.time!})",
                               textAlign: TextAlign.center,
                               style: MyStyles().fontSize12Weight400.copyWith(
                                     fontSize: 10.sp,
@@ -83,20 +86,27 @@ class ReceptPage extends GetView<HomeController> {
                     fullWidth: true,
                   ),
                   const Gap(5),
-                  Row(
-                    children: [
-                      const Gap(25),
-                      Text(
-                        "Mobiles-iphone 8 plus - software services",
-                        style: MyStyles()
-                            .fontSize12Weight400
-                            .copyWith(fontSize: 11.sp),
+                  Container(
+                    height: 80.h,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: 5,
+                      itemBuilder: (context, index) => Row(
+                        children: [
+                          const Gap(25),
+                          Text(
+                            "Mobiles-iphone 8 plus - software services",
+                            style: MyStyles()
+                                .fontSize12Weight400
+                                .copyWith(fontSize: 11.sp),
+                          ),
+                          const Spacer(),
+                          Text("120", style: MyStyles().fontSize14WeightBold),
+                          Text(" SAR", style: MyStyles().fontSize14Weight400),
+                          const Gap(24),
+                        ],
                       ),
-                      const Spacer(),
-                      Text("120", style: MyStyles().fontSize14WeightBold),
-                      Text(" SAR", style: MyStyles().fontSize14Weight400),
-                      const Gap(24),
-                    ],
+                    ),
                   ),
                   const CustomDivider(
                     fullWidth: true,

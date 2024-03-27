@@ -1,3 +1,5 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -24,7 +26,10 @@ class TechnicianCommet extends GetView<HomeController> {
         Row(
           children: [
             const Gap(18),
-            Text(controller.techComments.value ?? "No Comment",
+            AutoSizeText(
+                controller.techComments.value != ""
+                    ? controller.techComments.value
+                    : "No Comment",
                 textAlign: TextAlign.center,
                 style: MyStyles().fontSize12Weight400),
           ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:laser/app/config/theme/my_styles.dart';
+import 'package:laser/app/config/translations/localization_service.dart';
 import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/widgets/payment/payment_receipt.dart';
 
@@ -14,7 +15,11 @@ class ReceiptButton extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.off(() => const ReceptPage());
+        controller
+            .paymentReceipt(
+                orderId: controller.orderDetailsModel.orderId!,
+                lang: LocalizationService.isItEnglish() ? "en" : "ar")
+            .then((value) => Get.to(() => const ReceptPage()));
       },
       child: Container(
         width: 131.w,

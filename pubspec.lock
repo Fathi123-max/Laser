@@ -719,6 +719,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.1+1"
+  image_to_pdf_converter:
+    dependency: "direct main"
+    description:
+      path: "packages/image_to_pdf_converter"
+      ref: HEAD
+      resolved-ref: eda3d02ff2661c2decc5478532c5861542d9bc5c
+      url: "https://github.com/talha828/Images_to_pdf"
+    source: git
+    version: "0.0.1"
   integration_test:
     dependency: "direct dev"
     description: flutter

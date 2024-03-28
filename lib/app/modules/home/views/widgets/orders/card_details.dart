@@ -11,6 +11,7 @@ import 'package:laser/app/modules/home/controllers/home_controller.dart';
 import 'package:laser/app/modules/home/views/pages/order_ditails_page.dart';
 import 'package:laser/app/modules/home/views/widgets/custom_divider.dart';
 import 'package:laser/app/modules/home/views/widgets/home/home_base_view_model.dart';
+import 'package:laser/app/modules/home/views/widgets/payment/payment_receipt.dart';
 
 import 'custom_card_button.dart';
 
@@ -53,33 +54,60 @@ class CardDetails extends GetWidget<HomeController> {
                     style: MyStyles().fontSize12Weight700),
                 const Spacer(),
                 CustomCardButton(
-                  text: "Details",
-                  color: const Color(0xFFF1F0F5),
-                  onTap: () {
-                    showLoadingOverLay(
-                        asyncFunction: () => controller
-                                .orderDetails(
-                                    lang: LocalizationService.isItEnglish()
-                                        ? "en"
-                                        : "ar",
-                                    orderId: controller
-                                        .orderList.value[index].orderId!,
-                                    index: index)
-                                .then((value) {
-                              controller.orderindex.value = index!;
-                              if (controller.pageController.value.page == 4.0) {
-                                controller.pageController.value.nextPage(
-                                  curve: Curves.easeInOut,
-                                  duration: const Duration(milliseconds: 500),
-                                );
-                              } else {
-                                Get.put(OrderStatusController());
-                                Get.to(() => const HomeBaseViewModel(
-                                    child: OrderDitailsPage()));
-                              }
-                            }));
-                  },
-                ),
+                    text: "Details",
+                    color: const Color(0xFFF1F0F5),
+                    onTap: () {
+                      if (controller.orderList.value[index].currentStatusName ==
+                          "Finished") {
+                        showLoadingOverLay(
+                            asyncFunction: () => controller
+                                    .orderDetails(
+                                        lang: LocalizationService.isItEnglish()
+                                            ? "en"
+                                            : "ar",
+                                        orderId: controller
+                                            .orderList.value[index].orderId!,
+                                        index: index)
+                                    .then((value) {
+                                  controller
+                                      .paymentReceipt(
+                                        lang: LocalizationService.isItEnglish()
+                                            ? "en"
+                                            : "ar",
+                                        orderId: controller
+                                            .orderList.value[index].orderId!,
+                                        index: index,
+                                      )
+                                      .then((value) =>
+                                          Get.to(() => ReceptPage()));
+                                }));
+                      } else {
+                        showLoadingOverLay(
+                            asyncFunction: () => controller
+                                    .orderDetails(
+                                        lang: LocalizationService.isItEnglish()
+                                            ? "en"
+                                            : "ar",
+                                        orderId: controller
+                                            .orderList.value[index].orderId!,
+                                        index: index)
+                                    .then((value) {
+                                  controller.orderindex.value = index!;
+                                  if (controller.pageController.value.page ==
+                                      4.0) {
+                                    controller.pageController.value.nextPage(
+                                      curve: Curves.easeInOut,
+                                      duration:
+                                          const Duration(milliseconds: 500),
+                                    );
+                                  } else {
+                                    Get.put(OrderStatusController());
+                                    Get.to(() => const HomeBaseViewModel(
+                                        child: OrderDitailsPage()));
+                                  }
+                                }));
+                      }
+                    }),
                 const Gap(12)
               ],
             ),

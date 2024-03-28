@@ -50,7 +50,7 @@ class HomeBaseViewModel extends GetView<HomeController> {
                         debugPrint("Going to the moon!");
                       } // do your thing
                       controller.goodToGo = false;
-                      Future.delayed(const Duration(milliseconds: 3000), () {
+                      Future.delayed(const Duration(milliseconds: 2000), () {
                         controller.toOrderList(context);
                         controller.goodToGo = true;
                       });

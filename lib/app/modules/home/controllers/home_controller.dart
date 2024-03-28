@@ -22,8 +22,8 @@ import 'package:laser/app/modules/home/controllers/controller_helper/location_se
 import 'package:laser/app/modules/home/controllers/controller_helper/pick_controller.dart';
 import 'package:laser/app/routes/app_pages.dart';
 import 'package:open_file/open_file.dart';
-//path provider
 import 'package:path_provider/path_provider.dart';
+import 'package:pdf/widgets.dart' as pw;
 import 'package:screenshot/screenshot.dart';
 
 import '../../../core/constants.dart';
@@ -882,26 +882,51 @@ I/flutter ( 4077): ║            }
 
   Future<void> downloadPDF({required int orderId}) async {
     final directory = await getDownloadsDirectory();
-    final pdfPath = File('${directory!.path}/order-$orderId.png');
-    // final document = pw.Document();
+    final imagepath = File('${directory!.path}/order-$orderId.png');
+    final pdfPath = File('${directory!.path}/order-$orderId.pdf');
 
-    // final pdf = await exportDelegate.exportToPdfDocument('someFrameId');
-    // final bytes = await pdf.save();
-
-    // print(bytes);
     final image = await screenshotController.capture();
-    // // document.addPage(pw.Page(
-    // //   build: (pw.Context context) {
-    // //     return pw.Center(
-    // //       child: pw.Image(
-    // //         pw.MemoryImage(image!),
-    // //       ),
-    // //     );
-    // //   },
-    // // ));
-    // // final bytes = await document.save();
-    await pdfPath.writeAsBytes(image!);
-    await OpenFile.open(pdfPath.path);
+    final document = pw.Document();
+    document.addPage(pw.Page(
+      build: (pw.Context context) {
+        return pw.Center(
+          child: pw.Image(
+            pw.MemoryImage(image!),
+          ),
+        );
+      },
+    ));
+    // final bytes = await document.save();
+    final imageFile = await imagepath.writeAsBytes(image!);
+    File? pdffile = await imageList(listOfFiles: [imageFile]);
+    // File pdffinalfile = await pdfPath.writeAsBytes(pdffile!.readAsBytesSync(),
+    // flush: true, mode: FileMode.write);
+    await OpenFile.open(pdffile!.path);
+  }
+
+  Future<dynamic> imageList({required List<File?> listOfFiles}) async {
+    if (listOfFiles.isEmpty) {
+      throw "Your List is Empty";
+    } else {
+      final pdf = pw.Document();
+      for (var image in listOfFiles) {
+        var pdfImage = pw.MemoryImage(
+          image!.readAsBytesSync(),
+        );
+        pdf.addPage(
+          pw.Page(
+            build: (pw.Context context) {
+              return pw.Image(pdfImage, fit: pw.BoxFit.contain); // Center
+            },
+          ),
+        );
+      }
+      Directory? appDocDir = await getDownloadsDirectory();
+      final file =
+          File("${appDocDir!.path}/order-${orderDetailsModel.orderId}.pdf");
+      final bytes = await pdf.save();
+      return await file.writeAsBytes(bytes, flush: false);
+    }
   }
 
   bool goodToGo = true;

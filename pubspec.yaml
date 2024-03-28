@@ -56,7 +56,10 @@ dependencies:
   open_file: ^3.3.2
   pdf: ^3.10.8
   flutter_to_pdf: ^0.1.2
-
+  image_to_pdf_converter:
+      git:
+        url: https://github.com/talha828/Images_to_pdf
+        path: packages/image_to_pdf_converter
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1
 
